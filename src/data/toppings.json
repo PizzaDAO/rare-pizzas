@@ -10,7 +10,9 @@
     "probability": 0,
     "image": "/art/1000.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and illustrator who crafted the Thin Crust for the Rare Pizzas collection, bringing a wonderfully overcomplicated rendered style to the foundational topping.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1010,
@@ -23,7 +25,9 @@
     "probability": 0,
     "image": "/art/1010.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection, responsible for essential foundational pieces including the Thick Crust and Mozzarella toppings.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1020,
@@ -37,7 +41,9 @@
     "probability": 0,
     "image": "/art/1020.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection with multiple toppings spanning Crust, Sauce, and more. Known for imaginative designs from Moon Crust to Deep Space.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1040,
@@ -51,7 +57,9 @@
     "probability": 0,
     "image": "/art/1040.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection with multiple toppings spanning Crust, Sauce, and more. Known for imaginative designs from Moon Crust to Deep Space.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1050,
@@ -65,7 +73,9 @@
     "probability": 0,
     "image": "/art/1050.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist known as LoudColorz, contributing the super-rare White Bread Crust to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1060,
@@ -78,7 +88,9 @@
     "probability": 0,
     "image": "/art/1060.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 1070,
@@ -91,7 +103,9 @@
     "probability": 0,
     "image": "/art/1070.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Gluten Free Crust for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2000,
@@ -105,7 +119,9 @@
     "probability": 44.94,
     "image": "/art/2000.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Developer and creative known as jimthedev, contributing the foundational Tomato Sauce to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2010,
@@ -129,7 +145,9 @@
         "artist": "Didi Mx",
         "label": "Drizzle version: Pesto Swirl"
       }
-    ]
+    ],
+    "artistBio": "Bulgarian-born abstract artist exploring relationships between colors, shapes, light, and landscape. Active across NFT platforms including Foundation and OpenSea.",
+    "artistBioGenerated": false
   },
   {
     "sku": 2030,
@@ -150,7 +168,9 @@
         "artist": "Unknown",
         "label": "Drizzle version: BBQ Sauce"
       }
-    ]
+    ],
+    "artistBio": "Artist known as pixelthom who contributed the BBQ Sauce topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2040,
@@ -164,7 +184,9 @@
     "probability": 2.25,
     "image": "/art/2040.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Web3 community member known as 0xKilroy who contributed the super-rare Hazelnut Spread to the Rare Pizzas Sauce collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2050,
@@ -182,7 +204,9 @@
       "/art/2053.webp",
       "/art/2054.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2060,
@@ -196,7 +220,9 @@
     "probability": 2.25,
     "image": "/art/2060.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection with multiple toppings spanning Crust, Sauce, and more. Known for imaginative designs from Moon Crust to Deep Space.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2070,
@@ -213,7 +239,9 @@
       "/art/2072.webp",
       "/art/2073.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist creating under the handle the_artfool, known for the epic Prismatic Fluid sauce with its mesmerizing swirling patterns.",
+    "artistBioGenerated": true
   },
   {
     "sku": 2100,
@@ -227,7 +255,9 @@
     "probability": 2.25,
     "image": "/art/2100.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3000,
@@ -241,7 +271,9 @@
     "probability": 72.73,
     "image": "/art/3000.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection, responsible for essential foundational pieces including the Thick Crust and Mozzarella toppings.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3010,
@@ -255,7 +287,9 @@
     "probability": 1.82,
     "image": "/art/3010.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Actor, writer, and fictional world-builder best known for playing Brian Fuller in Gilmore Girls. Contributed the Vegan Cheese topping to the Rare Pizzas collection.",
+    "artistBioGenerated": false
   },
   {
     "sku": 3020,
@@ -269,7 +303,9 @@
     "probability": 1.82,
     "image": "/art/3020.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Documentarian, filmmaker, and photographer who founded NFTs.tips, one of the fastest-growing NFT communities. Co-founder of SelfLabs.xyz, bridging personal development and web3.",
+    "artistBioGenerated": false
   },
   {
     "sku": 3030,
@@ -287,7 +323,9 @@
       "/art/3032.webp",
       "/art/3033.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as tecatezilla who created the Smoked Mozzarella topping with multiple smoky variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3080,
@@ -301,7 +339,9 @@
     "probability": 1.82,
     "image": "/art/3080.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Crypto enthusiast and artist known as The House of Crypto who contributed the Feta cheese topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3100,
@@ -316,7 +356,9 @@
     "probability": 9.09,
     "image": "/art/3100.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and smart city advocate who designed the rare Quattro Formaggi cheese topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3170,
@@ -332,7 +374,9 @@
     "variants": [
       "/art/3171.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 3190,
@@ -352,7 +396,9 @@
       "/art/3193.webp",
       "/art/3194.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist behind the rare Gruyere cheese topping, complete with multiple melty variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4000,
@@ -373,7 +419,9 @@
       "/art/4005.webp",
       "/art/4006.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Creative known as Zedarius who designed the iconic Pepperoni topping with its many variants, one of the most recognizable pieces in the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4010,
@@ -390,7 +438,9 @@
       "/art/4011.webp",
       "/art/4012.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Visual artist known as mugwert_visuals who created the Salami topping and its variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4020,
@@ -406,7 +456,9 @@
     "variants": [
       "/art/4021.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as infiltrate who designed the Turkey Sausage topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4030,
@@ -429,7 +481,9 @@
       "/art/4037.webp",
       "/art/4038.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "AI art pioneer and creative technologist who entered the NFT space in 2018 on SuperRare. His strange visions combine tools like GANs, VCRs, oscilloscopes, and blockchains to capture the spaces between physical and digital worlds.",
+    "artistBioGenerated": false
   },
   {
     "sku": 4040,
@@ -442,7 +496,9 @@
     "probability": 1.68,
     "image": "/art/4040.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as trizzytrunk who created the Ham topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4050,
@@ -461,7 +517,9 @@
       "cholesterol": 9,
       "added_sugars": 4050,
       "vitamin_d": 9
-    }
+    },
+    "artistBio": "Contributing artist who designed the rare Duck topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4060,
@@ -482,7 +540,9 @@
       "/art/4065.webp",
       "/art/4066.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Mexican artist known as calaveritas_eth, bringing Day of the Dead-inspired artistry to the rare Turkey topping with multiple vibrant variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4070,
@@ -499,7 +559,9 @@
       "/art/4071.webp",
       "/art/4072.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Developer and artist known as realdevlife who contributed the Prosciutto topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4080,
@@ -515,7 +577,9 @@
       "/art/4081.webp",
       "/art/4082.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist who brought South Asian flavor to the collection with the rare Butter Chicken topping.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4090,
@@ -536,7 +600,9 @@
       "/art/4094.webp",
       "/art/4095.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as kimbafrances who created the Ground Beef topping with five distinct variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4110,
@@ -553,7 +619,9 @@
       "/art/4111.webp",
       "/art/4112.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ysgjay who contributed the Chorizo topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4120,
@@ -567,7 +635,9 @@
     "probability": 1.68,
     "image": "/art/4120.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Kaodraws who contributed the BBQ Chicken topping to the Rare Pizzas Meat collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4130,
@@ -586,7 +656,9 @@
       "/art/4133.webp",
       "/art/4134.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as hereidrewyousomething who designed the Bacon topping with multiple crispy variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4150,
@@ -603,7 +675,9 @@
       "/art/4151.webp",
       "/art/4152.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Art world insider, writer, collector, and NFT crusader who has been creating, curating, and teaching art for over 30 years. Co-author of The NFT Book and a prolific voice bridging traditional art and web3.",
+    "artistBioGenerated": false
   },
   {
     "sku": 4160,
@@ -623,7 +697,9 @@
       "/art/4164.webp",
       "/art/4165.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the Meatball topping with five unique variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4180,
@@ -639,7 +715,9 @@
       "/art/4181.webp",
       "/art/4182.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Lovewelchs who contributed the Buffalo Chicken topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4190,
@@ -656,7 +734,9 @@
       "/art/4191.webp",
       "/art/4192.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as statuswoe who designed the rare Char Siu Pork topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4200,
@@ -674,7 +754,9 @@
       "/art/4201.webp",
       "/art/4202.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Multi-platform artist active across Twitter, Discord, and Instagram, contributing the rare Cheeseburger topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4210,
@@ -690,7 +772,9 @@
       "/art/4211.webp",
       "/art/4212.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4220,
@@ -704,7 +788,9 @@
     "probability": 0.21,
     "image": "/art/4220.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist creating under the handle _Raster_Eyes_ who contributed the rare Eyeball topping to the Rare Pizzas Meat collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4230,
@@ -725,7 +811,9 @@
       "/art/4234.webp",
       "/art/4235.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and illustrator known as hwajilla who created the rare Finger topping with five detailed variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4240,
@@ -740,7 +828,9 @@
     "variants": [
       "/art/4241.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Movie industry veteran and award-winning animator who worked on Hotel Transylvania 3 and How to Train Your Dragon. Creator of the Drippieverse, a web3 universe of vibey creatures.",
+    "artistBioGenerated": false
   },
   {
     "sku": 4260,
@@ -756,7 +846,9 @@
       "/art/4261.webp",
       "/art/4262.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist who contributed the epic Bat topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4270,
@@ -776,7 +868,9 @@
       "/art/4274.webp",
       "/art/4275.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Crypto art enthusiast known as pixiegirlcrypto who created the super-rare Escargot topping with five elegant variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4280,
@@ -796,7 +890,9 @@
       "/art/4284.webp",
       "/art/4285.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Roast Beef topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4290,
@@ -814,7 +910,9 @@
       "/art/4292.webp",
       "/art/4293.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist known as HawkwardArt who created the super-rare Owl topping with its multiple wise variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4310,
@@ -836,7 +934,9 @@
       "/art/4316.webp",
       "/art/4317.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as DarkoR who contributed the rare Frog Legs topping with seven amphibious variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4320,
@@ -856,7 +956,9 @@
       "/art/4325.webp",
       "/art/4326.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as dani_tranquila who created the Bologna topping with six playful variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4330,
@@ -874,7 +976,9 @@
       "/art/4333.webp",
       "/art/4334.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ArabelaTuti who contributed the epic Dragon Meat topping with four mythical variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4340,
@@ -891,7 +995,9 @@
       "/art/4341.webp",
       "/art/4342.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as extrastu who designed the rare Smoked Turkey topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4350,
@@ -909,7 +1015,9 @@
       "/art/4352.webp",
       "/art/4353.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Creative known as Lukevoice who contributed the rare Jerk Chicken topping with multiple flavorful variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4360,
@@ -931,7 +1039,9 @@
       "/art/4366.webp",
       "/art/4367.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Pioneering collaborative art platform where people worldwide create visual conversations through drawing. Home to over 120,000 drawings and creators of Creeps & Weirdos (2017), one of the first NFT projects with automated royalties.",
+    "artistBioGenerated": false
   },
   {
     "sku": 4370,
@@ -948,7 +1058,9 @@
       "/art/4371.webp",
       "/art/4372.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and craftsperson who sells through Etsy's OrixaGoods shop, contributing the rare Oxtail topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4390,
@@ -966,7 +1078,9 @@
       "/art/4392.webp",
       "/art/4393.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as miseon9394 who created the rare Hot Dog topping in a playful Teenage Mutant Ninja style.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4400,
@@ -983,7 +1097,9 @@
       "/art/4401.webp",
       "/art/4402.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "A creative family trio who collaborated to bring the epic Unicorn topping to life for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4410,
@@ -1000,7 +1116,9 @@
       "/art/4411.webp",
       "/art/4412.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as laughandbelly who designed the cheeky super-rare Butt topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4430,
@@ -1017,7 +1135,9 @@
       "/art/4431.webp",
       "/art/4432.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as junoreactor who contributed the super-rare Brain topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4440,
@@ -1031,7 +1151,9 @@
     "probability": 0.21,
     "image": "/art/4440.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ZuwuTV who created the rare Corn Dog topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4450,
@@ -1044,7 +1166,9 @@
     "probability": 0.21,
     "image": "/art/4450.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as RageOfPotato who created the rare Fried Chicken topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4460,
@@ -1059,7 +1183,9 @@
     "variants": [],
     "nutrition": {
       "added_sugars": 5810
-    }
+    },
+    "artistBio": "Artist known as lightnoosh who contributed the Chicken topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4600,
@@ -1079,7 +1205,9 @@
       "/art/4604.webp",
       "/art/4605.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "3D artist who created the rare Fried Cheese topping with five delicious variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4610,
@@ -1101,7 +1229,9 @@
       "/art/4616.webp",
       "/art/4617.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Pioneering collaborative art platform where people worldwide create visual conversations through drawing. Home to over 120,000 drawings and creators of Creeps & Weirdos (2017), one of the first NFT projects with automated royalties.",
+    "artistBioGenerated": false
   },
   {
     "sku": 4620,
@@ -1117,7 +1247,9 @@
       "/art/4621.webp",
       "/art/4622.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as BequalsINGS who contributed the rare Smoked Gouda topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4630,
@@ -1131,7 +1263,9 @@
     "probability": 0.59,
     "image": "/art/4630.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as thetealappeal who created the Goat Cheese topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4640,
@@ -1147,7 +1281,9 @@
       "/art/4641.webp",
       "/art/4642.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as artoflizz who designed the Burnt Cheese topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4650,
@@ -1163,7 +1299,9 @@
       "/art/4651.webp",
       "/art/4652.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as vylkrom who contributed the rare Paneer Tikka topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4660,
@@ -1180,7 +1318,9 @@
       "/art/4661.webp",
       "/art/4662.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as NftSanta who created the Provolone topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4670,
@@ -1196,7 +1336,9 @@
     "variants": [
       "/art/4671.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Czech artist known as 113kw who designed the rare Tvaruzek topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4680,
@@ -1210,7 +1352,9 @@
     "probability": 0.21,
     "image": "/art/4680.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Czech artist known on Instagram as jayy.rough who contributed the rare Korbacik topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4890,
@@ -1226,7 +1370,9 @@
       "/art/4891.webp",
       "/art/4892.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the Tomato topping with multiple fresh variants for the Rare Pizzas Fruit collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4900,
@@ -1243,7 +1389,9 @@
       "/art/4901.webp",
       "/art/4902.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Juan Pablo who contributed the super-rare Psychedelic Tomato with its trippy variants to the collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4910,
@@ -1260,7 +1408,9 @@
       "/art/4911.webp",
       "/art/4912.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as forevertapwater who designed the rare Mango topping for the Rare Pizzas Fruit collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4920,
@@ -1273,7 +1423,9 @@
     "probability": 0.21,
     "image": "/art/4920.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Beez_Kneez0 who contributed the rare Beans topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4930,
@@ -1289,7 +1441,9 @@
       "/art/4931.webp",
       "/art/4932.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "UK-based artist known as grandedameuk who contributed the super-rare Fig topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4940,
@@ -1306,7 +1460,9 @@
       "/art/4941.webp",
       "/art/4942.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative who designed the epic Pitaya (dragon fruit) topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4950,
@@ -1319,7 +1475,9 @@
     "probability": 0.21,
     "image": "/art/4950.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as NFTCatgirl who created the rare Grapefruit topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4960,
@@ -1338,7 +1496,9 @@
       "/art/4964.webp",
       "/art/4965.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Lime topping with five zesty variants for the Rare Pizzas Fruit collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4970,
@@ -1352,7 +1512,9 @@
     "probability": 0.21,
     "image": "/art/4970.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as alexlzim who contributed the rare Blueberry topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4980,
@@ -1369,7 +1531,9 @@
       "/art/4982.webp",
       "/art/4983.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as MentaJengibre2 who designed the Avocado topping with multiple variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 4990,
@@ -1386,7 +1550,9 @@
       "/art/4992.webp",
       "/art/4993.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Creators of the beloved Uglydoll characters and the Uglyverse, a world celebrating uniqueness and imperfection. Their toy line won the Specialty Toy of the Year award and sold over a million dolls.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5000,
@@ -1402,7 +1568,9 @@
       "/art/5001.webp",
       "/art/5002.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "NYC-based visual artist and associate professor of digital art who works across drawing, painting, new media, and internet art. An early crypto art adopter with works on SuperRare.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5010,
@@ -1418,7 +1586,9 @@
     "variants": [
       "/art/5011.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as misterfelder who created the Green Olive topping for the Rare Pizzas Fruit collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5020,
@@ -1437,7 +1607,9 @@
       "/art/5024.webp",
       "/art/5025.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as KTLB who contributed the Pineapple topping -- one of pizza's most debated additions -- with five tropical variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5030,
@@ -1451,7 +1623,9 @@
     "probability": 0.04,
     "image": "/art/5030.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the epic Durian topping, bringing the king of fruits to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5040,
@@ -1467,7 +1641,9 @@
     "variants": [
       "/art/5041.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as mmeJOAN who created the rare Banana topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5050,
@@ -1486,7 +1662,9 @@
       "/art/5053.webp",
       "/art/5054.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Watermelon topping with four juicy variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5060,
@@ -1500,7 +1678,9 @@
     "probability": 0.21,
     "image": "/art/5060.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist formerly known as robslasagna who created the rare Kiwi topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5070,
@@ -1520,7 +1700,9 @@
       "/art/5074.webp",
       "/art/5075.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as soojincho who contributed the rare Grape topping with five luscious variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5080,
@@ -1535,7 +1717,9 @@
     "variants": [
       "/art/5081.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known on Instagram as notintuition who designed the rare Peach topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5090,
@@ -1551,7 +1735,9 @@
     "variants": [
       "/art/5091.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as applencinnamon who designed the rare Strawberry topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5100,
@@ -1575,7 +1761,9 @@
       "/art/5108.webp",
       "/art/5109.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Prolific contributing artist who created the Apple topping with nine variants -- the most of any single topping in the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5110,
@@ -1595,7 +1783,9 @@
       "/art/5114.webp",
       "/art/5115.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist known as sooscape_nft who contributed the rare Cherry topping with five sweet variants to the collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5120,
@@ -1613,7 +1803,9 @@
       "/art/5122.webp",
       "/art/5123.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as donmalbecc who created the rare Blackberry topping with multiple variants for the Rare Pizzas Fruit collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5130,
@@ -1627,7 +1819,9 @@
     "probability": 0.21,
     "image": "/art/5130.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Slovak artist known as Don Pizza Slovak who contributed the rare Orange topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5140,
@@ -1647,7 +1841,9 @@
       "/art/5144.webp",
       "/art/5145.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ainnamseo who created the super-rare Cantaloupe topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5150,
@@ -1668,7 +1864,9 @@
       "/art/5155.webp",
       "/art/5156.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as marybaeg who designed the epic Passion Fruit topping with six variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5160,
@@ -1688,7 +1886,9 @@
       "/art/5163.webp",
       "/art/5164.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as rand0mmm and on Instagram as voidskippa who contributed the super-rare Orange Peel topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5170,
@@ -1705,7 +1905,9 @@
       "/art/5171.webp",
       "/art/5172.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ciara_bourne who contributed the Black Olive topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5180,
@@ -1722,7 +1924,9 @@
       "/art/5181.webp",
       "/art/5182.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Colorful artist known on Instagram as sharona_color who designed the rare Date topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5190,
@@ -1738,7 +1942,9 @@
     "variants": [
       "/art/5191.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and musician known as kas__vegas who contributed the Eggplant topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5200,
@@ -1759,7 +1965,9 @@
       "/art/5206.webp",
       "/art/5207.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Manchester-based artist known as madeinmanc who created the rare Chili Pepper topping with seven fiery variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5210,
@@ -1779,7 +1987,9 @@
       "/art/5214.webp",
       "/art/5215.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as cherish_nfts who designed the Jalapeno Pepper topping with five spicy variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5220,
@@ -1795,7 +2005,9 @@
     "variants": [
       "/art/5221.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Bamdarockstar who contributed the epic Shishito Pepper topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5230,
@@ -1813,7 +2025,9 @@
       "/art/5233.webp",
       "/art/5234.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as WhereIDraw who created the rare Banana Pepper topping with four variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5240,
@@ -1830,7 +2044,9 @@
       "/art/5241.webp",
       "/art/5242.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as pluralspoons who designed the Red Pepper topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5250,
@@ -1848,7 +2064,9 @@
       "/art/5252.webp",
       "/art/5253.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "NY/BKK-based artist, toy designer, and storyteller behind MUMBOT WORLD, a magical universe of original characters. Founded Ghost Club, an international creative community, and pioneered bundling NFTs with physical collectibles.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5260,
@@ -1863,7 +2081,9 @@
     "variants": [
       "/art/5261.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the Yellow Pepper topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5280,
@@ -1882,7 +2102,9 @@
       "/art/5284.webp",
       "/art/5285.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as davidphunk who contributed the rare Habanero Pepper topping with five variants to the collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5290,
@@ -1901,7 +2123,9 @@
       "/art/5293.webp",
       "/art/5294.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Raxonchain who designed the Green Pepper topping with multiple variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5400,
@@ -1915,7 +2139,9 @@
     "probability": 1.68,
     "image": "/art/5400.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as nsputnik who created the Mushroom topping for the Rare Pizzas Fungi collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5410,
@@ -1929,7 +2155,9 @@
     "probability": 0.21,
     "image": "/art/5410.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as girlcalledreem who contributed the rare Black Truffle topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5420,
@@ -1943,7 +2171,9 @@
     "probability": 0.08,
     "image": "/art/5420.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Magic Mushroom topping for the Rare Pizzas Fungi collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5440,
@@ -1959,7 +2189,9 @@
     "variants": [
       "/art/5441.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as simoleotweet who contributed the Porcini mushroom topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5450,
@@ -1976,7 +2208,9 @@
       "/art/5451.webp",
       "/art/5452.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist known as cayogeneral who created the rare White Truffle topping with its playful pig-meets-truffle variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5470,
@@ -1989,7 +2223,9 @@
     "probability": 0.21,
     "image": "/art/5470.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Morel mushroom topping for the Rare Pizzas Fungi collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5480,
@@ -2004,7 +2240,9 @@
     "variants": [
       "/art/5481.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as spacedivers who contributed the super-rare Amanita mushroom topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5500,
@@ -2020,7 +2258,9 @@
     "variants": [
       "/art/5501.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Pistachio topping for the Rare Pizzas Nuts collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5510,
@@ -2034,7 +2274,9 @@
     "probability": 0.21,
     "image": "/art/5510.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Highballer who contributed the rare Pine Nut topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5520,
@@ -2051,7 +2293,9 @@
       "/art/5521.webp",
       "/art/5522.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as edomlipton who designed the rare Peanut topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5600,
@@ -2067,7 +2311,9 @@
       "/art/5601.webp",
       "/art/5602.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as pap3rink who created the super-rare Yuca topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5610,
@@ -2086,7 +2332,9 @@
       "/art/5613.webp",
       "/art/5614.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as vegsurfer who contributed the Vegan Sausage topping with four hearty variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5620,
@@ -2105,7 +2353,9 @@
       "/art/5623.webp",
       "/art/5624.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as bergoesbrr who created the rare Cactus topping with four prickly variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5640,
@@ -2121,7 +2371,9 @@
     "variants": [
       "/art/5641.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Edamame topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5650,
@@ -2138,7 +2390,9 @@
       "/art/5651.webp",
       "/art/5652.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as HaneyCanvas who contributed the rare Tofu topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5660,
@@ -2153,7 +2407,9 @@
     "probability": 1.68,
     "image": "/art/5660.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Ls528art who created the Spinach topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5670,
@@ -2171,7 +2427,9 @@
       "/art/5672.webp",
       "/art/5673.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Multi-disciplinary artist, dancer, author, and cultural producer. Army veteran turned creative entrepreneur, founder of Nous Tous Gallery and Citizens of Culture, exploring identity through movement and imagery.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5680,
@@ -2190,7 +2448,9 @@
       "/art/5683.webp",
       "/art/5684.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as framezero who designed the super-rare Bamboo topping with four variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5690,
@@ -2206,7 +2466,9 @@
     "variants": [
       "/art/5691.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as irregularsnd who contributed the Red Onion topping to the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5700,
@@ -2225,7 +2487,9 @@
       "/art/5704.webp",
       "/art/5705.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as shakenbakespear who created the epic Shadow Plant topping with five mysterious variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5710,
@@ -2245,7 +2509,9 @@
       "/art/5714.webp",
       "/art/5715.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Sweet Potato topping with five rebellious variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5720,
@@ -2261,7 +2527,9 @@
     "variants": [
       "/art/5722.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Frankfurt-based artist known as FlorianFrankfurt who contributed the Arugula topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5730,
@@ -2281,7 +2549,9 @@
       "/art/5734.webp",
       "/art/5735.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as zenfinite369 who created the rare Broccolini topping with five green variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5740,
@@ -2297,7 +2567,9 @@
     "variants": [
       "/art/5741.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ambypols who designed the Corn topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5750,
@@ -2317,7 +2589,9 @@
       "/art/5754.webp",
       "/art/5755.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the Artichoke Heart topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5760,
@@ -2333,7 +2607,9 @@
     "variants": [
       "/art/5761.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as OOooyyooOO who contributed the rare Asparagus topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5770,
@@ -2352,7 +2628,9 @@
       "/art/5773.webp",
       "/art/5774.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Pickled Beet topping with four probiotic-filled variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5780,
@@ -2368,7 +2646,9 @@
     "variants": [
       "/art/5781.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as nataliecrue who designed the rare Peas topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5790,
@@ -2389,7 +2669,9 @@
       "/art/5795.webp",
       "/art/5796.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist and creator of the first African Museum in the Metaverse, making cultural and artistic experiences accessible to global audiences through web3 technology.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5820,
@@ -2411,7 +2693,9 @@
       "/art/5826.webp",
       "/art/5827.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Pioneering collaborative art platform where people worldwide create visual conversations through drawing. Home to over 120,000 drawings and creators of Creeps & Weirdos (2017), one of the first NFT projects with automated royalties.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5830,
@@ -2433,7 +2717,9 @@
       "/art/5836.webp",
       "/art/5837.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Pioneering collaborative art platform where people worldwide create visual conversations through drawing. Home to over 120,000 drawings and creators of Creeps & Weirdos (2017), one of the first NFT projects with automated royalties.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5840,
@@ -2452,7 +2738,9 @@
       "/art/5843.webp",
       "/art/5844.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as redhotdaddy4 who created the rare Kale topping with four variants for the collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5850,
@@ -2468,7 +2756,9 @@
     "variants": [
       "/art/5851.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as timokuzme who contributed the rare Seitan topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5860,
@@ -2488,7 +2778,9 @@
       "/art/5864.webp",
       "/art/5865.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Cauliflower topping with five variants for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5870,
@@ -2508,7 +2800,9 @@
       "/art/5874.webp",
       "/art/5875.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ETruebard who created the rare Potato Chips topping with five crispy variants for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5880,
@@ -2525,7 +2819,9 @@
       "/art/5881.webp",
       "/art/5882.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Garlic topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5890,
@@ -2541,7 +2837,9 @@
       "/art/5891.webp",
       "/art/5892.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Broccoli topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5900,
@@ -2557,7 +2855,9 @@
       "/art/5901.webp",
       "/art/5902.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the super-rare Kimchi topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5910,
@@ -2573,7 +2873,9 @@
       "/art/5911.webp",
       "/art/5912.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Iranian-American painter, publisher, and installation artist whose richly ornamental works combine Persian miniature painting traditions with Western pop culture. Recipient of the Joan Mitchell Foundation grant.",
+    "artistBioGenerated": false
   },
   {
     "sku": 5920,
@@ -2592,7 +2894,9 @@
       "/art/5924.webp",
       "/art/5925.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Cryptocalpyse who contributed the White Onion topping with five variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5930,
@@ -2608,7 +2912,9 @@
       "/art/5931.webp",
       "/art/5932.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as nft_papi who created the rare Plantains topping for the Rare Pizzas Vegetable collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 5940,
@@ -2621,7 +2927,9 @@
     "probability": 0.21,
     "image": "/art/5940.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Ivorian graphic designer and illustrator who created over 365 African emojis for the Zouzoukwa app, bringing West African culture to smartphone keyboards. Named to the Forbes Africa 30 Under 30 list.",
+    "artistBioGenerated": false
   },
   {
     "sku": 6000,
@@ -2641,7 +2949,9 @@
       "/art/6004.webp",
       "/art/6005.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative who designed the Shrimp topping with five variants, one of the foundational pieces of the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6010,
@@ -2657,7 +2967,9 @@
     "variants": [
       "/art/6011.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as analemmaonandon who created the Anchovies topping for the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6020,
@@ -2673,7 +2985,9 @@
     "variants": [
       "/art/6021.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as artabovereality who contributed the epic Lobster topping to the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6030,
@@ -2689,7 +3003,9 @@
     "variants": [
       "/art/6031.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as MarkBeylin who designed the super-rare Scallop topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6040,
@@ -2706,7 +3022,9 @@
       "/art/6041.webp",
       "/art/6042.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as tonaros who created the rare Salmon topping for the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6050,
@@ -2723,7 +3041,9 @@
       "/art/6051.webp",
       "/art/6052.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as LoBo_301 who contributed the rare Sardine topping to the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6060,
@@ -2742,7 +3062,9 @@
       "/art/6063.webp",
       "/art/6064.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as seounghwan kim who created the grail-tier Mermaid topping -- one of the rarest pieces in the entire Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6070,
@@ -2762,7 +3084,9 @@
       "/art/6074.webp",
       "/art/6075.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as lindsaykingdom_ who designed the super-rare Pearl topping with five luminous variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6080,
@@ -2776,7 +3100,9 @@
     "probability": 0.04,
     "image": "/art/6080.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the epic Cthulhu topping for the Rare Pizzas Seafood collection, summoning Lovecraftian horror onto pizza.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6090,
@@ -2796,7 +3122,9 @@
       "/art/6094.webp",
       "/art/6095.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as jadeduckie who contributed the rare Hawaiian Poke topping with five delicious variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6100,
@@ -2810,7 +3138,9 @@
     "probability": 0.21,
     "image": "/art/6100.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Greek artist known as vasdekis who designed the rare Octopus topping for the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6110,
@@ -2826,7 +3156,9 @@
     "variants": [
       "/art/6111.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as strawberrywtf who contributed the rare Oyster topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6120,
@@ -2842,7 +3174,9 @@
       "/art/6121.webp",
       "/art/6122.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the epic Endangered Species topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6130,
@@ -2859,7 +3193,9 @@
       "/art/6131.webp",
       "/art/6132.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Hosugi93 who created the super-rare Sea Urchin topping for the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6140,
@@ -2883,7 +3219,9 @@
       "/art/6148.webp",
       "/art/6149.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Japanese artist known as wyoook who designed the rare Sushi topping with nine detailed variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6150,
@@ -2908,7 +3246,9 @@
       "/art/6158.webp",
       "/art/6159.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the super-rare Tropical Fish topping with nine colorful variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6160,
@@ -2922,7 +3262,9 @@
     "probability": 0.08,
     "image": "/art/6160.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as radical_sheep who contributed the super-rare Takoyaki topping to the Rare Pizzas Seafood collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6170,
@@ -2939,7 +3281,9 @@
       "/art/6171.webp",
       "/art/6172.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as CuspByCassie who designed the rare Squid topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6190,
@@ -2955,7 +3299,9 @@
       "/art/6191.webp",
       "/art/6192.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as nudiestitches who contributed the Cockroach topping to the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6200,
@@ -2971,7 +3317,9 @@
     "variants": [
       "/art/6201.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as damnketchup who created the rare Cricket topping for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6210,
@@ -2987,7 +3335,9 @@
     "variants": [
       "/art/6211.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as StephenTheJudge who designed the Worm topping for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6220,
@@ -3001,7 +3351,9 @@
     "probability": 0.21,
     "image": "/art/6220.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Yellowjacket topping for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6230,
@@ -3015,7 +3367,9 @@
     "probability": 0.21,
     "image": "/art/6230.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Necatuss who designed the rare Cicada topping for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6240,
@@ -3036,7 +3390,9 @@
       "/art/6245.webp",
       "/art/6246.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the super-rare Maggots topping with six squirmy variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6250,
@@ -3056,7 +3412,9 @@
       "/art/6254.webp",
       "/art/6255.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ZacKenny who designed the rare Spider topping with five crafty variants for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6260,
@@ -3076,7 +3434,9 @@
       "/art/6264.webp",
       "/art/6265.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as Kimkim_Jinah who contributed the Flies topping with five adorably cute variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6270,
@@ -3096,7 +3456,9 @@
       "/art/6274.webp",
       "/art/6275.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as okxnotxho who created the Ants topping with five industrious variants for the Rare Pizzas Bugs collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6280,
@@ -3113,7 +3475,9 @@
       "/art/6281.webp",
       "/art/6282.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as draculadco who contributed the rare Lady Bug topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6290,
@@ -3126,7 +3490,9 @@
     "probability": 0.21,
     "image": "/art/6290.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as leeannfenderson who created the rare Lantern Fly topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6300,
@@ -3142,7 +3508,9 @@
     "variants": [
       "/art/6301.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Hibiscus topping for the Rare Pizzas Flowers collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6310,
@@ -3162,7 +3530,9 @@
       "/art/6314.webp",
       "/art/6315.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as jaymeswestfall who created the rare Cannabis topping with five variants for the Rare Pizzas Herbs & Spices collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6320,
@@ -3179,7 +3549,9 @@
       "/art/6321.webp",
       "/art/6322.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as UnfoldedLife who contributed the Basil topping to the Rare Pizzas Herbs & Spices collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6330,
@@ -3194,7 +3566,9 @@
     "variants": [
       "/art/6331.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as artmetaverse who designed the super-rare Hemp topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6340,
@@ -3213,7 +3587,9 @@
       "/art/6344.webp",
       "/art/6345.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ashirasart who created the rare Rosemary topping with five herbal variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6350,
@@ -3227,7 +3603,9 @@
     "probability": 0.21,
     "image": "/art/6350.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as IP_rimko who designed the rare Mint Leaf topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6360,
@@ -3243,7 +3621,9 @@
       "/art/6361.webp",
       "/art/6362.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Cilantro topping for the Rare Pizzas Herbs & Spices collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6370,
@@ -3261,7 +3641,9 @@
       "/art/6372.webp",
       "/art/6373.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as fgonnello who contributed the Parsley topping with three flavorful variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6400,
@@ -3274,7 +3656,9 @@
     "probability": 0.04,
     "image": "/art/6400.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Hamm_day who created the epic Dino Egg topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6410,
@@ -3292,7 +3676,9 @@
       "/art/6412.webp",
       "/art/6413.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6420,
@@ -3309,7 +3695,9 @@
     "variants": [
       "/art/6421.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as ROck3tFu3l who contributed the super-rare Goose Egg topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6430,
@@ -3326,7 +3714,9 @@
       "/art/6431.webp",
       "/art/6432.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as JenJoyRoybal who designed the epic Ostrich Egg topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6440,
@@ -3342,7 +3732,9 @@
       "/art/6441.webp",
       "/art/6442.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as caoticadesigner who contributed the rare Hardboiled Egg topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6460,
@@ -3356,7 +3748,9 @@
     "probability": 0.04,
     "image": "/art/6460.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as keymaster74 who created the epic Flag topping for the Rare Pizzas Space collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6470,
@@ -3371,7 +3765,9 @@
     "variants": [],
     "nutrition": {
       "added_sugars": 5280
-    }
+    },
+    "artistBio": "Artist who contributed the grail-tier Black Hole topping -- one of the rarest and most coveted pieces in the entire Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6480,
@@ -3390,7 +3786,9 @@
       "/art/6483.webp",
       "/art/6484.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as SplatMap who designed the epic Stardust topping with four cosmic variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6490,
@@ -3410,7 +3808,9 @@
       "/art/6494.webp",
       "/art/6495.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Visual artist, DJ, and VJ known as Aaron Lazansky-Olivas who creates immersive visual experiences. Contributed the super-rare Dream Drops topping to the Rare Pizzas collection.",
+    "artistBioGenerated": false
   },
   {
     "sku": 6510,
@@ -3425,7 +3825,9 @@
     "variants": [
       "/art/6511.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare NASA topping for the Rare Pizzas Space collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6520,
@@ -3440,7 +3842,9 @@
     "variants": [
       "/art/6521.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as totalhappy who created the super-rare Sputnik topping for the Rare Pizzas Space collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6530,
@@ -3456,7 +3860,9 @@
       "/art/6531.webp",
       "/art/6532.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as Hekkate_ who designed the grail-tier UFO topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6540,
@@ -3474,7 +3880,9 @@
       "/art/6542.webp",
       "/art/6543.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as thebbot who designed the epic Robot topping with three mechanical variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6560,
@@ -3487,7 +3895,9 @@
     "probability": 0.02,
     "image": "/art/6560.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the grail-tier Tesla topping for the Rare Pizzas Space collection -- powered by the energy of stars.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6570,
@@ -3506,7 +3916,9 @@
       "/art/6573.webp",
       "/art/6574.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as hughebdy who designed the super-rare Meteorite topping with four cosmic variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6580,
@@ -3525,7 +3937,9 @@
       "/art/6583.webp",
       "/art/6584.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as raleahx who contributed the epic Alien topping with four extraterrestrial variants to the Rare Pizzas Space collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6590,
@@ -3539,7 +3953,9 @@
     "probability": 0.04,
     "image": "/art/6590.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as shadiekafercuts who created the epic Laika topping -- honoring the brave space dog -- for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6600,
@@ -3557,7 +3973,9 @@
       "/art/6602.webp",
       "/art/6603.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as viroze who created the epic Snap Rocks topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6610,
@@ -3573,7 +3991,9 @@
       "/art/6611.webp",
       "/art/6612.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as angelacrypto1 who contributed the rare Fried Onion Ring topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6620,
@@ -3595,7 +4015,9 @@
       "/art/6626.webp",
       "/art/6627.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as crzikrn who designed the super-rare Star Candy topping with seven galactic variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6630,
@@ -3612,7 +4034,9 @@
       "/art/6631.webp",
       "/art/6632.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as k_pohle who created the super-rare Ice Cream topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6640,
@@ -3631,7 +4055,9 @@
       "/art/6643.webp",
       "/art/6644.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Popcorn topping with four variants for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6650,
@@ -3645,7 +4071,9 @@
     "probability": 0.21,
     "image": "/art/6650.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative behind MonkeyFactory who contributed the rare Peanut Butter drizzle to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6660,
@@ -3665,7 +4093,9 @@
       "/art/6664.webp",
       "/art/6665.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist who designed the super-rare Dotoru Chips topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6670,
@@ -3685,7 +4115,9 @@
       "/art/6674.webp",
       "/art/6675.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as sungsuyim who created the epic Melty topping with five gooey variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6680,
@@ -3704,7 +4136,9 @@
       "/art/6684.webp",
       "/art/6685.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as yo_ma_hon who contributed the super-rare Teeth topping with five biting variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6690,
@@ -3728,7 +4162,9 @@
       "/art/6698.webp",
       "/art/6699.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and creative known as joshing_machine who designed the rare Gumball topping with nine colorful variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6700,
@@ -3741,7 +4177,9 @@
     "probability": 0.08,
     "image": "/art/6700.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the super-rare Waffle topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6710,
@@ -3755,7 +4193,9 @@
     "probability": 0.21,
     "image": "/art/6710.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "NYC-based artist known as loft_lyfe_nyc who designed the rare Marshmallow topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6720,
@@ -3772,7 +4212,9 @@
       "/art/6721.webp",
       "/art/6722.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as martkrupik who contributed the rare Cotton Candy topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6730,
@@ -3792,7 +4234,9 @@
       "/art/6734.webp",
       "/art/6735.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Studio-based artist known as SpielraumStudio who created the super-rare Mongda Chips topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6740,
@@ -3810,7 +4254,9 @@
       "/art/6742.webp",
       "/art/6743.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as mr_randleson who designed the super-rare Ramen Noodle topping with three slurp-worthy variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6750,
@@ -3824,7 +4270,9 @@
     "probability": 0.21,
     "image": "/art/6750.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Pretzel topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6760,
@@ -3837,7 +4285,9 @@
     "probability": 0.21,
     "image": "/art/6760.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as yetgol_saloon who contributed the rare Bagel topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6770,
@@ -3857,7 +4307,9 @@
       "/art/6774.webp",
       "/art/6775.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as jascolors who designed the rare Donut topping with five sweet variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6780,
@@ -3877,7 +4329,9 @@
       "/art/6784.webp",
       "/art/6785.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Experimental crypto artist and self-described blonkchainologist, pushing the boundaries of what NFT art can be through unconventional creative coding and blockchain experimentation.",
+    "artistBioGenerated": false
   },
   {
     "sku": 6790,
@@ -3893,7 +4347,9 @@
       "/art/6791.webp",
       "/art/6792.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the super-rare Vada Pav topping, bringing Indian street food to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6800,
@@ -3906,7 +4362,9 @@
     "probability": 0.04,
     "image": "/art/6800.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as snack_man who designed the epic Peanut Chews topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6810,
@@ -3923,7 +4381,9 @@
       "/art/6811.webp",
       "/art/6812.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as rowena.originals who contributed the super-rare Dandelion topping to the Rare Pizzas Flowers collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6820,
@@ -3940,7 +4400,9 @@
       "/art/6821.webp",
       "/art/6822.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Dury_ who created the rare Squash Blossom topping for the Rare Pizzas Flowers collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6830,
@@ -3957,7 +4419,9 @@
       "/art/6831.webp",
       "/art/6832.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Lyra_Yara who designed the epic Wild Dagga topping, bringing South African botanical culture to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6840,
@@ -3977,7 +4441,9 @@
       "/art/6844.webp",
       "/art/6845.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as 5Jennie1 who contributed the rare Rose topping with five blooming variants to the Rare Pizzas Flowers collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6850,
@@ -3997,7 +4463,9 @@
       "/art/6854.webp",
       "/art/6855.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as BoKim_art who created the rare Tulip topping with five beautiful variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6860,
@@ -4017,7 +4485,9 @@
       "/art/6864.webp",
       "/art/6865.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Loie__art who designed the super-rare Camellia topping with five elegant variants for the Rare Pizzas Flowers collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6900,
@@ -4036,7 +4506,9 @@
       "/art/6903.webp",
       "/art/6904.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the epic Laszlo topping -- a nod to Laszlo Hanyecz, who made the first Bitcoin pizza purchase -- for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 6910,
@@ -4053,7 +4525,9 @@
       "/art/6911.webp",
       "/art/6912.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as thomasdylandan2 who designed the epic Book topping for the Rare Pizzas collection, celebrating the match of books and pizza.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7000,
@@ -4070,7 +4544,9 @@
       "/art/7001.webp",
       "/art/7002.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as sweet_bamboo99 who contributed the rare Banh Mi topping to the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7010,
@@ -4090,7 +4566,9 @@
       "/art/7014.webp",
       "/art/7015.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as black__sunnn who created the epic Supernatural Poodle topping with five otherworldly variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7020,
@@ -4110,7 +4588,9 @@
       "/art/7024.webp",
       "/art/7025.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as junseokmo who designed the super-rare Monkey Dome topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7030,
@@ -4129,7 +4609,9 @@
       "/art/7034.webp",
       "/art/7035.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Mac and Cheese topping with five cheesy variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7040,
@@ -4151,7 +4633,9 @@
       "/art/7046.webp",
       "/art/7047.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist and MC known as voice_mc who designed the rare Alphabet Soup topping with seven letter-filled variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7050,
@@ -4171,7 +4655,9 @@
       "/art/7054.webp",
       "/art/7055.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as EraseR_nft who contributed the Hair topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7060,
@@ -4188,7 +4674,9 @@
       "/art/7061.webp",
       "/art/7062.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as night0wl.eth who created the super-rare Key topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7070,
@@ -4202,7 +4690,9 @@
     "probability": 0.08,
     "image": "/art/7070.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Paracell topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7080,
@@ -4216,7 +4706,9 @@
     "probability": 0.08,
     "image": "/art/7080.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as HTEELYK who created the super-rare Eyelash topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7100,
@@ -4236,7 +4728,9 @@
       "/art/7104.webp",
       "/art/7105.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "San Francisco-based artist and designer behind creative studio Massiflux, creating custom art installations and stage props for clients like Airbnb, Adobe, and Mariah Carey. His art even orbits Earth on Planet Labs satellites.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7110,
@@ -4256,7 +4750,9 @@
       "/art/7114.webp",
       "/art/7115.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as sensstudios who designed the rare Cigarette topping with five smoky variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7120,
@@ -4274,7 +4770,9 @@
       "/art/7122.webp",
       "/art/7123.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Jelly drizzle with three fruity variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7130,
@@ -4294,7 +4792,9 @@
       "/art/7134.webp",
       "/art/7135.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as evillady_x who designed the super-rare Buttons topping with five portal-like variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7140,
@@ -4314,7 +4814,9 @@
       "/art/7144.webp",
       "/art/7145.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "South African origami artist who quit his dev job in 2014 to fold paper full-time. His Instagram @white_onrice grew to over 100K followers, leading to commissions from Dior, Red Bull, Samsung, and Pixar.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7150,
@@ -4331,7 +4833,9 @@
       "/art/7151.webp",
       "/art/7152.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as juansgarden1 who contributed the rare Glitter topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7160,
@@ -4351,7 +4855,9 @@
       "/art/7164.webp",
       "/art/7165.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as RockStar_Zin who created the epic Preamp topping with five amplified variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7170,
@@ -4369,7 +4875,9 @@
       "/art/7173.webp",
       "/art/7174.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as canoCloudX who designed the rare Cloud topping with four fluffy variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7180,
@@ -4389,7 +4897,9 @@
       "/art/7184.webp",
       "/art/7185.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as RookNola who contributed the super-rare Chess topping with five strategic variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7190,
@@ -4406,7 +4916,9 @@
       "/art/7191.webp",
       "/art/7192.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as 0xsmbss who contributed the super-rare Computer Chip topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7200,
@@ -4425,7 +4937,9 @@
       "/art/7204.webp",
       "/art/7205.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Sculptor, educator, and decentralization advocate known for her bold sculptural work. Personally onboarded over 100 people into NFTs and crypto, championing creators shut out of traditional platforms.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7210,
@@ -4445,7 +4959,9 @@
       "/art/7214.webp",
       "/art/7215.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as dongleehan who created the super-rare Puzzle topping with five interlocking variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7220,
@@ -4462,7 +4978,9 @@
       "/art/7221.webp",
       "/art/7222.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as nikkipsyce who created the epic Gold Flake topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7230,
@@ -4479,7 +4997,9 @@
       "/art/7231.webp",
       "/art/7232.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as DepecheGuevara who designed the grail-tier Diamonds topping -- one of the most precious pieces in the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7250,
@@ -4498,7 +5018,9 @@
       "/art/7253.webp",
       "/art/7254.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "London-born artist known for painting brushstrokes on glass, then reconstructing them in 3D software to create luminous digital figures. His Energy Portals series bridges physical paint and NFTs across galleries and the metaverse.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7260,
@@ -4515,7 +5037,9 @@
       "/art/7262.webp",
       "/art/7263.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "UK-born, NYC-based artist famed as the leading figure in the popular doodle art style. His instantly recognizable characters and murals have led to collaborations with Nike, Pepsi, Sony, and MTV.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7270,
@@ -4533,7 +5057,9 @@
       "/art/7273.webp",
       "/art/7274.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as nancykilmer11 who contributed the rare Dog Toy topping with four playful variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7280,
@@ -4547,7 +5073,9 @@
     "probability": 0.08,
     "image": "/art/7280.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as mattywardo who created the super-rare Twinkie Wiener Sandwich topping, a tribute to the film UHF.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7290,
@@ -4566,7 +5094,9 @@
       "/art/7294.webp",
       "/art/7295.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Rice topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7300,
@@ -4582,7 +5112,9 @@
       "/art/7301.webp",
       "/art/7302.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as 6cellphones who created the super-rare Battery topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7310,
@@ -4600,7 +5132,9 @@
       "/art/7312.webp",
       "/art/7313.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as mattwharton who designed the super-rare Yarn Ball topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7320,
@@ -4616,7 +5150,9 @@
     "variants": [
       "/art/7321.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as bakofsky who contributed the epic Tires topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7340,
@@ -4633,7 +5169,9 @@
       "/art/7341.webp",
       "/art/7342.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as blue_rumie who created the rare Butter topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7350,
@@ -4650,7 +5188,9 @@
       "/art/7351.webp",
       "/art/7352.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the rare Spaghetti topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7360,
@@ -4670,7 +5210,9 @@
       "/art/7364.webp",
       "/art/7365.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as nkosearas1 who created the French Fry topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7370,
@@ -4692,7 +5234,9 @@
       "/art/7376.webp",
       "/art/7377.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Korean artist known as yoonzise who designed the rare Hand Sanitizer topping with seven variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7380,
@@ -4712,7 +5256,9 @@
       "/art/7384.webp",
       "/art/7385.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Digital artist from South Carolina, Senior Director of Operations at NotFungible, and NFT instructor at Otis College. Co-Founder of Adaptive Labs and active member of the Superchief NFT community.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7390,
@@ -4732,7 +5278,9 @@
       "/art/7394.webp",
       "/art/7395.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as pikapark_vibes who designed the super-rare Heart Beat topping with five pulsing variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7400,
@@ -4748,7 +5296,9 @@
     "variants": [
       "/art/7401.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Rothmansandy who contributed the rare Rocks topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7410,
@@ -4765,7 +5315,9 @@
       "/art/7411.webp",
       "/art/7412.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Defy_33 who created the Curly Fry topping for the Rare Pizzas Snacks collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7420,
@@ -4785,7 +5337,9 @@
       "/art/7424.webp",
       "/art/7425.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Light Bulb topping with five illuminating variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7430,
@@ -4804,7 +5358,9 @@
       "/art/7434.webp",
       "/art/7435.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as DemetriEspinosa who contributed the Taco topping with five variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7440,
@@ -4823,7 +5379,9 @@
       "/art/7444.webp",
       "/art/7445.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as serviverman who created the super-rare Polygon topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7460,
@@ -4840,7 +5398,9 @@
     "variants": [
       "/art/7461.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Musician and artist known as sanjakarinmusic who designed the rare Corona topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7470,
@@ -4857,7 +5417,9 @@
       "/art/7471.webp",
       "/art/7472.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as andyborewall who contributed the rare Soup topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7480,
@@ -4871,7 +5433,9 @@
     "probability": 0.21,
     "image": "/art/7480.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as prestonrogo who created the rare Beer topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7490,
@@ -4891,7 +5455,9 @@
       "/art/7494.webp",
       "/art/7495.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Arrow topping with five variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7500,
@@ -4907,7 +5473,9 @@
       "/art/7501.webp",
       "/art/7502.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist connected to woahboymusic who created the rare Pill topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7510,
@@ -4922,7 +5490,9 @@
     "variants": [
       "/art/7511.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as catherinexmoan who contributed the epic Crown topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7520,
@@ -4941,7 +5511,9 @@
     ],
     "nutrition": {
       "added_sugars": 5080
-    }
+    },
+    "artistBio": "Artist known on Instagram as danielgordonstudio who designed the rare Glasses topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7530,
@@ -4957,7 +5529,9 @@
       "/art/7531.webp",
       "/art/7532.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Creator of 3,333 unique, 100% hand-drawn NFTs -- no algorithms, each one a true original. Signed a partnership with TIME Studios to develop an animated series based on the Toy Boogers universe.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7540,
@@ -4977,7 +5551,9 @@
     ],
     "nutrition": {
       "added_sugars": 3040
-    }
+    },
+    "artistBio": "Artist known as sophie1337 who created the rare Lip Balm topping with four variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7550,
@@ -5000,7 +5576,9 @@
       "/art/7558.webp",
       "/art/7559.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Award-winning sculptor, NFT hologram artist, and crypto art curator. Her work lives in the permanent collection of MoCA (Museum of Crypto Art) as its first official NFT hologram, and she has curated over 25 NFT exhibitions.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7560,
@@ -5018,7 +5596,9 @@
     ],
     "nutrition": {
       "added_sugars": 6170
-    }
+    },
+    "artistBio": "Artist known as DimsuroDS who contributed the rare Oil Spill topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7570,
@@ -5035,7 +5615,9 @@
       "/art/7572.webp",
       "/art/7573.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as a_tchuca who designed the rare FOMO topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7580,
@@ -5053,7 +5635,9 @@
       "/art/7583.webp",
       "/art/7584.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "New Jersey-based artist and animator known as BEARBRAINS, experimenting with dynamic cartoon aesthetics and digital animation. A member of Ghost Club who ran one of the first all-NFT Comic Con booths.",
+    "artistBioGenerated": false
   },
   {
     "sku": 7590,
@@ -5069,7 +5653,9 @@
       "/art/7591.webp",
       "/art/7592.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as braincabinet who contributed the rare Poker Chip topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 7600,
@@ -5087,7 +5673,9 @@
     ],
     "nutrition": {
       "added_sugars": 5810
-    }
+    },
+    "artistBio": "Artist known as Sluttstrands who created the super-rare Stuffed Animal topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8160,
@@ -5107,7 +5695,9 @@
       "/art/8164.webp",
       "/art/8165.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as Don Mafia who created the epic Pizza Mafia topping with five money-stacked variants.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8170,
@@ -5120,7 +5710,9 @@
     "probability": 0.21,
     "image": "/art/8170.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as MetaverseNext who contributed the rare Screw topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8180,
@@ -5136,7 +5728,9 @@
       "/art/8181.webp",
       "/art/8182.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the super-rare Magic Wand topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8190,
@@ -5152,7 +5746,9 @@
       "/art/8191.webp",
       "/art/8192.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Prtty_Plz who designed the rare Headphone topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8210,
@@ -5165,7 +5761,9 @@
     "probability": 0.04,
     "image": "/art/8210.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the epic 3D Glasses topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8300,
@@ -5181,7 +5779,9 @@
       "/art/8301.webp",
       "/art/8302.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as aliendroog who designed the rare Crayon topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8310,
@@ -5198,7 +5798,9 @@
       "/art/8311.webp",
       "/art/8312.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as FemdommeVivian who contributed the super-rare Glue topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8320,
@@ -5213,7 +5815,9 @@
     "variants": [
       "/art/8321.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as GaryPalmerJr who designed the super-rare Feather topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8330,
@@ -5229,7 +5833,9 @@
     "variants": [],
     "nutrition": {
       "added_sugars": 5270
-    }
+    },
+    "artistBio": "Artist known as SOUTHfellini who created the rare Transit Token topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8340,
@@ -5250,7 +5856,9 @@
       "/art/8345.webp",
       "/art/8346.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as peptomics who designed the super-rare Peptomics topping with six variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8350,
@@ -5270,7 +5878,9 @@
       "/art/8353.webp",
       "/art/8354.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Allairemat who contributed the rare Bowtie topping with four dapper variants to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8540,
@@ -5286,7 +5896,9 @@
       "/art/8541.webp",
       "/art/8542.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as itsvondibaby who contributed the Sriracha drizzle to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8550,
@@ -5300,7 +5912,9 @@
     "probability": 1.68,
     "image": "/art/8550.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as almighty_pizza who created the Hot Pepper Flakes topping for the Rare Pizzas Herbs & Spices collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8570,
@@ -5314,7 +5928,9 @@
     "probability": 1.68,
     "image": "/art/8570.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as petrolheadde who designed the Oregano topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8580,
@@ -5328,7 +5944,9 @@
     "probability": 0.21,
     "image": "/art/8580.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who created the rare Bird Seed topping for the Rare Pizzas Herbs & Spices collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 8590,
@@ -5343,7 +5961,9 @@
     "variants": [
       "/art/8591.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known on Instagram as ThatCraftyOne who contributed the rare Sprinkles topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9100,
@@ -5359,7 +5979,9 @@
     "variants": [
       "/art/9101.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as uniquenft who created the rare Mayo drizzle for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9120,
@@ -5373,7 +5995,9 @@
     "probability": 0.04,
     "image": "/art/9120.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Crypto art advocate known as AmyforCryptoArt who designed the epic Christmas Lights topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9130,
@@ -5387,7 +6011,9 @@
     "probability": 0.21,
     "image": "/art/9130.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as hallieannzimmie who contributed the rare Ranch drizzle to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9140,
@@ -5400,7 +6026,9 @@
     "probability": 0.21,
     "image": "/art/9140.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Web3 creative collective known as blockchaincoll3 who designed the rare Whiz cheese topping for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9170,
@@ -5415,7 +6043,9 @@
     "probability": 0.21,
     "image": "/art/9170.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as Redavenger6 who contributed the rare Apple Sauce topping to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9190,
@@ -5428,7 +6058,9 @@
     "probability": 0.59,
     "image": "/art/9190.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist known as kennycandid who created the Ketchup drizzle for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9200,
@@ -5446,7 +6078,9 @@
       "/art/9202.webp",
       "/art/9203.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Hot Sauce drizzle with three fiery variants for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9210,
@@ -5462,7 +6096,9 @@
       "/art/9211.webp",
       "/art/9212.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as BFassberg who created the rare Salsa Verde drizzle for the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9220,
@@ -5476,7 +6112,9 @@
     "probability": 0.21,
     "image": "/art/9220.webp",
     "variants": [],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as craigrussellcdr who contributed the rare Hot Honey drizzle to the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9900,
@@ -5494,7 +6132,9 @@
       "/art/9902.webp",
       "/art/9903.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Artist known as gilben_peebles who created the grail-tier Swole Doge topping -- peak performance in the rarest tier of the Rare Pizzas collection.",
+    "artistBioGenerated": true
   },
   {
     "sku": 9910,
@@ -5511,6 +6151,8 @@
       "/art/9911.webp",
       "/art/9912.webp"
     ],
-    "nutrition": {}
+    "nutrition": {},
+    "artistBio": "Contributing artist who designed the Pizza Saver topping, immortalizing the iconic plastic pizza table as art.",
+    "artistBioGenerated": true
   }
 ]

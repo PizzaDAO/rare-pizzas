@@ -70,6 +70,12 @@ export default function Header() {
               Browse All
             </Link>
             <Link
+              href="/artists"
+              className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
+            >
+              Artists
+            </Link>
+            <Link
               href="/chefs"
               className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
             >

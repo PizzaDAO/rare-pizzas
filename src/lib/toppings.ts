@@ -2,6 +2,17 @@ import toppingsData from "@/data/toppings.json";
 import type { Topping, ToppingClass, Rarity, NFTAttribute } from "./types";
 import { EXCLUDED_TRAIT_TYPES } from "./constants";
 
+export interface ArtistInfo {
+  name: string;
+  bio?: string;
+  bioGenerated?: boolean;
+  twitter?: string;
+  instagram?: string;
+  discord?: string;
+  toppings: Topping[];
+  slug: string;
+}
+
 const RARITY_ORDER: Record<string, number> = {
   common: 0,
   uncommon: 1,
@@ -81,6 +92,55 @@ export function getRarities(): Rarity[] {
     seen.add(t.rarity);
   }
   return Array.from(seen);
+}
+
+// --- Artist helpers ---
+
+let artistCache: ArtistInfo[] | null = null;
+
+export function getAllArtists(): ArtistInfo[] {
+  if (artistCache) return artistCache;
+
+  const artistMap = new Map<string, Topping[]>();
+  for (const t of toppings) {
+    const existing = artistMap.get(t.artist);
+    if (existing) {
+      existing.push(t);
+    } else {
+      artistMap.set(t.artist, [t]);
+    }
+  }
+
+  const artists: ArtistInfo[] = [];
+  for (const [name, items] of artistMap) {
+    // Take social info from the first topping that has it
+    const withTwitter = items.find((t) => t.artistTwitter);
+    const withIG = items.find((t) => t.artistIG);
+    const withDiscord = items.find((t) => t.artistDiscord);
+
+    artists.push({
+      name,
+      bio: items[0].artistBio,
+      bioGenerated: items[0].artistBioGenerated,
+      twitter: withTwitter?.artistTwitter,
+      instagram: withIG?.artistIG,
+      discord: withDiscord?.artistDiscord,
+      toppings: items,
+      slug: slugify(name),
+    });
+  }
+
+  artists.sort((a, b) => a.name.localeCompare(b.name));
+  artistCache = artists;
+  return artists;
+}
+
+export function getNotableArtists(): ArtistInfo[] {
+  return getAllArtists().filter((a) => !a.bioGenerated);
+}
+
+export function getArtistBySlug(slug: string): ArtistInfo | undefined {
+  return getAllArtists().find((a) => a.slug === slug);
 }
 
 // --- Topping lookup for NFT metadata matching ---

@@ -140,6 +140,14 @@ export default async function ToppingPage({ params }: ToppingPageProps) {
             <p className="mb-2 text-lg font-medium text-white">
               {topping.artist}
             </p>
+            {topping.artistBio && (
+              <p className="mb-1 text-sm leading-relaxed text-[#ccc]">
+                {topping.artistBio}
+              </p>
+            )}
+            {topping.artistBioGenerated && (
+              <span className="text-xs text-[#555] italic">Auto-generated bio</span>
+            )}
             <div className="flex flex-wrap gap-3">
               {twitterUrl && (
                 <a

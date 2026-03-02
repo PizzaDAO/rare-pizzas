@@ -9,6 +9,8 @@ export interface Topping {
   artistTwitter?: string;
   artistDiscord?: string;
   artistIG?: string;
+  artistBio?: string;
+  artistBioGenerated?: boolean;
   rarity: Rarity;
   probability: number;
   image: string;

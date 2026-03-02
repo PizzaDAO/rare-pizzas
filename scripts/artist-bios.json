@@ -1,0 +1,1258 @@
+{
+  "Kenny Schachter": {
+    "bio": "Art world insider, writer, collector, and NFT crusader who has been creating, curating, and teaching art for over 30 years. Co-author of The NFT Book and a prolific voice bridging traditional art and web3.",
+    "sourced": true
+  },
+  "Jon Burgerman": {
+    "bio": "UK-born, NYC-based artist famed as the leading figure in the popular doodle art style. His instantly recognizable characters and murals have led to collaborations with Nike, Pepsi, Sony, and MTV.",
+    "sourced": true
+  },
+  "Bard Ionson": {
+    "bio": "AI art pioneer and creative technologist who entered the NFT space in 2018 on SuperRare. His strange visions combine tools like GANs, VCRs, oscilloscopes, and blockchains to capture the spaces between physical and digital worlds.",
+    "sourced": true
+  },
+  "Ryan Seslow": {
+    "bio": "NYC-based visual artist and associate professor of digital art who works across drawing, painting, new media, and internet art. An early crypto art adopter with works on SuperRare.",
+    "sourced": true
+  },
+  "David Horvath & Sun-Min": {
+    "bio": "Creators of the beloved Uglydoll characters and the Uglyverse, a world celebrating uniqueness and imperfection. Their toy line won the Specialty Toy of the Year award and sold over a million dolls.",
+    "sourced": true
+  },
+  "Matthew Stone": {
+    "bio": "London-born artist known for painting brushstrokes on glass, then reconstructing them in 3D software to create luminous digital figures. His Energy Portals series bridges physical paint and NFTs across galleries and the metaverse.",
+    "sourced": true
+  },
+  "Jade \"MUMBOT\"": {
+    "bio": "NY/BKK-based artist, toy designer, and storyteller behind MUMBOT WORLD, a magical universe of original characters. Founded Ghost Club, an international creative community, and pioneered bundling NFTs with physical collectibles.",
+    "sourced": true
+  },
+  "Ross Symons": {
+    "bio": "South African origami artist who quit his dev job in 2014 to fold paper full-time. His Instagram @white_onrice grew to over 100K followers, leading to commissions from Dior, Red Bull, Samsung, and Pixar.",
+    "sourced": true
+  },
+  "Rebecca Rose": {
+    "bio": "Award-winning sculptor, NFT hologram artist, and crypto art curator. Her work lives in the permanent collection of MoCA (Museum of Crypto Art) as its first official NFT hologram, and she has curated over 25 NFT exhibitions.",
+    "sourced": true
+  },
+  "Amir Fallah": {
+    "bio": "Iranian-American painter, publisher, and installation artist whose richly ornamental works combine Persian miniature painting traditions with Western pop culture. Recipient of the Joan Mitchell Foundation grant.",
+    "sourced": true
+  },
+  "O'Plerou": {
+    "bio": "Ivorian graphic designer and illustrator who created over 365 African emojis for the Zouzoukwa app, bringing West African culture to smartphone keyboards. Named to the Forbes Africa 30 Under 30 list.",
+    "sourced": true
+  },
+  "dada.art": {
+    "bio": "Pioneering collaborative art platform where people worldwide create visual conversations through drawing. Home to over 120,000 drawings and creators of Creeps & Weirdos (2017), one of the first NFT projects with automated royalties.",
+    "sourced": true
+  },
+  "Florian Tappeser / digitalflower": {
+    "bio": "Movie industry veteran and award-winning animator who worked on Hotel Transylvania 3 and How to Train Your Dragon. Creator of the Drippieverse, a web3 universe of vibey creatures.",
+    "sourced": true
+  },
+  "Jeremiah Allen Welch": {
+    "bio": "San Francisco-based artist and designer behind creative studio Massiflux, creating custom art installations and stage props for clients like Airbnb, Adobe, and Mariah Carey. His art even orbits Earth on Planet Labs satellites.",
+    "sourced": true
+  },
+  "Chinwe Onwudiwe": {
+    "bio": "Digital artist and creator of the first African Museum in the Metaverse, making cultural and artistic experiences accessible to global audiences through web3 technology.",
+    "sourced": true
+  },
+  "Nate Bear": {
+    "bio": "New Jersey-based artist and animator known as BEARBRAINS, experimenting with dynamic cartoon aesthetics and digital animation. A member of Ghost Club who ran one of the first all-NFT Comic Con booths.",
+    "sourced": true
+  },
+  "Toy Boogers": {
+    "bio": "Creator of 3,333 unique, 100% hand-drawn NFTs -- no algorithms, each one a true original. Signed a partnership with TIME Studios to develop an animated series based on the Toy Boogers universe.",
+    "sourced": true
+  },
+  "Jen Stein": {
+    "bio": "Sculptor, educator, and decentralization advocate known for her bold sculptural work. Personally onboarded over 100 people into NFTs and crypto, championing creators shut out of traditional platforms.",
+    "sourced": true
+  },
+  "obxium": {
+    "bio": "Experimental crypto artist and self-described blonkchainologist, pushing the boundaries of what NFT art can be through unconventional creative coding and blockchain experimentation.",
+    "sourced": true
+  },
+  "Plotski": {
+    "bio": "Digital artist from South Carolina, Senior Director of Operations at NotFungible, and NFT instructor at Otis College. Co-Founder of Adaptive Labs and active member of the Superchief NFT community.",
+    "sourced": true
+  },
+  "Joel Fallerini": {
+    "bio": "Contributing artist to the Rare Pizzas collection with multiple toppings spanning Crust, Sauce, and more. Known for imaginative designs from Moon Crust to Deep Space.",
+    "sourced": false
+  },
+  "Jim": {
+    "bio": "Developer and creative known as jimthedev, contributing the foundational Tomato Sauce to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Didi Mx": {
+    "bio": "Bulgarian-born abstract artist exploring relationships between colors, shapes, light, and landscape. Active across NFT platforms including Foundation and OpenSea.",
+    "sourced": true
+  },
+  "Erick Stow": {
+    "bio": "Contributing artist to the Rare Pizzas collection, responsible for essential foundational pieces including the Thick Crust and Mozzarella toppings.",
+    "sourced": false
+  },
+  "Mike Sparber": {
+    "bio": "Artist and illustrator who crafted the Thin Crust for the Rare Pizzas collection, bringing a wonderfully overcomplicated rendered style to the foundational topping.",
+    "sourced": false
+  },
+  "Travis O'Dell": {
+    "bio": "Digital artist known as LoudColorz, contributing the super-rare White Bread Crust to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Danny Olefsky": {
+    "bio": "Creative known as Zedarius who designed the iconic Pepperoni topping with its many variants, one of the most recognizable pieces in the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Kilroy (Clubhouse)": {
+    "bio": "Web3 community member known as 0xKilroy who contributed the super-rare Hazelnut Spread to the Rare Pizzas Sauce collection.",
+    "sourced": false
+  },
+  "Art Fool": {
+    "bio": "Digital artist creating under the handle the_artfool, known for the epic Prismatic Fluid sauce with its mesmerizing swirling patterns.",
+    "sourced": false
+  },
+  "John Cabrera": {
+    "bio": "Actor, writer, and fictional world-builder best known for playing Brian Fuller in Gilmore Girls. Contributed the Vegan Cheese topping to the Rare Pizzas collection.",
+    "sourced": true
+  },
+  "Alexander Mazzei": {
+    "bio": "Documentarian, filmmaker, and photographer who founded NFTs.tips, one of the fastest-growing NFT communities. Co-founder of SelfLabs.xyz, bridging personal development and web3.",
+    "sourced": true
+  },
+  "John Brassell": {
+    "bio": "Artist known as tecatezilla who created the Smoked Mozzarella topping with multiple smoky variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Alex Likissas": {
+    "bio": "Crypto enthusiast and artist known as The House of Crypto who contributed the Feta cheese topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Raphael Kling": {
+    "bio": "Artist and smart city advocate who designed the rare Quattro Formaggi cheese topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Crispy Cheddar": {
+    "bio": "Contributing artist behind the rare Gruyere cheese topping, complete with multiple melty variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Mike Wert": {
+    "bio": "Visual artist known as mugwert_visuals who created the Salami topping and its variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "brandon forant": {
+    "bio": "Artist and creative known as infiltrate who designed the Turkey Sausage topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "chapsMX": {
+    "bio": "Mexican artist known as calaveritas_eth, bringing Day of the Dead-inspired artistry to the rare Turkey topping with multiple vibrant variants.",
+    "sourced": false
+  },
+  "Kanon Knaphus": {
+    "bio": "Developer and artist known as realdevlife who contributed the Prosciutto topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ninaad Kothawade": {
+    "bio": "Artist who brought South Asian flavor to the collection with the rare Butter Chicken topping.",
+    "sourced": false
+  },
+  "Kimba Kerner Donna Nonna": {
+    "bio": "Artist known as kimbafrances who created the Ground Beef topping with five distinct variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Angel": {
+    "bio": "Artist known as Kaodraws who contributed the BBQ Chicken topping to the Rare Pizzas Meat collection.",
+    "sourced": false
+  },
+  "Amanda Edwards": {
+    "bio": "Artist and creative known as hereidrewyousomething who designed the Bacon topping with multiple crispy variants.",
+    "sourced": false
+  },
+  "Bad Andy": {
+    "bio": "Contributing artist who created the Meatball topping with five unique variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Won Joon Chee": {
+    "bio": "Artist known as Lovewelchs who contributed the Buffalo Chicken topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Allan Xia": {
+    "bio": "Artist and creative known as statuswoe who designed the rare Char Siu Pork topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "dgducos": {
+    "bio": "Multi-platform artist active across Twitter, Discord, and Instagram, contributing the rare Cheeseburger topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Raster Eyes": {
+    "bio": "Digital artist creating under the handle _Raster_Eyes_ who contributed the rare Eyeball topping to the Rare Pizzas Meat collection.",
+    "sourced": false
+  },
+  "Hwaji (Don Fingas)": {
+    "bio": "Artist and illustrator known as hwajilla who created the rare Finger topping with five detailed variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ersoy Irsi": {
+    "bio": "Digital artist who contributed the epic Bat topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pixiegirl": {
+    "bio": "Crypto art enthusiast known as pixiegirlcrypto who created the super-rare Escargot topping with five elegant variants.",
+    "sourced": false
+  },
+  "Sebastian K.": {
+    "bio": "Contributing artist who designed the rare Roast Beef topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Hawkward": {
+    "bio": "Digital artist known as HawkwardArt who created the super-rare Owl topping with its multiple wise variants.",
+    "sourced": false
+  },
+  "Darko": {
+    "bio": "Artist known as DarkoR who contributed the rare Frog Legs topping with seven amphibious variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Daniela": {
+    "bio": "Artist known as dani_tranquila who created the Bologna topping with six playful variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ara (tuti.arte)": {
+    "bio": "Artist known as ArabelaTuti who contributed the epic Dragon Meat topping with four mythical variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Emmanuel Okoye": {
+    "bio": "Artist known as extrastu who designed the rare Smoked Turkey topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Luke": {
+    "bio": "Creative known as Lukevoice who contributed the rare Jerk Chicken topping with multiple flavorful variants.",
+    "sourced": false
+  },
+  "Anthony Sijuade Omishade Akanbi": {
+    "bio": "Artist and craftsperson who sells through Etsy's OrixaGoods shop, contributing the rare Oxtail topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Emma PARK": {
+    "bio": "Korean artist known as miseon9394 who created the rare Hot Dog topping in a playful Teenage Mutant Ninja style.",
+    "sourced": false
+  },
+  "Kayla Enatsu, Kylie Enatsu, Kelsey Enatsu": {
+    "bio": "A creative family trio who collaborated to bring the epic Unicorn topping to life for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Suzie (Laugh And Belly)": {
+    "bio": "Artist and creative known as laughandbelly who designed the cheeky super-rare Butt topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Junouno": {
+    "bio": "Artist known as junoreactor who contributed the super-rare Brain topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "446f6d": {
+    "bio": "Contributing artist who created the Tomato topping with multiple fresh variants for the Rare Pizzas Fruit collection.",
+    "sourced": false
+  },
+  "Don Knitterbitter": {
+    "bio": "Artist known as Juan Pablo who contributed the super-rare Psychedelic Tomato with its trippy variants to the collection.",
+    "sourced": false
+  },
+  "Tapwaterjared": {
+    "bio": "Artist known as forevertapwater who designed the rare Mango topping for the Rare Pizzas Fruit collection.",
+    "sourced": false
+  },
+  "Grand Dame": {
+    "bio": "UK-based artist known as grandedameuk who contributed the super-rare Fig topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "John Nousis": {
+    "bio": "Artist and creative who designed the epic Pitaya (dragon fruit) topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Brauxelion": {
+    "bio": "Contributing artist who created the rare Lime topping with five zesty variants for the Rare Pizzas Fruit collection.",
+    "sourced": false
+  },
+  "Alex Zim": {
+    "bio": "Artist known as alexlzim who contributed the rare Blueberry topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Don Menta-Jengibre": {
+    "bio": "Artist known as MentaJengibre2 who designed the Avocado topping with multiple variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Michael Felder": {
+    "bio": "Artist known as misterfelder who created the Green Olive topping for the Rare Pizzas Fruit collection.",
+    "sourced": false
+  },
+  "Krystal T L Bracket": {
+    "bio": "Artist known as KTLB who contributed the Pineapple topping -- one of pizza's most debated additions -- with five tropical variants.",
+    "sourced": false
+  },
+  "foodmasku": {
+    "bio": "Contributing artist who designed the epic Durian topping, bringing the king of fruits to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "JOAN": {
+    "bio": "Artist known as mmeJOAN who created the rare Banana topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "SOO.": {
+    "bio": "Artist known as soojincho who contributed the rare Grape topping with five luscious variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Kierstin": {
+    "bio": "Artist known as applencinnamon who designed the rare Strawberry topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Apple aka Dan aka danscher aka rarelyMinted": {
+    "bio": "Prolific contributing artist who created the Apple topping with nine variants -- the most of any single topping in the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "sooscape": {
+    "bio": "Digital artist known as sooscape_nft who contributed the rare Cherry topping with five sweet variants to the collection.",
+    "sourced": false
+  },
+  "Don Malbec": {
+    "bio": "Artist known as donmalbecc who created the rare Blackberry topping with multiple variants for the Rare Pizzas Fruit collection.",
+    "sourced": false
+  },
+  "Ciara Borne": {
+    "bio": "Artist known as ciara_bourne who contributed the Black Olive topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Sharona Color": {
+    "bio": "Colorful artist known on Instagram as sharona_color who designed the rare Date topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Kas": {
+    "bio": "Artist and musician known as kas__vegas who contributed the Eggplant topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Shiraz": {
+    "bio": "Manchester-based artist known as madeinmanc who created the rare Chili Pepper topping with seven fiery variants.",
+    "sourced": false
+  },
+  "Jed Berk": {
+    "bio": "Artist known as cherish_nfts who designed the Jalapeno Pepper topping with five spicy variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "ladez": {
+    "bio": "Artist known as Bamdarockstar who contributed the epic Shishito Pepper topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ricky Butcher": {
+    "bio": "Artist known as WhereIDraw who created the rare Banana Pepper topping with four variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Spoon": {
+    "bio": "Contributing artist known as pluralspoons who designed the Red Pepper topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Yellopep": {
+    "bio": "Contributing artist who created the Yellow Pepper topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "David Nikolovski": {
+    "bio": "Artist known as davidphunk who contributed the rare Habanero Pepper topping with five variants to the collection.",
+    "sourced": false
+  },
+  "Justin": {
+    "bio": "Artist known as Raxonchain who designed the Green Pepper topping with multiple variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "N.Sputnik (Nick)": {
+    "bio": "Contributing artist known as nsputnik who created the Mushroom topping for the Rare Pizzas Fungi collection.",
+    "sourced": false
+  },
+  "Reem Chahrour": {
+    "bio": "Artist known as girlcalledreem who contributed the rare Black Truffle topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Eric Armstrong": {
+    "bio": "Contributing artist who designed the super-rare Magic Mushroom topping for the Rare Pizzas Fungi collection.",
+    "sourced": false
+  },
+  "@hyper.aesthetics": {
+    "bio": "Artist known as simoleotweet who contributed the Porcini mushroom topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "caygen": {
+    "bio": "Digital artist known as cayogeneral who created the rare White Truffle topping with its playful pig-meets-truffle variants.",
+    "sourced": false
+  },
+  "Aryaenne": {
+    "bio": "Contributing artist who designed the rare Morel mushroom topping for the Rare Pizzas Fungi collection.",
+    "sourced": false
+  },
+  "Barbara Tosti": {
+    "bio": "Artist known as spacedivers who contributed the super-rare Amanita mushroom topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "BentleGiant": {
+    "bio": "Contributing artist who created the rare Pistachio topping for the Rare Pizzas Nuts collection.",
+    "sourced": false
+  },
+  "Edom": {
+    "bio": "Artist known as edomlipton who designed the rare Peanut topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "John Caldwell": {
+    "bio": "Artist known as vegsurfer who contributed the Vegan Sausage topping with four hearty variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Amber Tran": {
+    "bio": "Artist known as bergoesbrr who created the rare Cactus topping with four prickly variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "eitoasano": {
+    "bio": "Contributing artist who designed the super-rare Edamame topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Haney Canvas": {
+    "bio": "Artist known as HaneyCanvas who contributed the rare Tofu topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Laura Shepherd": {
+    "bio": "Artist known as Ls528art who created the Spinach topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Maceo Paisley": {
+    "bio": "Multi-disciplinary artist, dancer, author, and cultural producer. Army veteran turned creative entrepreneur, founder of Nous Tous Gallery and Citizens of Culture, exploring identity through movement and imagery.",
+    "sourced": true
+  },
+  "Damon Wolfe": {
+    "bio": "Artist known as framezero who designed the super-rare Bamboo topping with four variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "antonio gloria": {
+    "bio": "Artist known as irregularsnd who contributed the Red Onion topping to the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Anna": {
+    "bio": "Artist known as shakenbakespear who created the epic Shadow Plant topping with five mysterious variants.",
+    "sourced": false
+  },
+  "TK Al-Mahti": {
+    "bio": "Contributing artist who designed the rare Sweet Potato topping with five rebellious variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Florian": {
+    "bio": "Frankfurt-based artist known as FlorianFrankfurt who contributed the Arugula topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Zenfinite": {
+    "bio": "Artist known as zenfinite369 who created the rare Broccolini topping with five green variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Amber Pollack": {
+    "bio": "Artist known as ambypols who designed the Corn topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "mcirwinc": {
+    "bio": "Contributing artist who created the Artichoke Heart topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "oyyo": {
+    "bio": "Artist known as OOooyyooOO who contributed the rare Asparagus topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "nilknahS": {
+    "bio": "Contributing artist who created the rare Pickled Beet topping with four probiotic-filled variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Natalie": {
+    "bio": "Artist known as nataliecrue who designed the rare Peas topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Oliver": {
+    "bio": "Contributing artist known as redhotdaddy4 who created the rare Kale topping with four variants for the collection.",
+    "sourced": false
+  },
+  "Timo Kuzme": {
+    "bio": "Artist known on Instagram as timokuzme who contributed the rare Seitan topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jeff Jag": {
+    "bio": "Contributing artist who designed the Cauliflower topping with five variants for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Truebard": {
+    "bio": "Artist known as ETruebard who created the rare Potato Chips topping with five crispy variants for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "ross dallbricht": {
+    "bio": "Contributing artist who designed the Garlic topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Berke Önder": {
+    "bio": "Artist known as Cryptocalpyse who contributed the White Onion topping with five variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "NFT Papi": {
+    "bio": "Artist known as nft_papi who created the rare Plantains topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Anthony Shafer": {
+    "bio": "Artist and creative who designed the Shrimp topping with five variants, one of the foundational pieces of the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Analemma": {
+    "bio": "Contributing artist known as analemmaonandon who created the Anchovies topping for the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Badir McCleary": {
+    "bio": "Artist known as artabovereality who contributed the epic Lobster topping to the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Scallops": {
+    "bio": "Artist known as MarkBeylin who designed the super-rare Scallop topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "d3cker": {
+    "bio": "Contributing artist known as tonaros who created the rare Salmon topping for the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Lobo301": {
+    "bio": "Artist known as LoBo_301 who contributed the rare Sardine topping to the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "tomaytravel": {
+    "bio": "Korean artist known as seounghwan kim who created the grail-tier Mermaid topping -- one of the rarest pieces in the entire Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Lindsay Park": {
+    "bio": "Artist known as lindsaykingdom_ who designed the super-rare Pearl topping with five luminous variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Charlie Witter": {
+    "bio": "Contributing artist who created the epic Cthulhu topping for the Rare Pizzas Seafood collection, summoning Lovecraftian horror onto pizza.",
+    "sourced": false
+  },
+  "Jade Eiger": {
+    "bio": "Artist known as jadeduckie who contributed the rare Hawaiian Poke topping with five delicious variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Stefanos Vasdekis": {
+    "bio": "Greek artist known as vasdekis who designed the rare Octopus topping for the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Strawberr13s": {
+    "bio": "Artist known as strawberrywtf who contributed the rare Oyster topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Hosugi": {
+    "bio": "Artist known as Hosugi93 who created the super-rare Sea Urchin topping for the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "yuuki": {
+    "bio": "Japanese artist known as wyoook who designed the rare Sushi topping with nine detailed variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "uniquelab": {
+    "bio": "Contributing artist who created the super-rare Tropical Fish topping with nine colorful variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "SIRON": {
+    "bio": "Artist known as radical_sheep who contributed the super-rare Takoyaki topping to the Rare Pizzas Seafood collection.",
+    "sourced": false
+  },
+  "Cassie Jones": {
+    "bio": "Artist known on Instagram as CuspByCassie who designed the rare Squid topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Erin Kesel": {
+    "bio": "Artist known on Instagram as nudiestitches who contributed the Cockroach topping to the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "AJ": {
+    "bio": "Artist known as damnketchup who created the rare Cricket topping for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "Stephen Judge": {
+    "bio": "Artist known as StephenTheJudge who designed the Worm topping for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "Stayseaart": {
+    "bio": "Contributing artist who created the rare Yellowjacket topping for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "Patrick Soper": {
+    "bio": "Artist known as Necatuss who designed the rare Cicada topping for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "@twitchitt": {
+    "bio": "Contributing artist who created the super-rare Maggots topping with six squirmy variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Zac Kenny": {
+    "bio": "Artist known as ZacKenny who designed the rare Spider topping with five crafty variants for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "Kimkim": {
+    "bio": "Korean artist known as Kimkim_Jinah who contributed the Flies topping with five adorably cute variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "OXOXO": {
+    "bio": "Artist known as okxnotxho who created the Ants topping with five industrious variants for the Rare Pizzas Bugs collection.",
+    "sourced": false
+  },
+  "Christopher L Rodgers": {
+    "bio": "Contributing artist who designed the super-rare Hibiscus topping for the Rare Pizzas Flowers collection.",
+    "sourced": false
+  },
+  "Jaymes Westfall": {
+    "bio": "Artist known as jaymeswestfall who created the rare Cannabis topping with five variants for the Rare Pizzas Herbs & Spices collection.",
+    "sourced": false
+  },
+  "Adriana": {
+    "bio": "Artist known as UnfoldedLife who contributed the Basil topping to the Rare Pizzas Herbs & Spices collection.",
+    "sourced": false
+  },
+  "ari lankin": {
+    "bio": "Artist known as artmetaverse who designed the super-rare Hemp topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ashira Siegel Fox": {
+    "bio": "Artist known as ashirasart who created the rare Rosemary topping with five herbal variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Goksel Gunay": {
+    "bio": "Contributing artist who designed the Cilantro topping for the Rare Pizzas Herbs & Spices collection.",
+    "sourced": false
+  },
+  "Fronc": {
+    "bio": "Artist known as fgonnello who contributed the Parsley topping with three flavorful variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Hamm": {
+    "bio": "Artist known as Hamm_day who created the epic Dino Egg topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Joseph Carter": {
+    "bio": "Artist known as ROck3tFu3l who contributed the super-rare Goose Egg topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "JenJoy": {
+    "bio": "Artist known as JenJoyRoybal who designed the epic Ostrich Egg topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Larry Huntington": {
+    "bio": "Artist known as keymaster74 who created the epic Flag topping for the Rare Pizzas Space collection.",
+    "sourced": false
+  },
+  "Mohsen Omidvar": {
+    "bio": "Artist who contributed the grail-tier Black Hole topping -- one of the rarest and most coveted pieces in the entire Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Andrew Nagata": {
+    "bio": "Contributing artist known as SplatMap who designed the epic Stardust topping with four cosmic variants.",
+    "sourced": false
+  },
+  "SpazeCraft": {
+    "bio": "Visual artist, DJ, and VJ known as Aaron Lazansky-Olivas who creates immersive visual experiences. Contributed the super-rare Dream Drops topping to the Rare Pizzas collection.",
+    "sourced": true
+  },
+  "Austin Hill": {
+    "bio": "Artist known as totalhappy who created the super-rare Sputnik topping for the Rare Pizzas Space collection.",
+    "sourced": false
+  },
+  "Bbot": {
+    "bio": "Artist and creative known as thebbot who designed the epic Robot topping with three mechanical variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "theshapemaker": {
+    "bio": "Contributing artist who created the grail-tier Tesla topping for the Rare Pizzas Space collection -- powered by the energy of stars.",
+    "sourced": false
+  },
+  "Hugh Ebdy": {
+    "bio": "Artist known as hughebdy who designed the super-rare Meteorite topping with four cosmic variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rachel Hy": {
+    "bio": "Artist known as raleahx who contributed the epic Alien topping with four extraterrestrial variants to the Rare Pizzas Space collection.",
+    "sourced": false
+  },
+  "Roze": {
+    "bio": "Artist known as viroze who created the epic Snap Rocks topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Don Moka": {
+    "bio": "Artist known as angelacrypto1 who contributed the rare Fried Onion Ring topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Michael Karam Byun": {
+    "bio": "Artist known as crzikrn who designed the super-rare Star Candy topping with seven galactic variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "kevin": {
+    "bio": "Artist known as k_pohle who created the super-rare Ice Cream topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Untitled_day": {
+    "bio": "Contributing artist who designed the rare Popcorn topping with four variants for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Kenny Yee": {
+    "bio": "Artist and creative behind MonkeyFactory who contributed the rare Peanut Butter drizzle to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Hwamin SHIN": {
+    "bio": "Korean artist who designed the super-rare Dotoru Chips topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "sungsu": {
+    "bio": "Artist known as sungsuyim who created the epic Melty topping with five gooey variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "yomahon": {
+    "bio": "Artist known as yo_ma_hon who contributed the super-rare Teeth topping with five biting variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Josh Stein • JOSHIES": {
+    "bio": "Artist and creative known as joshing_machine who designed the rare Gumball topping with nine colorful variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Maria Oben": {
+    "bio": "Contributing artist who created the super-rare Waffle topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Skye Ruozzi": {
+    "bio": "NYC-based artist known as loft_lyfe_nyc who designed the rare Marshmallow topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Martin Krupik": {
+    "bio": "Artist known as martkrupik who contributed the rare Cotton Candy topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Spielraum": {
+    "bio": "Studio-based artist known as SpielraumStudio who created the super-rare Mongda Chips topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rand W": {
+    "bio": "Artist known on Instagram as mr_randleson who designed the super-rare Ramen Noodle topping with three slurp-worthy variants.",
+    "sourced": false
+  },
+  "Adidust": {
+    "bio": "Contributing artist who created the rare Pretzel topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "hongtari": {
+    "bio": "Artist known as yetgol_saloon who contributed the rare Bagel topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Don Jas": {
+    "bio": "Artist known as jascolors who designed the rare Donut topping with five sweet variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rahul Jadhav": {
+    "bio": "Contributing artist who created the super-rare Vada Pav topping, bringing Indian street food to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Sam": {
+    "bio": "Artist known as snack_man who designed the epic Peanut Chews topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rowena Lair": {
+    "bio": "Artist known on Instagram as rowena.originals who contributed the super-rare Dandelion topping to the Rare Pizzas Flowers collection.",
+    "sourced": false
+  },
+  "Dury Luong": {
+    "bio": "Artist known as Dury_ who created the rare Squash Blossom topping for the Rare Pizzas Flowers collection.",
+    "sourced": false
+  },
+  "Lyra Yara": {
+    "bio": "Artist known as Lyra_Yara who designed the epic Wild Dagga topping, bringing South African botanical culture to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jennie": {
+    "bio": "Artist known as 5Jennie1 who contributed the rare Rose topping with five blooming variants to the Rare Pizzas Flowers collection.",
+    "sourced": false
+  },
+  "Bo": {
+    "bio": "Artist known as BoKim_art who created the rare Tulip topping with five beautiful variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Loie": {
+    "bio": "Artist known as Loie__art who designed the super-rare Camellia topping with five elegant variants for the Rare Pizzas Flowers collection.",
+    "sourced": false
+  },
+  "Alex Wykoff": {
+    "bio": "Contributing artist who created the epic Laszlo topping -- a nod to Laszlo Hanyecz, who made the first Bitcoin pizza purchase -- for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Presser": {
+    "bio": "Artist known as thomasdylandan2 who designed the epic Book topping for the Rare Pizzas collection, celebrating the match of books and pizza.",
+    "sourced": false
+  },
+  "Bamboo": {
+    "bio": "Artist known as sweet_bamboo99 who contributed the rare Banh Mi topping to the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Blacksun": {
+    "bio": "Artist known as black__sunnn who created the epic Supernatural Poodle topping with five otherworldly variants.",
+    "sourced": false
+  },
+  "Junseok MO": {
+    "bio": "Korean artist known as junseokmo who designed the super-rare Monkey Dome topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "SPOOKIKAGE": {
+    "bio": "Contributing artist who created the rare Mac and Cheese topping with five cheesy variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Alphabet Soup / Voice": {
+    "bio": "Artist and MC known as voice_mc who designed the rare Alphabet Soup topping with seven letter-filled variants.",
+    "sourced": false
+  },
+  "V": {
+    "bio": "Artist known as EraseR_nft who contributed the Hair topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ask Don CrispyCheddar": {
+    "bio": "Artist known as night0wl.eth who created the super-rare Key topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "08_AM": {
+    "bio": "Contributing artist who designed the super-rare Paracell topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Kyul (ask Crispy)": {
+    "bio": "Artist known as HTEELYK who created the super-rare Eyelash topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Don Hanimal": {
+    "bio": "Artist known as sensstudios who designed the rare Cigarette topping with five smoky variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ruben Alexander": {
+    "bio": "Contributing artist who created the rare Jelly drizzle with three fruity variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "EunBong Yang": {
+    "bio": "Artist known as evillady_x who designed the super-rare Buttons topping with five portal-like variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "juancarlos": {
+    "bio": "Artist known as juansgarden1 who contributed the rare Glitter topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "RockStar Zin": {
+    "bio": "Korean artist known as RockStar_Zin who created the epic Preamp topping with five amplified variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Cano": {
+    "bio": "Artist known as canoCloudX who designed the rare Cloud topping with four fluffy variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "NolaRook": {
+    "bio": "Artist known as RookNola who contributed the super-rare Chess topping with five strategic variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "pizza slyce @psyceart": {
+    "bio": "Artist known as nikkipsyce who created the epic Gold Flake topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Joshua Herbert": {
+    "bio": "Artist known as DepecheGuevara who designed the grail-tier Diamonds topping -- one of the most precious pieces in the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Granny": {
+    "bio": "Artist known as nancykilmer11 who contributed the rare Dog Toy topping with four playful variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Matthew Ward": {
+    "bio": "Artist known on Instagram as mattywardo who created the super-rare Twinkie Wiener Sandwich topping, a tribute to the film UHF.",
+    "sourced": false
+  },
+  "Agent64209": {
+    "bio": "Contributing artist who designed the rare Rice topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Saint": {
+    "bio": "Artist known as 6cellphones who created the super-rare Battery topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "`": {
+    "bio": "Artist known as mattwharton who designed the super-rare Yarn Ball topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Don weeds": {
+    "bio": "Artist known as bakofsky who contributed the epic Tires topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rumie Blue": {
+    "bio": "Artist known as blue_rumie who created the rare Butter topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "whtsrl#2441": {
+    "bio": "Contributing artist who designed the rare Spaghetti topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "Nicholas Kosearas": {
+    "bio": "Artist known as nkosearas1 who created the French Fry topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "ZISE": {
+    "bio": "Korean artist known as yoonzise who designed the rare Hand Sanitizer topping with seven variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Saucy Saucier": {
+    "bio": "Artist known as Rothmansandy who contributed the rare Rocks topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Fairy": {
+    "bio": "Artist known as Defy_33 who created the Curly Fry topping for the Rare Pizzas Snacks collection.",
+    "sourced": false
+  },
+  "sangsangpen": {
+    "bio": "Contributing artist who designed the super-rare Light Bulb topping with five illuminating variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Demetri": {
+    "bio": "Artist known as DemetriEspinosa who contributed the Taco topping with five variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Serviver Man": {
+    "bio": "Artist known as serviverman who created the super-rare Polygon topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "S.K.Music": {
+    "bio": "Musician and artist known as sanjakarinmusic who designed the rare Corona topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Andy Borewall": {
+    "bio": "Artist known as andyborewall who contributed the rare Soup topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Preston Rogosheske": {
+    "bio": "Artist known as prestonrogo who created the rare Beer topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Greemgreego": {
+    "bio": "Contributing artist who designed the super-rare Arrow topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Eva Morton (Woahboy's sis)": {
+    "bio": "Artist connected to woahboymusic who created the rare Pill topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Angel Jefferson": {
+    "bio": "Artist known as catherinexmoan who contributed the epic Crown topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Daniel Gordon": {
+    "bio": "Artist known on Instagram as danielgordonstudio who designed the rare Glasses topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Sophie Pochtler": {
+    "bio": "Artist known as sophie1337 who created the rare Lip Balm topping with four variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Dimsur": {
+    "bio": "Artist known as DimsuroDS who contributed the rare Oil Spill topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Andressa Furletti": {
+    "bio": "Artist known as a_tchuca who designed the rare FOMO topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Paul van der Meer": {
+    "bio": "Contributing artist known as Don Mafia who created the epic Pizza Mafia topping with five money-stacked variants.",
+    "sourced": false
+  },
+  "Noah Kinderknecht": {
+    "bio": "Artist known as MetaverseNext who contributed the rare Screw topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Plz": {
+    "bio": "Artist known as Prtty_Plz who designed the rare Headphone topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Shannon Patterson": {
+    "bio": "Artist known on Instagram as ThatCraftyOne who contributed the rare Sprinkles topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ed Mason": {
+    "bio": "Artist known as uniquenft who created the rare Mayo drizzle for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Amy Jacobellis": {
+    "bio": "Crypto art advocate known as AmyforCryptoArt who designed the epic Christmas Lights topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Hallie": {
+    "bio": "Artist known as hallieannzimmie who contributed the rare Ranch drizzle to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "BlockchainCollectiV": {
+    "bio": "Web3 creative collective known as blockchaincoll3 who designed the rare Whiz cheese topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Llama": {
+    "bio": "Artist known as Redavenger6 who contributed the rare Apple Sauce topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "kennyhonest#9410 (ask crispychedddar)": {
+    "bio": "Contributing artist known as kennycandid who created the Ketchup drizzle for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "TigerBall": {
+    "bio": "Contributing artist who designed the Hot Sauce drizzle with three fiery variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Brandon Fassberg": {
+    "bio": "Artist known as BFassberg who created the rare Salsa Verde drizzle for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Craig": {
+    "bio": "Artist known as craigrussellcdr who contributed the rare Hot Honey drizzle to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Wayne Sinclair": {
+    "bio": "Artist known as gilben_peebles who created the grail-tier Swole Doge topping -- peak performance in the rarest tier of the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Tony Wild": {
+    "bio": "Contributing artist who designed the Pizza Saver topping, immortalizing the iconic plastic pizza table as art.",
+    "sourced": false
+  },
+  "Von Di": {
+    "bio": "Artist known as itsvondibaby who contributed the Sriracha drizzle to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "EZ Almighty": {
+    "bio": "Artist known as almighty_pizza who created the Hot Pepper Flakes topping for the Rare Pizzas Herbs & Spices collection.",
+    "sourced": false
+  },
+  "Petrolhead": {
+    "bio": "Artist known as petrolheadde who designed the Oregano topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Steve Laymon": {
+    "bio": "Contributing artist who created the rare Bird Seed topping for the Rare Pizzas Herbs & Spices collection.",
+    "sourced": false
+  },
+  "Johannes Blank": {
+    "bio": "Artist known as peptomics who designed the super-rare Peptomics topping with six variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "GuanIX": {
+    "bio": "Artist known as Allairemat who contributed the rare Bowtie topping with four dapper variants to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Don Glee": {
+    "bio": "Artist known as dongleehan who created the super-rare Puzzle topping with five interlocking variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "SavageRecluse (Jim Berney)": {
+    "bio": "Contributing artist who designed the rare Gluten Free Crust for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jim Berney": {
+    "bio": "Contributing artist to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Wild Oak": {
+    "bio": "Contributing artist to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Max Nguyen": {
+    "bio": "Contributing artist to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Alex Elko": {
+    "bio": "Contributing artist to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "trizzytrunk#4834": {
+    "bio": "Contributing artist known as trizzytrunk who created the Ham topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Josh Hilty": {
+    "bio": "Contributing artist who designed the rare Duck topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jay": {
+    "bio": "Artist known as ysgjay who contributed the Chorizo topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Evil": {
+    "bio": "Artist known as RageOfPotato who created the rare Fried Chicken topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Noosh": {
+    "bio": "Artist known as lightnoosh who contributed the Chicken topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "lvlangle": {
+    "bio": "Contributing artist to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "ZuwuTV(ask Crispy)": {
+    "bio": "Artist known as ZuwuTV who created the rare Corn Dog topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Bee (ask Crispy)": {
+    "bio": "Artist known as Beez_Kneez0 who contributed the rare Beans topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "NFTcatgirl (ask Crispy)": {
+    "bio": "Artist known as NFTCatgirl who created the rare Grapefruit topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Edom's friend": {
+    "bio": "Contributing artist known on Instagram as notintuition who designed the rare Peach topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "nikafit.sk@gmail.com (@nikafit.sk)": {
+    "bio": "Slovak artist known as Don Pizza Slovak who contributed the rare Orange topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Ain": {
+    "bio": "Artist known as ainnamseo who created the super-rare Cantaloupe topping with five variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "moonduck": {
+    "bio": "Artist known as marybaeg who designed the epic Passion Fruit topping with six variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Philip Reay": {
+    "bio": "Artist known as rand0mmm and on Instagram as voidskippa who contributed the super-rare Orange Peel topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pajke": {
+    "bio": "Contributing artist formerly known as robslasagna who created the rare Kiwi topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "TDogNasty": {
+    "bio": "Contributing artist who designed the super-rare Watermelon topping with four juicy variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Tomas Montagna": {
+    "bio": "Contributing artist who created the super-rare Kimchi topping for the Rare Pizzas Vegetable collection.",
+    "sourced": false
+  },
+  "Lyn Tian": {
+    "bio": "Contributing artist who designed the Broccoli topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Carlos": {
+    "bio": "Artist known as Highballer who contributed the rare Pine Nut topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Camilla": {
+    "bio": "Artist known on Instagram as pap3rink who created the super-rare Yuca topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Rimko": {
+    "bio": "Contributing artist known as IP_rimko who designed the rare Mint Leaf topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "AVL Joe America": {
+    "bio": "Artist known as BequalsINGS who contributed the rare Smoked Gouda topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jaime DeAngelis": {
+    "bio": "Artist known as thetealappeal who created the Goat Cheese topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Pizza Margherita": {
+    "bio": "Artist known as artoflizz who designed the Burnt Cheese topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Vishesh Chopra": {
+    "bio": "Artist known as vylkrom who contributed the rare Paneer Tikka topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Santa": {
+    "bio": "Artist known as NftSanta who created the Provolone topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "113kw Kristina Weiserova": {
+    "bio": "Czech artist known as 113kw who designed the rare Tvaruzek topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Jaromir Hruby": {
+    "bio": "Czech artist known on Instagram as jayy.rough who contributed the rare Korbacik topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Skylar Shafer": {
+    "bio": "Contributing artist who created the epic Endangered Species topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Zade Shafer": {
+    "bio": "Contributing artist who designed the super-rare NASA topping for the Rare Pizzas Space collection.",
+    "sourced": false
+  },
+  "Katie Shafer": {
+    "bio": "Artist known on Instagram as shadiekafercuts who created the epic Laika topping -- honoring the brave space dog -- for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Bry": {
+    "bio": "Artist known on Instagram as Hekkate_ who designed the grail-tier UFO topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Michael Georgie Georgerson": {
+    "bio": "Artist known on Instagram as draculadco who contributed the rare Lady Bug topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "LeAnn Zito": {
+    "bio": "Artist known on Instagram as leeannfenderson who created the rare Lantern Fly topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Anamarija Montak": {
+    "bio": "Artist known on Instagram as caoticadesigner who contributed the rare Hardboiled Egg topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Gary Palmer": {
+    "bio": "Artist known as GaryPalmerJr who designed the super-rare Feather topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Johnny Zito": {
+    "bio": "Artist known as SOUTHfellini who created the rare Transit Token topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Dona Veracity": {
+    "bio": "Artist known as FemdommeVivian who contributed the super-rare Glue topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Yuliya": {
+    "bio": "Artist known on Instagram as aliendroog who designed the rare Crayon topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Orlando Porter": {
+    "bio": "Contributing artist who created the epic 3D Glasses topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Flux": {
+    "bio": "Contributing artist who designed the super-rare Magic Wand topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Fran Cota": {
+    "bio": "Artist known on Instagram as braincabinet who contributed the rare Poker Chip topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Shroomroast": {
+    "bio": "Artist known as Sluttstrands who created the super-rare Stuffed Animal topping for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "PikaPark": {
+    "bio": "Artist known as pikapark_vibes who designed the super-rare Heart Beat topping with five pulsing variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Sandro": {
+    "bio": "Artist known as 0xsmbss who contributed the super-rare Computer Chip topping to the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "Anasculpt": {
+    "bio": "3D artist who created the rare Fried Cheese topping with five delicious variants for the Rare Pizzas collection.",
+    "sourced": false
+  },
+  "thom": {
+    "bio": "Artist known as pixelthom who contributed the BBQ Sauce topping to the Rare Pizzas collection.",
+    "sourced": false
+  }
+}
