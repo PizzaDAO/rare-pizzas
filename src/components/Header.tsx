@@ -75,6 +75,12 @@ export default function Header() {
             >
               Chefs
             </Link>
+            <Link
+              href="/mint"
+              className="text-sm text-[#FFE135] transition-colors hover:text-white"
+            >
+              Mint
+            </Link>
             {isConnected && (
               <Link
                 href="/my-toppings"
