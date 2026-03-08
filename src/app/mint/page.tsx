@@ -32,16 +32,16 @@ function BuyBoxSection() {
   const [quantity, setQuantity] = useState(1);
   const [txState, setTxState] = useState<TxState>({ status: "idle" });
 
-  const { data: totalSupply } = useReadContract({
+  const { data: totalNewPurchases } = useReadContract({
     address: PIZZA_BOX_CONTRACT,
     abi: BOX_ABI,
-    functionName: "totalSupply",
+    functionName: "totalNewPurchases",
   });
 
-  const { data: maxSupply } = useReadContract({
+  const { data: maxNewPurchases } = useReadContract({
     address: PIZZA_BOX_CONTRACT,
     abi: BOX_ABI,
-    functionName: "maxSupply",
+    functionName: "maxNewPurchases",
   });
 
   const { data: price } = useReadContract({
@@ -102,8 +102,10 @@ function BuyBoxSection() {
 
       <div className="mb-4 flex items-center gap-4 text-sm text-[#7DD3E8]">
         <span>
-          Supply: {totalSupply !== undefined ? totalSupply.toString() : "..."} /{" "}
-          {maxSupply !== undefined ? maxSupply.toString() : "..."}
+          Available:{" "}
+          {totalNewPurchases !== undefined && maxNewPurchases !== undefined
+            ? (maxNewPurchases - totalNewPurchases).toString()
+            : "..."}
         </span>
         <span>Price: {formatEther(unitPrice)} ETH each</span>
       </div>
