@@ -131,7 +131,7 @@ export default function ToppingImage({
             <button
               key={`${item.image}-${i}`}
               onClick={() => handleSelect(i)}
-              className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-150 ${
+              className={`relative flex-shrink-0 rounded-lg transition-all duration-150 ${
                 i === selectedIndex
                   ? "ring-2 ring-[#FFE135] ring-offset-2 ring-offset-black"
                   : "opacity-60 hover:opacity-100"
