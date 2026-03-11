@@ -534,9 +534,11 @@ function CheckRedeemedSection() {
         </div>
         <form onSubmit={handleCheck} className="flex items-center gap-4">
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={tokenId}
-            onChange={(e) => setTokenId(e.target.value)}
+            onChange={(e) => setTokenId(e.target.value.replace(/\D/g, ""))}
             placeholder="Token ID"
             className="h-14 w-44 rounded-lg border border-white/20 bg-[#1f2937] px-4 font-[family-name:var(--font-naiche)] text-2xl italic text-white placeholder-white/25 focus:border-[#FFE135] focus:outline-none"
           />
