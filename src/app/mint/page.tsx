@@ -545,7 +545,7 @@ function CheckRedeemedSection() {
           <button
             type="submit"
             disabled={!tokenId || checking}
-            className="h-11 rounded-full border-2 border-[#FFE135] px-8 font-bold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10 disabled:opacity-50"
+            className="h-11 min-w-[100px] rounded-full border-2 border-[#FFE135] px-8 font-bold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10 disabled:opacity-50"
           >
             {checking ? "..." : "Check"}
           </button>
