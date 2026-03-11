@@ -123,6 +123,12 @@ function BuyBoxSection() {
     functionName: "maxNewPurchases",
   });
 
+  const { data: maxSupply } = useReadContract({
+    address: PIZZA_BOX_CONTRACT,
+    abi: BOX_ABI,
+    functionName: "maxSupply",
+  });
+
   const { data: price } = useReadContract({
     address: PIZZA_BOX_CONTRACT,
     abi: BOX_ABI,
@@ -144,8 +150,8 @@ function BuyBoxSection() {
       ? Number(maxNewPurchases - totalNewPurchases).toLocaleString()
       : "--";
 
-  const maxDisplay = maxNewPurchases
-    ? Number(maxNewPurchases).toLocaleString()
+  const maxDisplay = maxSupply
+    ? Number(maxSupply).toLocaleString()
     : "10,000";
 
   const { writeContract } = useWriteContract({
@@ -507,7 +513,8 @@ function CheckRedeemedSection() {
     query: { enabled: false },
   });
 
-  const handleCheck = async () => {
+  const handleCheck = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (!tokenId) return;
     setChecking(true);
     await refetch();
@@ -525,7 +532,7 @@ function CheckRedeemedSection() {
             Check a Rare Pizza Box NFT using its Token ID.
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <form onSubmit={handleCheck} className="flex items-center gap-4">
           <input
             type="number"
             value={tokenId}
@@ -534,19 +541,27 @@ function CheckRedeemedSection() {
             className="h-14 w-44 rounded-lg border border-white/20 bg-[#1f2937] px-4 font-[family-name:var(--font-naiche)] text-2xl italic text-white placeholder-white/25 focus:border-[#FFE135] focus:outline-none"
           />
           <button
-            onClick={handleCheck}
+            type="submit"
             disabled={!tokenId || checking}
             className="h-11 rounded-full border-2 border-[#FFE135] px-8 font-bold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10 disabled:opacity-50"
           >
             {checking ? "..." : "Check"}
           </button>
-        </div>
+        </form>
       </div>
       {isRedeemed !== undefined && tokenId && (
         <p className="mt-4 text-sm">
           {isRedeemed ? (
             <span className="text-[#FFE135]">
-              Box #{tokenId} has been redeemed.
+              Box #{tokenId} has been redeemed.{" "}
+              <a
+                href={`https://opensea.io/assets/ethereum/${RARE_PIZZAS_CONTRACT}/${tokenId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white"
+              >
+                View Pizza #{tokenId} on OpenSea
+              </a>
             </span>
           ) : (
             <span className="text-green-400">
