@@ -583,6 +583,26 @@ export default function MintPage() {
     <div className="-mx-4 -mt-8">
       <Starfield />
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-8">
+        {/* Hero */}
+        <div className="mb-10 text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/6178920bd9ae15ee240c7110_rarepizza-logo.png"
+            alt="Rare Pizzas"
+            className="mx-auto mb-6 h-20 w-auto sm:h-24"
+          />
+          <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/80">
+            10,000 generatively baked pizzas in a one-of-a-kind collaboration
+            between 314 international artists. Each box can be opened to claim
+            one randomly generated pizza.
+          </p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/50">
+            On May 22, 2010, Laszlo Hanyecz bought two pizzas for 10,000
+            Bitcoin. Now, PizzaDAO throws a Global Pizza Party every May 22 in
+            his honor.
+          </p>
+        </div>
+
         <div className="grid gap-8 md:grid-cols-2">
           <BuyBoxSection />
           <OrderPizzaSection />
