@@ -59,9 +59,15 @@ export default function Header() {
           <nav className="hidden items-center gap-4 sm:flex">
             <Link
               href="/"
+              className="text-sm text-[#FFE135] transition-colors hover:text-white"
+            >
+              Mint
+            </Link>
+            <Link
+              href="/toppings"
               className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
             >
-              Home
+              Toppings
             </Link>
             <Link
               href="/browse"
@@ -74,12 +80,6 @@ export default function Header() {
               className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
             >
               Chefs
-            </Link>
-            <Link
-              href="/mint"
-              className="text-sm text-[#FFE135] transition-colors hover:text-white"
-            >
-              Mint
             </Link>
             {isConnected && (
               <Link
