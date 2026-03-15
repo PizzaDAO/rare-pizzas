@@ -80,6 +80,13 @@ export const BOX_ABI = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [{ name: "tokenId", type: "uint256" }],
+    name: "tokenURI",
+    outputs: [{ name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;
 
 export const PIZZA_ABI = [
