@@ -101,7 +101,7 @@ export default function Header() {
             </a>
           </div>
           <WalletStatus />
-          <ConnectButton />
+          <ConnectButton showBalance={false} />
         </div>
       </div>
     </header>
