@@ -19,10 +19,8 @@ import {
 } from "@/lib/contracts";
 import TxStatus, { type TxState } from "@/components/TxStatus";
 
-const BOX_GIF =
-  "https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/62766366d0b6df9beb6fa1d6_giphy.gif";
-const PIZZA_GIF =
-  "https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/627663afbf9f574d9d507498_giphy-2.gif";
+const BOX_GIF = "/images/pizza-box.gif";
+const PIZZA_GIF = "/images/pizza.gif";
 
 function extractErrorMessage(error: unknown): string {
   if (error instanceof Error) {
@@ -587,7 +585,7 @@ export default function MintPage() {
         <div className="mb-10 text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/6178920bd9ae15ee240c7110_rarepizza-logo.png"
+            src="/images/rarepizza-logo.png"
             alt="Rare Pizzas"
             className="mx-auto mb-6 h-20 w-auto sm:h-24"
           />

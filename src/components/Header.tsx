@@ -111,7 +111,7 @@ export default function Header() {
               title="Discord"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/616e41dca9f5ae84e4ec9b59_discordicon.svg" alt="Discord" className="h-5 w-5 invert" />
+              <img src="/images/discord.svg" alt="Discord" className="h-5 w-5 invert" />
             </a>
             <a
               href="https://opensea.io/collection/rare-pizzas-box"
@@ -121,7 +121,7 @@ export default function Header() {
               title="OpenSea"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://cdn.prod.website-files.com/60651d01d383e4f482012c1d/6171adb101dc34775bae5d90_opensea-Logomark-black.svg" alt="OpenSea" className="h-5 w-5 invert" />
+              <img src="/images/opensea.svg" alt="OpenSea" className="h-5 w-5 invert" />
             </a>
             <a
               href="https://x.com/rarepizzas"
