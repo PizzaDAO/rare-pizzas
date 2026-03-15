@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "Rare Pizzas Toppings",
   description:
     "Browse the complete collection of Rare Pizzas toppings — unique digital art assets across multiple classes and rarities.",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>",
+  },
 };
 
 export default function RootLayout({

@@ -56,7 +56,7 @@ export default function Header() {
             </Link>
             {isConnected && (
               <Link href="/my-toppings" className={navColor("/my-toppings", pathname)}>
-                My Toppings
+                My Collection
               </Link>
             )}
             <a
