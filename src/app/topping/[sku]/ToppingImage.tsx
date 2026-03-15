@@ -109,14 +109,9 @@ export default function ToppingImage({
       {hasGallery && (
         <div className="mt-3 text-center">
           <p className="text-sm font-medium text-[#7DD3E8]">
-            Version {selectedIndex + 1} of {galleryItems.length}
+            Variant {selectedIndex + 1} of {galleryItems.length}
             {currentItem.isAltArt && (
               <span className="ml-2 text-[#FFE135]">
-                {currentItem.label}
-              </span>
-            )}
-            {!currentItem.isAltArt && selectedIndex > 0 && (
-              <span className="ml-2 text-[#7DD3E8]/70">
                 {currentItem.label}
               </span>
             )}
@@ -126,7 +121,7 @@ export default function ToppingImage({
 
       {/* Thumbnail Strip */}
       {hasGallery && (
-        <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+        <div className="mt-3 flex gap-2 overflow-x-auto px-1 py-1">
           {galleryItems.map((item, i) => (
             <button
               key={`${item.image}-${i}`}
