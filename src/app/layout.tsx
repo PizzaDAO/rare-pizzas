@@ -17,9 +17,9 @@ const naiche = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Rare Pizzas Toppings",
+  title: "Rare Pizzas",
   description:
-    "Browse the complete collection of Rare Pizzas toppings — unique digital art assets across multiple classes and rarities.",
+    "10,000 generatively baked pizzas in a one-of-a-kind collaboration between 314 international artists. Each box can be opened to claim one randomly generated pizza.",
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>",
   },

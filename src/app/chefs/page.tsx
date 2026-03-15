@@ -2,7 +2,7 @@ import { getWoodTileUrl } from "@/lib/constants";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "The Kitchen Chefs | Rare Pizzas Toppings",
+  title: "The Kitchen Chefs | Rare Pizzas",
   description:
     "Meet the chefs behind the Rare Pizzas kitchen — Head Chef Shrimp, Oven Chef Don Volare, Toppings Chefs Cactus, Oscar Frog, Pizza Slyce, and Don Fingas, and Sous Chef Jalapeno Peppers.",
 };
