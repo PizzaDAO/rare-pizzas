@@ -596,8 +596,11 @@ export default function MintPage() {
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/50">
             On May 22, 2010, Laszlo Hanyecz bought two pizzas for 10,000
-            Bitcoin. Now, PizzaDAO throws a Global Pizza Party every May 22 in
-            his honor. Sales of Rare Pizzas support PizzaDAO.
+            Bitcoin. Now, PizzaDAO throws a{" "}
+            <a href="https://globalpizza.party" target="_blank" rel="noopener noreferrer" className="text-[#FFE135] underline hover:text-white">
+              Global Pizza Party
+            </a>{" "}
+            every May 22 in his honor. Sales of Rare Pizzas support PizzaDAO.
           </p>
         </div>
 
