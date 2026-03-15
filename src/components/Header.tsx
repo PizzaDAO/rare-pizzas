@@ -121,7 +121,7 @@ export default function Header() {
               title="OpenSea"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/opensea.svg" alt="OpenSea" className="h-5 w-5 invert" />
+              <img src="/images/opensea.svg" alt="OpenSea" className="h-10 w-10 invert" />
             </a>
             <a
               href="https://x.com/rarepizzas"
