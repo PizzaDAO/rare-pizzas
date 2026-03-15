@@ -39,6 +39,21 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main className="mx-auto max-w-7xl px-4 py-8">{children}</main>
+          <footer className="border-t border-white/10 py-8 text-center">
+            <a
+              href="https://pizzadao.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block opacity-50 transition-opacity hover:opacity-100"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/pizzadao-logo.svg"
+                alt="PizzaDAO"
+                className="h-8 w-auto"
+              />
+            </a>
+          </footer>
         </Providers>
       </body>
     </html>

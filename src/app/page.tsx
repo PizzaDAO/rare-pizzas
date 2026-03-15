@@ -329,7 +329,8 @@ function OrderPizzaSection() {
     if (!tokenIdResults) return [];
     return tokenIdResults
       .filter((r) => r.status === "success" && r.result !== undefined)
-      .map((r) => Number(r.result as bigint));
+      .map((r) => Number(r.result as bigint))
+      .sort((a, b) => a - b);
   }, [tokenIdResults]);
 
   const isRedeemedContracts = useMemo(() => {
