@@ -17,6 +17,7 @@ import {
   PIZZA_ABI,
   RECIPES,
 } from "@/lib/contracts";
+import { getWoodTileUrl } from "@/lib/constants";
 import TxStatus, { type TxState } from "@/components/TxStatus";
 
 const BOX_GIF = "/images/pizza-box.gif";
@@ -661,6 +662,55 @@ function CheckRedeemedSection() {
   );
 }
 
+// ─── The Kitchen ───────────────────────────────────────────────────
+
+const CHEFS = [
+  { title: "Head Chef", name: "Shrimp", x: "anthonyshafer", pfp: "/images/chefs/anthonyshafer.jpg" },
+  { title: "Oven Chef", name: "Don Volare", x: "AddressXception", pfp: "/images/chefs/AddressXception.jpg" },
+  { title: "Toppings Chef", name: "Cactus", x: "bergoesbrr", pfp: "/images/chefs/bergoesbrr.png" },
+  { title: "Toppings Chef", name: "Oscar Frog", x: "dark0eth", pfp: "/images/chefs/dark0eth.jpg" },
+  { title: "Toppings Chef", name: "Pizza Slyce", x: "NikkiPsyce", pfp: "/images/chefs/NikkiPsyce.jpg" },
+  { title: "Toppings Chef", name: "Don Fingas", x: "hwajilla", pfp: "/images/chefs/hwajilla.jpg" },
+  { title: "Sous Chef", name: "Jalapeno Peppers", x: "cherish_NFTs", pfp: "/images/chefs/cherish_NFTs.jpg" },
+];
+
+function KitchenSection() {
+  return (
+    <section className="mt-8">
+      <h2 className="mb-2 text-center font-[family-name:var(--font-naiche)] text-3xl italic text-white">
+        The Kitchen
+      </h2>
+      <p className="mb-6 text-center text-sm text-white/50">
+        Meet the chefs who run the Rare Pizzas kitchen.
+      </p>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {CHEFS.map((chef, i) => (
+          <a
+            key={chef.name}
+            href={`https://x.com/${chef.x}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-xl border border-[#333]/50 bg-cover bg-center p-5 text-center transition-all hover:border-[#FFE135]/50"
+            style={{ backgroundImage: `url(${getWoodTileUrl(i)})` }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={chef.pfp}
+              alt={chef.name}
+              className="mx-auto mb-3 h-16 w-16 rounded-full object-cover ring-2 ring-[#FFE135]/30 transition-all group-hover:ring-[#FFE135]"
+            />
+            <p className="text-xs font-medium uppercase tracking-wider text-[#FFE135]">
+              {chef.title}
+            </p>
+            <p className="mt-1 text-sm font-bold text-white">{chef.name}</p>
+            <p className="mt-0.5 text-xs text-white/40">@{chef.x}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 // ─── Mint Page ──────────────────────────────────────────────────────
 
 export default function MintPage() {
@@ -698,6 +748,7 @@ export default function MintPage() {
         <div className="mt-8">
           <CheckRedeemedSection />
         </div>
+        <KitchenSection />
       </div>
     </div>
   );

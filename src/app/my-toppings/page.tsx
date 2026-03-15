@@ -280,7 +280,7 @@ function PizzaBoxesSection() {
   return (
     <section className="mb-10">
       <h2 className="mb-1 text-xl font-semibold text-white">
-        Pizza Boxes
+        My Pizza Boxes
       </h2>
       <p className="mb-4 text-sm text-[#7DD3E8]">{total} box{total !== 1 ? "es" : ""}</p>
       {isLoading ? (
@@ -355,7 +355,7 @@ function RarePizzasSection() {
   return (
     <section className="mb-10">
       <h2 className="mb-1 text-xl font-semibold text-white">
-        Rare Pizzas
+        My Rare Pizzas
       </h2>
       <p className="mb-4 text-sm text-[#7DD3E8]">{total} pizza{total !== 1 ? "s" : ""}</p>
       {isLoading ? (
@@ -639,7 +639,7 @@ function ToppingsSection() {
   if (isLoadingOnChain) {
     return (
       <section className="mb-10">
-        <h2 className="mb-4 text-xl font-semibold text-white">Toppings</h2>
+        <h2 className="mb-4 text-xl font-semibold text-white">My Toppings</h2>
         <div className="flex items-center gap-3 rounded-xl bg-[#111] p-4">
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
           <p className="text-sm text-[#7DD3E8]">Scanning for toppings...</p>
@@ -652,7 +652,7 @@ function ToppingsSection() {
 
   return (
     <section>
-      <h2 className="mb-1 text-xl font-semibold text-white">Toppings</h2>
+      <h2 className="mb-1 text-xl font-semibold text-white">My Toppings</h2>
 
       {error && (
         <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4">

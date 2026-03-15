@@ -51,14 +51,6 @@ export default function Header() {
             <Link href="/toppings" className={navColor("/toppings", pathname)}>
               Toppings
             </Link>
-            <Link href="/chefs" className={navColor("/chefs", pathname)}>
-              Chefs
-            </Link>
-            {isConnected && (
-              <Link href="/my-toppings" className={navColor("/my-toppings", pathname)}>
-                My Collection
-              </Link>
-            )}
             <a
               href="https://globalpizza.party"
               target="_blank"
@@ -131,14 +123,6 @@ export default function Header() {
           <Link href="/toppings" className={navColor("/toppings", pathname, true)} onClick={() => setMenuOpen(false)}>
             Toppings
           </Link>
-          <Link href="/chefs" className={navColor("/chefs", pathname, true)} onClick={() => setMenuOpen(false)}>
-            Chefs
-          </Link>
-          {isConnected && (
-            <Link href="/my-toppings" className={navColor("/my-toppings", pathname, true)} onClick={() => setMenuOpen(false)}>
-              My Toppings
-            </Link>
-          )}
           <a
             href="https://globalpizza.party"
             target="_blank"
