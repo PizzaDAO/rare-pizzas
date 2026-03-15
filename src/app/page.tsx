@@ -200,7 +200,7 @@ function BuyBoxSection() {
       <img
         src={BOX_GIF}
         alt="Pizza Box"
-        className="mb-6 w-64 rounded-lg"
+        className="mb-6 w-72 rounded-lg"
       />
 
       <p className="mb-1 text-xs font-bold uppercase tracking-[0.2em] text-[#FFE135]">

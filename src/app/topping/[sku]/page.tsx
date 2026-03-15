@@ -5,6 +5,7 @@ import { getImageUrl, getWoodTileUrl, OPENSEA_BASE_URL } from "@/lib/constants";
 import RarityBadge from "@/components/RarityBadge";
 import NutritionLabel from "@/components/NutritionLabel";
 import ToppingImage from "./ToppingImage";
+import MyPizzas from "./MyPizzas";
 import pizzaIndex from "@/data/pizza-index.json";
 
 interface ToppingPageProps {
@@ -96,11 +97,6 @@ export default async function ToppingPage({ params }: ToppingPageProps) {
             </h1>
             <div className="mb-3 flex items-center gap-3">
               <RarityBadge rarity={topping.rarity} />
-              {topping.probability > 0 && (
-                <span className="text-sm text-[#7DD3E8]">
-                  {topping.probability}% probability
-                </span>
-              )}
             </div>
           </div>
 
@@ -215,7 +211,10 @@ export default async function ToppingPage({ params }: ToppingPageProps) {
         </div>
       </div>
 
-      {/* Rare Pizzas with this topping */}
+      {/* My Rare Pizzas with this topping (client component, wallet-aware) */}
+      {pizzaTokenIds.length > 0 && <MyPizzas pizzaTokenIds={pizzaTokenIds} />}
+
+      {/* All Rare Pizzas with this topping */}
       {pizzaTokenIds.length > 0 && (
         <section className="mt-12">
           <h2 className="mb-1 text-sm font-semibold uppercase tracking-wider text-[#7DD3E8]">
