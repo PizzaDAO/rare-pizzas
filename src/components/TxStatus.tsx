@@ -33,17 +33,22 @@ export default function TxStatus({ state }: { state: TxState }) {
         </p>
       )}
       {state.status === "success" && (
-        <p className="text-green-400">
-          Transaction confirmed!{" "}
-          <a
-            href={etherscanLink(state.hash)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-white"
-          >
-            View on Etherscan
-          </a>
-        </p>
+        <div className="text-green-400">
+          <p>
+            Transaction confirmed!{" "}
+            <a
+              href={etherscanLink(state.hash)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-white"
+            >
+              View on Etherscan
+            </a>
+          </p>
+          <p className="mt-1 text-white/50">
+            It will take a few minutes for your box to be folded and delivered to your wallet.
+          </p>
+        </div>
       )}
       {state.status === "error" && (
         <p className="text-[#E85D5D]">{state.message}</p>
