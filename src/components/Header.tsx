@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
 import WalletStatus from "./WalletStatus";
 
@@ -12,8 +13,16 @@ const ConnectButton = dynamic(
   { ssr: false }
 );
 
+function navColor(href: string, pathname: string) {
+  const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+  return active
+    ? "text-sm text-[#FFE135] transition-colors hover:text-white"
+    : "text-sm text-[#7DD3E8] transition-colors hover:text-white";
+}
+
 export default function Header() {
   const { isConnected } = useAccount();
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#FFE135]/20 bg-black/90 backdrop-blur-md">
@@ -33,29 +42,17 @@ export default function Header() {
             />
           </Link>
           <nav className="hidden items-center gap-4 sm:flex">
-            <Link
-              href="/"
-              className="text-sm text-[#FFE135] transition-colors hover:text-white"
-            >
+            <Link href="/" className={navColor("/", pathname)}>
               Mint
             </Link>
-            <Link
-              href="/toppings"
-              className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
-            >
+            <Link href="/toppings" className={navColor("/toppings", pathname)}>
               Toppings
             </Link>
-            <Link
-              href="/chefs"
-              className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
-            >
+            <Link href="/chefs" className={navColor("/chefs", pathname)}>
               Chefs
             </Link>
             {isConnected && (
-              <Link
-                href="/my-toppings"
-                className="text-sm text-[#FFE135] transition-colors hover:text-white"
-              >
+              <Link href="/my-toppings" className={navColor("/my-toppings", pathname)}>
                 My Toppings
               </Link>
             )}
