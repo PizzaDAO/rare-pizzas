@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
 import Header from "@/components/Header";
 
-const rubik = Rubik({
-  variable: "--font-rubik",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const naiche = localFont({
@@ -34,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rubik.variable} ${naiche.variable} bg-black font-sans text-[#ededed] antialiased`}
+        className={`${inter.variable} ${naiche.variable} bg-black font-sans text-[#ededed] antialiased`}
       >
         <Providers>
           <Header />

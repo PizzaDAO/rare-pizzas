@@ -11,7 +11,7 @@
   --color-wood-medium: #333333;
   --color-wood-light: #6b4c3b;
   --color-cream: #7DD3E8;
-  --font-sans: var(--font-rubik);
+  --font-sans: var(--font-inter);
   --font-mono: monospace;
   --font-display: var(--font-naiche);
 }
@@ -19,7 +19,7 @@
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-rubik), Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }
 
 h1, h2 {
