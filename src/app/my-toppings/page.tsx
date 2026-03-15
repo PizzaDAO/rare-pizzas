@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -132,6 +132,24 @@ function useOwnedTokenIds(
   return { total, tokenIds, isLoading: total > 0 && tokenIds.length === 0 };
 }
 
+const BOX_IPFS_GATEWAYS = [
+  "https://dweb.link/ipfs/",
+  "https://cloudflare-ipfs.com/ipfs/",
+  "https://ipfs.io/ipfs/",
+];
+
+const BOX_CACHE_PREFIX = "rp-box-";
+
+function extractIpfsHash(url: string): string | null {
+  const match = url.match(/\/ipfs\/(.+)$/);
+  return match ? match[1] : null;
+}
+
+function ipfsImageUrl(url: string, gateway: string = BOX_IPFS_GATEWAYS[0]): string {
+  const hash = extractIpfsHash(url);
+  return hash ? `${gateway}${hash}` : url;
+}
+
 function PizzaBoxesSection() {
   const { address, isConnected } = useAccount();
   const { total, tokenIds, isLoading } = useOwnedTokenIds(
@@ -155,6 +173,97 @@ function PizzaBoxesSection() {
     contracts: redeemedContracts,
     query: { enabled: redeemedContracts.length > 0 },
   });
+
+  // Batch-fetch tokenURI for each box
+  const tokenURIContracts = useMemo(() => {
+    return tokenIds.map((tokenId) => ({
+      address: PIZZA_BOX_CONTRACT,
+      abi: BOX_ABI,
+      functionName: "tokenURI" as const,
+      args: [BigInt(tokenId)] as const,
+    }));
+  }, [tokenIds]);
+
+  const { data: tokenURIResults } = useReadContracts({
+    contracts: tokenURIContracts,
+    query: { enabled: tokenURIContracts.length > 0 },
+  });
+
+  // Fetch box metadata from IPFS
+  const [boxMeta, setBoxMeta] = useState<
+    Record<number, { name: string; image: string }>
+  >({});
+
+  useEffect(() => {
+    if (!tokenURIResults || tokenURIResults.length === 0) return;
+
+    let cancelled = false;
+
+    async function fetchBoxMeta(
+      tokenId: number,
+      uri: string
+    ): Promise<{ name: string; image: string } | null> {
+      // Check sessionStorage cache
+      try {
+        const cached = sessionStorage.getItem(`${BOX_CACHE_PREFIX}${tokenId}`);
+        if (cached) return JSON.parse(cached);
+      } catch {}
+
+      const hash = extractIpfsHash(uri);
+      if (!hash) return null;
+
+      for (const gateway of BOX_IPFS_GATEWAYS) {
+        try {
+          const res = await fetch(`${gateway}${hash}`, {
+            signal: AbortSignal.timeout(10000),
+          });
+          if (!res.ok) continue;
+          const data = await res.json();
+          const meta = { name: data.name || "", image: data.image || "" };
+          try {
+            sessionStorage.setItem(
+              `${BOX_CACHE_PREFIX}${tokenId}`,
+              JSON.stringify(meta)
+            );
+          } catch {}
+          return meta;
+        } catch {
+          continue;
+        }
+      }
+      return null;
+    }
+
+    async function fetchAll() {
+      const MAX_CONCURRENT = 5;
+      const queue = tokenIds
+        .map((id, i) => ({ tokenId: id, result: tokenURIResults![i] }))
+        .filter((item) => item.result?.status === "success" && item.result.result);
+
+      const workers = Array.from(
+        { length: Math.min(MAX_CONCURRENT, queue.length) },
+        async () => {
+          while (queue.length > 0 && !cancelled) {
+            const item = queue.shift();
+            if (!item) break;
+            const meta = await fetchBoxMeta(
+              item.tokenId,
+              item.result!.result as string
+            );
+            if (meta && !cancelled) {
+              setBoxMeta((prev) => ({ ...prev, [item.tokenId]: meta }));
+            }
+          }
+        }
+      );
+      await Promise.all(workers);
+    }
+
+    fetchAll();
+    return () => {
+      cancelled = true;
+    };
+  }, [tokenIds, tokenURIResults]);
 
   const boxes = useMemo(() => {
     return tokenIds.map((tokenId, i) => ({
@@ -181,34 +290,49 @@ function PizzaBoxesSection() {
         </div>
       ) : (
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-          {boxes.map(({ tokenId, redeemed }) => (
-            <a
-              key={tokenId}
-              href={`${OPENSEA_BOX_URL}/${tokenId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-xl border border-[#333]/50 bg-[#111] p-3 transition-all hover:border-[#FFE135]/50"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/images/pizza-box.gif"
-                alt={`Box #${tokenId}`}
-                className="mb-2 w-full rounded-lg"
-              />
-              <p className="text-center text-xs font-semibold text-white">
-                #{tokenId}
-              </p>
-              {redeemed !== undefined && (
-                <p
-                  className={`mt-1 text-center text-xs ${
-                    redeemed ? "text-[#FFE135]" : "text-green-400"
-                  }`}
-                >
-                  {redeemed ? "Redeemed" : "Unredeemed"}
+          {boxes.map(({ tokenId, redeemed }) => {
+            const meta = boxMeta[tokenId];
+            return (
+              <a
+                key={tokenId}
+                href={`${OPENSEA_BOX_URL}/${tokenId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-xl border border-[#333]/50 bg-[#111] p-3 transition-all hover:border-[#FFE135]/50"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={meta ? ipfsImageUrl(meta.image) : "/images/pizza-box.gif"}
+                  alt={meta?.name || `Box #${tokenId}`}
+                  className="mb-2 aspect-square w-full rounded-lg object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.src !== "/images/pizza-box.gif") {
+                      img.src = "/images/pizza-box.gif";
+                    }
+                  }}
+                />
+                <p className="text-center text-xs font-semibold text-white">
+                  #{tokenId}
                 </p>
-              )}
-            </a>
-          ))}
+                {meta?.name && (
+                  <p className="mt-0.5 truncate text-center text-[10px] text-[#7DD3E8]">
+                    {meta.name}
+                  </p>
+                )}
+                {redeemed !== undefined && (
+                  <p
+                    className={`mt-1 text-center text-xs ${
+                      redeemed ? "text-[#FFE135]" : "text-green-400"
+                    }`}
+                  >
+                    {redeemed ? "Redeemed" : "Unredeemed"}
+                  </p>
+                )}
+              </a>
+            );
+          })}
         </div>
       )}
     </section>

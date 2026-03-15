@@ -288,11 +288,24 @@ function BuyBoxSection() {
 
 // ─── Order Pizza (Redeem) ───────────────────────────────────────────
 
+const BOX_IPFS_GATEWAYS = [
+  "https://dweb.link/ipfs/",
+  "https://cloudflare-ipfs.com/ipfs/",
+  "https://ipfs.io/ipfs/",
+];
+
+function extractIpfsHash(url: string): string | null {
+  const match = url.match(/\/ipfs\/(.+)$/);
+  return match ? match[1] : null;
+}
+
 function OrderPizzaSection() {
   const { address, isConnected } = useAccount();
   const [selectedBox, setSelectedBox] = useState<string>("");
   const [selectedRecipe, setSelectedRecipe] = useState(0);
   const [txState, setTxState] = useState<TxState>({ status: "idle" });
+  const [boxPreview, setBoxPreview] = useState<{ name: string; image: string } | null>(null);
+  const [loadingPreview, setLoadingPreview] = useState(false);
 
   const { data: pizzaTotalSupply } = useReadContract({
     address: RARE_PIZZAS_CONTRACT,
@@ -354,6 +367,53 @@ function OrderPizzaSection() {
       return result?.status === "success" && result.result === false;
     });
   }, [boxTokenIds, redeemedResults]);
+
+  // Fetch box art when a box is selected
+  const { data: selectedBoxURI } = useReadContract({
+    address: PIZZA_BOX_CONTRACT,
+    abi: BOX_ABI,
+    functionName: "tokenURI",
+    args: selectedBox ? [BigInt(selectedBox)] : undefined,
+    query: { enabled: !!selectedBox },
+  });
+
+  useEffect(() => {
+    if (!selectedBox) {
+      setBoxPreview(null);
+      return;
+    }
+    if (!selectedBoxURI) return;
+
+    let cancelled = false;
+    setLoadingPreview(true);
+
+    async function fetchPreview() {
+      const hash = extractIpfsHash(selectedBoxURI as string);
+      if (!hash) { setLoadingPreview(false); return; }
+
+      for (const gateway of BOX_IPFS_GATEWAYS) {
+        try {
+          const res = await fetch(`${gateway}${hash}`, { signal: AbortSignal.timeout(10000) });
+          if (!res.ok) continue;
+          const data = await res.json();
+          if (!cancelled) {
+            const imgHash = extractIpfsHash(data.image || "");
+            setBoxPreview({
+              name: data.name || "",
+              image: imgHash ? `${BOX_IPFS_GATEWAYS[0]}${imgHash}` : data.image || "",
+            });
+          }
+          break;
+        } catch {
+          continue;
+        }
+      }
+      if (!cancelled) setLoadingPreview(false);
+    }
+
+    fetchPreview();
+    return () => { cancelled = true; };
+  }, [selectedBox, selectedBoxURI]);
 
   const { writeContract } = useWriteContract({
     mutation: {
@@ -445,6 +505,32 @@ function OrderPizzaSection() {
               ))}
             </select>
           </div>
+
+          {selectedBox && (
+            <div className="mb-4 flex w-full max-w-xs flex-col items-center">
+              {loadingPreview ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                  <span className="text-xs text-white/50">Loading box art...</span>
+                </div>
+              ) : boxPreview ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={boxPreview.image}
+                    alt={boxPreview.name}
+                    className="mb-2 w-40 rounded-lg"
+                    onError={(e) => {
+                      e.currentTarget.src = BOX_GIF;
+                    }}
+                  />
+                  <p className="text-sm font-semibold text-[#FFE135]">
+                    {boxPreview.name}
+                  </p>
+                </>
+              ) : null}
+            </div>
+          )}
 
           <div className="mb-6 w-full max-w-xs text-left">
             <p className="mb-2 text-sm font-bold uppercase tracking-wider text-white">
