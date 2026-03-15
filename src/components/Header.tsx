@@ -65,7 +65,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="text-sm text-[#7DD3E8] transition-colors hover:text-white"
             >
-              Pizza Party
+              Global Pizza Party
             </a>
           </nav>
         </div>
@@ -89,7 +89,7 @@ export default function Header() {
               title="OpenSea"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/opensea.svg" alt="OpenSea" className="h-9 w-9 invert" />
+              <img src="/images/opensea.svg" alt="OpenSea" className="h-8 w-8 invert" />
             </a>
             <a
               href="https://x.com/rarepizzas"
