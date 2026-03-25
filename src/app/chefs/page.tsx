@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "The Kitchen Chefs | Rare Pizzas",
   description:
-    "Meet the chefs behind the Rare Pizzas kitchen — Head Chef Shrimp, Oven Chef Don Volare, Toppings Chefs Cactus, Oscar Frog, Pizza Slyce, and Don Fingas, and Sous Chef Jalapeno Peppers.",
+    "Meet the chefs behind the Rare Pizzas kitchen — Head Chef Shrimp, Oven Chef Don Volare, Toppings Chefs Cactus, Oscar Frog, Pizza Slyce, Don Fingas, and Peanut Chews, and Sous Chef Jalapeno Peppers.",
 };
 
 const chefs = [
@@ -31,6 +31,11 @@ const chefs = [
   {
     title: "Toppings Chef",
     name: "Don Fingas",
+  },
+  {
+    title: "Toppings Chef",
+    name: "Peanut Chews",
+    x: "snack_man",
   },
   {
     title: "Sous Chef",
@@ -64,6 +69,16 @@ export default function ChefsPage() {
               {chef.title}
             </p>
             <h2 className="mt-1 text-xl font-bold text-white">{chef.name}</h2>
+            {"x" in chef && (
+              <a
+                href={`https://x.com/${chef.x}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-block text-sm text-[#7DD3E8] hover:text-white"
+              >
+                @{chef.x}
+              </a>
+            )}
           </div>
         ))}
       </div>
