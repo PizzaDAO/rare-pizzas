@@ -671,6 +671,7 @@ const CHEFS = [
   { title: "Toppings Chef", name: "Oscar Frog", x: "dark0eth", pfp: "/images/chefs/dark0eth.jpg" },
   { title: "Toppings Chef", name: "Pizza Slyce", x: "NikkiPsyce", pfp: "/images/chefs/NikkiPsyce.jpg" },
   { title: "Toppings Chef", name: "Don Fingas", x: "hwajilla", pfp: "/images/chefs/hwajilla.jpg" },
+  { title: "Toppings Chef", name: "Peanut Chews", x: "snack_man", pfp: "/images/chefs/snack_man.jpg" },
   { title: "Sous Chef", name: "Jalapeno Peppers", x: "cherish_NFTs", pfp: "/images/chefs/cherish_NFTs.jpg" },
 ];
 
