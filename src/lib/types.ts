@@ -50,3 +50,9 @@ export interface PizzaTokenData {
   toppings: Topping[];
   unmatchedTraits: NFTAttribute[];
 }
+
+export interface OwnerLookupResult {
+  ownerAddress: string | null;
+  twitter: string | null;
+  username: string | null;
+}

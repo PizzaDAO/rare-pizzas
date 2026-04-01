@@ -7,10 +7,11 @@ import {
   RARE_PIZZAS_CONTRACT,
   ERC721_ENUMERABLE_ABI,
   EXCLUDED_TRAIT_TYPES,
+  OPENSEA_BASE_URL,
 } from "@/lib/constants";
 import { matchTopping } from "@/lib/toppings";
 import { getToppingEmoji } from "@/lib/topping-emojis";
-import type { Topping, NFTMetadata, NFTAttribute } from "@/lib/types";
+import type { Topping, NFTMetadata, NFTAttribute, OwnerLookupResult } from "@/lib/types";
 
 // --- IPFS helpers (same pattern as useWalletToppings) ---
 
@@ -45,6 +46,18 @@ async function fetchMetadataWithRetry(
     }
   }
   throw new Error("All IPFS gateways failed");
+}
+
+// --- Owner lookup via serverless function ---
+
+async function lookupOwner(tokenId: number): Promise<OwnerLookupResult> {
+  const res = await fetch(`/api/opensea-owner?tokenId=${tokenId}`);
+  if (!res.ok) throw new Error(`Owner lookup failed (${res.status})`);
+  return res.json();
+}
+
+function truncateAddress(address: string): string {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
 // --- Class ordering for tweet (crust first, sauce, cheese, etc.) ---
@@ -87,7 +100,7 @@ function generateTweet(
   const lines: string[] = [];
 
   // Header
-  lines.push("💎🍕😋");
+  lines.push("\u{1F48E}\u{1F355}\u{1F60B}");
   const ownerPart = ownerHandle
     ? `, owned by @${ownerHandle.replace("@", "")}`
     : "";
@@ -108,13 +121,15 @@ function generateTweet(
     }
   }
   if (handles.size > 0) {
-    lines.push(`🎨 ${[...handles].map((h) => `@${h}`).join(" ")}`);
+    lines.push(`\u{1F3A8} ${[...handles].map((h) => `@${h}`).join(" ")}`);
   }
 
   return lines.join("\n");
 }
 
 // --- Component ---
+
+type OwnerLookupStatus = "idle" | "loading" | "found" | "not-found" | "error";
 
 export default function ComposePage() {
   const [tokenIdInput, setTokenIdInput] = useState("");
@@ -125,6 +140,9 @@ export default function ComposePage() {
   const [isLoadingMeta, setIsLoadingMeta] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [ownerHandle, setOwnerHandle] = useState("");
+  const [ownerAutoFilled, setOwnerAutoFilled] = useState(false);
+  const [ownerAddress, setOwnerAddress] = useState<string | null>(null);
+  const [ownerLookupStatus, setOwnerLookupStatus] = useState<OwnerLookupStatus>("idle");
   const [copied, setCopied] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -183,6 +201,38 @@ export default function ComposePage() {
     };
   }, [tokenURI]);
 
+  // Step 3: Look up owner via OpenSea when activeTokenId changes
+  useEffect(() => {
+    if (activeTokenId === null) return;
+
+    let cancelled = false;
+    setOwnerLookupStatus("loading");
+    setOwnerAddress(null);
+    setOwnerAutoFilled(false);
+
+    lookupOwner(activeTokenId)
+      .then((result) => {
+        if (cancelled) return;
+        setOwnerAddress(result.ownerAddress);
+        if (result.twitter) {
+          setOwnerHandle(result.twitter);
+          setOwnerAutoFilled(true);
+          setOwnerLookupStatus("found");
+        } else {
+          setOwnerLookupStatus("not-found");
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setOwnerLookupStatus("error");
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTokenId]);
+
   const handleLoad = useCallback(() => {
     const id = parseInt(tokenIdInput, 10);
     if (isNaN(id) || id < 0) {
@@ -193,8 +243,17 @@ export default function ComposePage() {
     setToppings([]);
     setUnmatchedTraits([]);
     setError(null);
+    setOwnerHandle("");
+    setOwnerAutoFilled(false);
+    setOwnerAddress(null);
+    setOwnerLookupStatus("idle");
     setActiveTokenId(id);
   }, [tokenIdInput]);
+
+  const handleOwnerHandleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setOwnerHandle(e.target.value);
+    setOwnerAutoFilled(false);
+  }, []);
 
   const isLoading = isLoadingURI || isLoadingMeta;
 
@@ -229,6 +288,22 @@ export default function ComposePage() {
     }
   }, [tweetText]);
 
+  // Owner handle label suffix
+  const ownerLabelSuffix = (() => {
+    switch (ownerLookupStatus) {
+      case "loading":
+        return <span className="normal-case text-[#555]">(looking up...)</span>;
+      case "found":
+        return ownerAutoFilled
+          ? <span className="normal-case text-green-400">(via OpenSea)</span>
+          : <span className="normal-case text-[#555]">(optional)</span>;
+      case "not-found":
+      case "error":
+      default:
+        return <span className="normal-case text-[#555]">(optional)</span>;
+    }
+  })();
+
   return (
     <div>
       <section className="mb-8">
@@ -258,15 +333,30 @@ export default function ComposePage() {
         </div>
         <div className="flex-1">
           <label className="mb-1 block text-sm font-semibold uppercase tracking-wider text-[#7DD3E8]">
-            Owner @ Handle <span className="normal-case text-[#555]">(optional)</span>
+            Owner @ Handle {ownerLabelSuffix}
           </label>
           <input
             type="text"
             value={ownerHandle}
-            onChange={(e) => setOwnerHandle(e.target.value)}
-            placeholder="e.g. dark0eth"
-            className="w-full rounded-lg border border-[#333] bg-[#111] px-4 py-2.5 text-white placeholder-[#555] outline-none focus:border-[#FFE135] sm:max-w-xs"
+            onChange={handleOwnerHandleChange}
+            disabled={ownerLookupStatus === "loading"}
+            placeholder={ownerLookupStatus === "loading" ? "Looking up owner..." : "e.g. dark0eth"}
+            className="w-full rounded-lg border border-[#333] bg-[#111] px-4 py-2.5 text-white placeholder-[#555] outline-none focus:border-[#FFE135] disabled:opacity-50 sm:max-w-xs"
           />
+          {/* Show wallet address + OpenSea link when no X handle found */}
+          {ownerLookupStatus === "not-found" && ownerAddress && (
+            <p className="mt-1 text-xs text-[#555]">
+              Owner: {truncateAddress(ownerAddress)}{" "}
+              <a
+                href={`https://opensea.io/${ownerAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#7DD3E8] hover:underline"
+              >
+                OpenSea profile
+              </a>
+            </p>
+          )}
         </div>
         <button
           onClick={handleLoad}

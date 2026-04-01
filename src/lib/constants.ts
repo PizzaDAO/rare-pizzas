@@ -43,6 +43,13 @@ export const ERC721_ENUMERABLE_ABI = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [{ name: "tokenId", type: "uint256" }],
+    name: "ownerOf",
+    outputs: [{ name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;
 
 export const EXCLUDED_TRAIT_TYPES = new Set([
