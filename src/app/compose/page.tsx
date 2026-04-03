@@ -144,6 +144,7 @@ export default function ComposePage() {
   const [ownerAddress, setOwnerAddress] = useState<string | null>(null);
   const [ownerLookupStatus, setOwnerLookupStatus] = useState<OwnerLookupStatus>("idle");
   const [copied, setCopied] = useState(false);
+  const [isLoadingRandom, setIsLoadingRandom] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Step 1: Read tokenURI from contract
@@ -255,7 +256,31 @@ export default function ComposePage() {
     setOwnerAutoFilled(false);
   }, []);
 
-  const isLoading = isLoadingURI || isLoadingMeta;
+  const handleRandom = useCallback(async () => {
+    setIsLoadingRandom(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/random-pizza");
+      if (!res.ok) throw new Error(`Random pizza failed (${res.status})`);
+      const data = await res.json();
+      setTokenIdInput(String(data.tokenId));
+      // Reset state and trigger load
+      setMetadata(null);
+      setToppings([]);
+      setUnmatchedTraits([]);
+      setOwnerHandle("");
+      setOwnerAutoFilled(false);
+      setOwnerAddress(null);
+      setOwnerLookupStatus("idle");
+      setActiveTokenId(data.tokenId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to get random pizza");
+    } finally {
+      setIsLoadingRandom(false);
+    }
+  }, []);
+
+  const isLoading = isLoadingURI || isLoadingMeta || isLoadingRandom;
 
   const tweetText =
     activeTokenId !== null && toppings.length > 0
@@ -358,13 +383,36 @@ export default function ComposePage() {
             </p>
           )}
         </div>
-        <button
-          onClick={handleLoad}
-          disabled={isLoading || !tokenIdInput}
-          className="rounded-lg bg-[#FFE135] px-6 py-2.5 font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
-        >
-          {isLoading ? "Loading..." : "Load Pizza"}
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleLoad}
+            disabled={isLoading || !tokenIdInput}
+            className="rounded-lg bg-[#FFE135] px-6 py-2.5 font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
+          >
+            {isLoadingURI || isLoadingMeta ? "Loading..." : "Load Pizza"}
+          </button>
+          <button
+            onClick={handleRandom}
+            disabled={isLoading}
+            className="rounded-lg border border-[#FFE135] px-4 py-2.5 font-semibold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10 disabled:opacity-50"
+          >
+            {isLoadingRandom ? (
+              "Rolling..."
+            ) : (
+              <span className="flex items-center gap-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="3" />
+                  <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+                  <circle cx="16" cy="8" r="1.5" fill="currentColor" />
+                  <circle cx="8" cy="16" r="1.5" fill="currentColor" />
+                  <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+                Random
+              </span>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Error */}
