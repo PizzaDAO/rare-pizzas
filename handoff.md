@@ -1,7 +1,7 @@
 # Toppings Site Handoff
 
 ## Live URL
-https://toppings-two.vercel.app
+https://rarepizzas.com
 
 ## What Was Built
 
