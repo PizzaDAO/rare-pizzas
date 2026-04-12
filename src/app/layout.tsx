@@ -23,6 +23,20 @@ export const metadata: Metadata = {
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍕</text></svg>",
   },
+  openGraph: {
+    title: "Rare Pizzas",
+    description:
+      "10,000 generatively baked pizzas in a one-of-a-kind collaboration between 314 international artists.",
+    images: [{ url: "/images/pizza.gif", width: 480, height: 480 }],
+    siteName: "Rare Pizzas",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rare Pizzas",
+    description:
+      "10,000 generatively baked pizzas in a one-of-a-kind collaboration between 314 international artists.",
+    images: ["/images/pizza.gif"],
+  },
 };
 
 export default function RootLayout({
