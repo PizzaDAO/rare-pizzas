@@ -9,9 +9,10 @@ import {
   EXCLUDED_TRAIT_TYPES,
   OPENSEA_BASE_URL,
 } from "@/lib/constants";
-import { matchTopping } from "@/lib/toppings";
+import { matchTopping, getAllToppings } from "@/lib/toppings";
 import { getToppingEmoji } from "@/lib/topping-emojis";
 import type { Topping, NFTMetadata, NFTAttribute, OwnerLookupResult } from "@/lib/types";
+import pizzaIndex from "@/data/pizza-index.json";
 
 // --- IPFS helpers (same pattern as useWalletToppings) ---
 
@@ -127,8 +128,42 @@ function generateTweet(
   return lines.join("\n");
 }
 
+// --- Spotlight tweet generation ---
+
+function generateSpotlightTweet(topping: Topping): string {
+  const emoji = getToppingEmoji(topping.name, topping.class);
+  const lines: string[] = [];
+
+  lines.push(`\u{1F355}\u{2728} Topping Spotlight: ${emoji} ${topping.name}`);
+  lines.push("");
+  lines.push(topping.description);
+  lines.push("");
+
+  // Rarity formatting: "common" → "Common", "superrare" → "Super Rare"
+  const rarityLabel = topping.rarity === "superrare"
+    ? "Super Rare"
+    : topping.rarity.charAt(0).toUpperCase() + topping.rarity.slice(1);
+
+  // Pizza count from pizza-index
+  const count = (pizzaIndex as Record<string, number[]>)[String(topping.sku)]?.length ?? 0;
+
+  lines.push(`\u{1F4CA} Rarity: ${rarityLabel} \u{2022} Found on ${count} pizzas`);
+
+  // Artist line
+  const hasTwitter = topping.artistTwitter && topping.artistTwitter !== "n/a" && topping.artistTwitter !== "N/A";
+  const artistTag = hasTwitter
+    ? `${topping.artist} @${topping.artistTwitter!.replace("@", "")}`
+    : topping.artist;
+  lines.push(`\u{1F3A8} Art by ${artistTag}`);
+  lines.push("");
+  lines.push(`rarepizzas.com/topping/${topping.sku}`);
+
+  return lines.join("\n");
+}
+
 // --- Component ---
 
+type ComposeMode = "pizza" | "spotlight";
 type OwnerLookupStatus = "idle" | "loading" | "found" | "not-found" | "error";
 
 export default function ComposePage() {
@@ -146,6 +181,13 @@ export default function ComposePage() {
   const [copied, setCopied] = useState(false);
   const [isLoadingRandom, setIsLoadingRandom] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Spotlight mode state
+  const [mode, setMode] = useState<ComposeMode>("pizza");
+  const [selectedTopping, setSelectedTopping] = useState<Topping | null>(null);
+  const [toppingSearch, setToppingSearch] = useState("");
+  const [spotlightCopied, setSpotlightCopied] = useState(false);
+  const spotlightTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Step 1: Read tokenURI from contract
   const {
@@ -313,6 +355,47 @@ export default function ComposePage() {
     }
   }, [tweetText]);
 
+  // --- Spotlight mode logic ---
+
+  const allToppings = getAllToppings();
+  const filteredToppings = toppingSearch.trim()
+    ? allToppings.filter((t) => t.name.toLowerCase().includes(toppingSearch.toLowerCase()))
+    : [];
+
+  const handleRandomTopping = useCallback(() => {
+    const all = getAllToppings();
+    const random = all[Math.floor(Math.random() * all.length)];
+    setSelectedTopping(random);
+    setToppingSearch("");
+  }, []);
+
+  const spotlightTweetText = selectedTopping
+    ? generateSpotlightTweet(selectedTopping)
+    : "";
+
+  const spotlightTweetIntentUrl = spotlightTweetText
+    ? `https://x.com/intent/tweet?text=${encodeURIComponent(spotlightTweetText)}`
+    : "";
+
+  const handleSpotlightCopy = useCallback(async () => {
+    if (!spotlightTweetText) return;
+    try {
+      await navigator.clipboard.writeText(spotlightTweetText);
+      setSpotlightCopied(true);
+      setTimeout(() => setSpotlightCopied(false), 2000);
+    } catch {
+      spotlightTextareaRef.current?.select();
+    }
+  }, [spotlightTweetText]);
+
+  // Auto-resize spotlight textarea
+  useEffect(() => {
+    if (spotlightTextareaRef.current) {
+      spotlightTextareaRef.current.style.height = "auto";
+      spotlightTextareaRef.current.style.height = `${spotlightTextareaRef.current.scrollHeight}px`;
+    }
+  }, [spotlightTweetText]);
+
   // Owner handle label suffix
   const ownerLabelSuffix = (() => {
     switch (ownerLookupStatus) {
@@ -336,10 +419,38 @@ export default function ComposePage() {
           Tweet Composer
         </h1>
         <p className="text-[#7DD3E8]">
-          Generate a tweet for any Rare Pizza by token ID.
+          {mode === "pizza"
+            ? "Generate a tweet for any Rare Pizza by token ID."
+            : "Highlight a single topping with its art, stats, and artist credit."}
         </p>
       </section>
 
+      {/* Mode Toggle */}
+      <div className="mb-8 flex gap-1 rounded-lg bg-[#111] p-1 border border-[#333] w-fit">
+        <button
+          onClick={() => setMode("pizza")}
+          className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${
+            mode === "pizza"
+              ? "bg-[#FFE135] text-black"
+              : "text-[#888] hover:text-white"
+          }`}
+        >
+          Pizza PFP
+        </button>
+        <button
+          onClick={() => setMode("spotlight")}
+          className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${
+            mode === "spotlight"
+              ? "bg-[#FFE135] text-black"
+              : "text-[#888] hover:text-white"
+          }`}
+        >
+          Topping Spotlight
+        </button>
+      </div>
+
+      {mode === "pizza" && (
+      <>
       {/* Input */}
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end">
         <div className="flex-1">
@@ -521,6 +632,132 @@ export default function ComposePage() {
             )}
           </div>
         </div>
+      )}
+      </>
+      )}
+
+      {mode === "spotlight" && (
+        <>
+          {/* Topping Search + Random */}
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="relative flex-1">
+              <label className="mb-1 block text-sm font-semibold uppercase tracking-wider text-[#7DD3E8]">
+                Search Toppings
+              </label>
+              <input
+                type="text"
+                value={toppingSearch}
+                onChange={(e) => setToppingSearch(e.target.value)}
+                placeholder="e.g. Pepperoni, Lobster, Gold Flake..."
+                className="w-full rounded-lg border border-[#333] bg-[#111] px-4 py-2.5 text-white placeholder-[#555] outline-none focus:border-[#FFE135] sm:max-w-md"
+              />
+              {/* Dropdown */}
+              {toppingSearch.trim() && filteredToppings.length > 0 && (
+                <div className="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border border-[#333] bg-[#111] sm:max-w-md">
+                  {filteredToppings.slice(0, 20).map((t) => (
+                    <button
+                      key={t.sku}
+                      onClick={() => {
+                        setSelectedTopping(t);
+                        setToppingSearch("");
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-white hover:bg-[#222]"
+                    >
+                      <span>{getToppingEmoji(t.name, t.class)}</span>
+                      <span>{t.name}</span>
+                      <span className="ml-auto text-xs text-[#555]">{t.class}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {toppingSearch.trim() && filteredToppings.length === 0 && (
+                <div className="absolute z-10 mt-1 w-full rounded-lg border border-[#333] bg-[#111] px-4 py-3 text-sm text-[#555] sm:max-w-md">
+                  No toppings found
+                </div>
+              )}
+            </div>
+            <button
+              onClick={handleRandomTopping}
+              className="rounded-lg border border-[#FFE135] px-4 py-2.5 font-semibold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10"
+            >
+              <span className="flex items-center gap-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="3" />
+                  <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+                  <circle cx="16" cy="8" r="1.5" fill="currentColor" />
+                  <circle cx="8" cy="16" r="1.5" fill="currentColor" />
+                  <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+                </svg>
+                Random Topping
+              </span>
+            </button>
+          </div>
+
+          {/* Selected Topping Result */}
+          {selectedTopping && spotlightTweetText && (
+            <div className="grid gap-8 lg:grid-cols-2">
+              {/* Topping Art */}
+              <div>
+                <div className="mb-4 overflow-hidden rounded-xl border border-[#333]/50">
+                  <Image
+                    src={`/art/${selectedTopping.sku}.webp`}
+                    alt={selectedTopping.name}
+                    width={600}
+                    height={600}
+                    className="h-auto w-full"
+                  />
+                </div>
+                <p className="text-sm text-[#555]">
+                  {getToppingEmoji(selectedTopping.name, selectedTopping.class)} {selectedTopping.name} — {selectedTopping.class}
+                </p>
+              </div>
+
+              {/* Tweet Text */}
+              <div>
+                <label className="mb-2 block text-sm font-semibold uppercase tracking-wider text-[#FFE135]">
+                  Tweet
+                </label>
+                <textarea
+                  ref={spotlightTextareaRef}
+                  value={spotlightTweetText}
+                  readOnly
+                  className="mb-4 w-full resize-none rounded-lg border border-[#333] bg-[#111] p-4 font-mono text-sm leading-relaxed text-white outline-none"
+                  rows={10}
+                />
+
+                <div className="mb-6 text-right text-xs text-[#555]">
+                  {spotlightTweetText.length} / 280 characters
+                  {spotlightTweetText.length > 280 && (
+                    <span className="ml-2 text-red-400">
+                      (over limit by {spotlightTweetText.length - 280})
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleSpotlightCopy}
+                    className="rounded-lg border border-[#333] bg-[#111] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#222]"
+                  >
+                    {spotlightCopied ? "Copied!" : "Copy Text"}
+                  </button>
+                  <a
+                    href={spotlightTweetIntentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[#1DA1F2] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1A8CD8]"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                    Post on X
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
