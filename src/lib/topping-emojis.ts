@@ -331,6 +331,7 @@ const CLASS_EMOJIS: Record<string, string> = {
   "Snacks": "🍿",
   "Random": "✨",
   "Drizzle": "💧",
+  "NFT": "🖼️",
 };
 
 export function getToppingEmoji(name: string, className?: string): string {
