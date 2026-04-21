@@ -652,7 +652,7 @@ export default function ComposePage() {
             </div>
             {markPostedStatus === "error" && (
               <p className="mt-2 text-xs text-red-400">
-                Failed to mark as posted. KV store may not be configured.
+                Failed to mark as posted. Blob store may not be configured.
               </p>
             )}
 

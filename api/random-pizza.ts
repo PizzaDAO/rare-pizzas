@@ -1,12 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { kv } from "@vercel/kv";
+import { list } from "@vercel/blob";
 
 interface RecentEntry {
   tokenId: number;
   tweetedAt: string;
 }
 
-const KV_KEY = "recently-tweeted";
+const BLOB_PATH = "recently-tweeted.json";
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
 /**
@@ -107,11 +107,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // Try to filter out recently-tweeted pizzas (graceful degradation if KV unavailable)
+  // Try to filter out recently-tweeted pizzas (graceful degradation if Blob unavailable)
   let recentTokenIds = new Set<number>();
   try {
-    const entries: RecentEntry[] | null = await kv.get<RecentEntry[]>(KV_KEY);
-    if (entries) {
+    const { blobs } = await list({ prefix: "recently-tweeted" });
+    const existing = blobs.find((b) => b.pathname === BLOB_PATH);
+    if (existing) {
+      const blobRes = await fetch(existing.url);
+      const entries: RecentEntry[] = await blobRes.json();
       const cutoff = Date.now() - THIRTY_DAYS_MS;
       for (const e of entries) {
         if (new Date(e.tweetedAt).getTime() > cutoff) {
@@ -120,7 +123,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
   } catch {
-    // KV not configured — proceed without filtering
+    // Blob not configured — proceed without filtering
   }
 
   let pool = X_LINKED_PIZZAS.filter((p) => !recentTokenIds.has(p.tokenId));
