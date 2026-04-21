@@ -48,10 +48,9 @@ function ToppingsContent() {
           Rare Pizzas Toppings
         </h1>
         <p className="mx-auto max-w-2xl text-lg text-[#7DD3E8]">
-          Browse {toppingCount} unique toppings across {toppingClasses.length}{" "}
-          classes{crustCount > 0 && <> + {crustCount} crusts</>}. Each topping
-          is a hand-crafted piece of digital art created by a different artist
-          from around the world.
+          314 unique artist toppings across 17 classes, 16 NFTs, and 7 crusts.
+          Each topping is a hand-crafted piece of digital art created by a
+          different artist from around the world.
         </p>
       </section>
 
