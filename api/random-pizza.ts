@@ -1,4 +1,13 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { list } from "@vercel/blob";
+
+interface RecentEntry {
+  tokenId: number;
+  tweetedAt: string;
+}
+
+const BLOB_PATH = "recently-tweeted.json";
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
 /**
  * Pre-built list of Rare Pizza token IDs whose owners have X/Twitter
@@ -98,7 +107,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const entry = X_LINKED_PIZZAS[Math.floor(Math.random() * X_LINKED_PIZZAS.length)];
+  // Try to filter out recently-tweeted pizzas (graceful degradation if Blob unavailable)
+  let recentTokenIds = new Set<number>();
+  try {
+    const { blobs } = await list({ prefix: "recently-tweeted" });
+    const existing = blobs.find((b) => b.pathname === BLOB_PATH);
+    if (existing) {
+      const blobRes = await fetch(existing.url);
+      const entries: RecentEntry[] = await blobRes.json();
+      const cutoff = Date.now() - THIRTY_DAYS_MS;
+      for (const e of entries) {
+        if (new Date(e.tweetedAt).getTime() > cutoff) {
+          recentTokenIds.add(e.tokenId);
+        }
+      }
+    }
+  } catch {
+    // Blob not configured — proceed without filtering
+  }
+
+  let pool = X_LINKED_PIZZAS.filter((p) => !recentTokenIds.has(p.tokenId));
+  // If all are filtered out, fall back to the full list
+  if (pool.length === 0) {
+    pool = X_LINKED_PIZZAS;
+  }
+
+  const entry = pool[Math.floor(Math.random() * pool.length)];
 
   res.setHeader("Cache-Control", "public, s-maxage=0");
   return res.status(200).json({

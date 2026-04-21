@@ -180,6 +180,8 @@ export default function ComposePage() {
   const [ownerLookupStatus, setOwnerLookupStatus] = useState<OwnerLookupStatus>("idle");
   const [copied, setCopied] = useState(false);
   const [isLoadingRandom, setIsLoadingRandom] = useState(false);
+  const [isMarkingPosted, setIsMarkingPosted] = useState(false);
+  const [markPostedStatus, setMarkPostedStatus] = useState<"idle" | "success" | "error">("idle");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Spotlight mode state
@@ -290,6 +292,7 @@ export default function ComposePage() {
     setOwnerAutoFilled(false);
     setOwnerAddress(null);
     setOwnerLookupStatus("idle");
+    setMarkPostedStatus("idle");
     setActiveTokenId(id);
   }, [tokenIdInput]);
 
@@ -314,6 +317,7 @@ export default function ComposePage() {
       setOwnerAutoFilled(false);
       setOwnerAddress(null);
       setOwnerLookupStatus("idle");
+      setMarkPostedStatus("idle");
       setActiveTokenId(data.tokenId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to get random pizza");
@@ -321,6 +325,25 @@ export default function ComposePage() {
       setIsLoadingRandom(false);
     }
   }, []);
+
+  const handleMarkPosted = useCallback(async () => {
+    if (activeTokenId === null) return;
+    setIsMarkingPosted(true);
+    setMarkPostedStatus("idle");
+    try {
+      const res = await fetch("/api/mark-posted", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tokenId: activeTokenId }),
+      });
+      if (!res.ok) throw new Error(`Failed (${res.status})`);
+      setMarkPostedStatus("success");
+    } catch {
+      setMarkPostedStatus("error");
+    } finally {
+      setIsMarkingPosted(false);
+    }
+  }, [activeTokenId]);
 
   const isLoading = isLoadingURI || isLoadingMeta || isLoadingRandom;
 
@@ -597,7 +620,7 @@ export default function ComposePage() {
               )}
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <button
                 onClick={handleCopy}
                 className="rounded-lg border border-[#333] bg-[#111] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#222]"
@@ -615,7 +638,23 @@ export default function ComposePage() {
                 </svg>
                 Post on X
               </a>
+              <button
+                onClick={handleMarkPosted}
+                disabled={isMarkingPosted || markPostedStatus === "success"}
+                className="rounded-lg border border-green-500/50 bg-green-500/10 px-5 py-2.5 text-sm font-semibold text-green-400 transition-colors hover:bg-green-500/20 disabled:opacity-50"
+              >
+                {isMarkingPosted
+                  ? "Marking..."
+                  : markPostedStatus === "success"
+                    ? "Marked — won\u2019t suggest for 30 days"
+                    : "Mark Posted"}
+              </button>
             </div>
+            {markPostedStatus === "error" && (
+              <p className="mt-2 text-xs text-red-400">
+                Failed to mark as posted. Blob store may not be configured.
+              </p>
+            )}
 
             {/* Unmatched traits warning */}
             {unmatchedTraits.length > 0 && (
