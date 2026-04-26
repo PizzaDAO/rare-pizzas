@@ -3,11 +3,17 @@
 import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAccount } from "wagmi";
+import dynamic from "next/dynamic";
 import RarityBadge from "@/components/RarityBadge";
 import { getAllToppings, getClasses, getRarities } from "@/lib/toppings";
 import { getImageUrl } from "@/lib/constants";
 import { COLLECTIONS, CHAIN_LABELS } from "@/lib/collections";
 import type { Rarity } from "@/lib/types";
+import type { OrderWithCounter } from "@/lib/seaport";
+
+// Lazy-load BuyModal (client-only, heavy dependency on seaport/ethers)
+const BuyModal = dynamic(() => import("@/components/BuyModal"), { ssr: false });
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -28,6 +34,7 @@ interface Listing {
   expiry: string;
   status: string;
   createdAt: string;
+  orderData?: OrderWithCounter;
   toppings: ListingTopping[];
 }
 
@@ -74,10 +81,30 @@ function getOpenseaLink(listing: Listing): string {
   return `https://opensea.io/assets/ethereum/${listing.tokenContract}/${listing.tokenId}`;
 }
 
+/** Check if a listing has valid Seaport order data for on-site buying */
+function hasOrderData(listing: Listing): listing is Listing & { orderData: OrderWithCounter } {
+  return (
+    listing.orderData != null &&
+    typeof listing.orderData === "object" &&
+    "parameters" in listing.orderData &&
+    "signature" in listing.orderData
+  );
+}
+
 // ─── Listing Card ────────────────────────────────────────────────────
 
-function ListingCard({ listing }: { listing: Listing }) {
+function ListingCard({
+  listing,
+  onBuyClick,
+}: {
+  listing: Listing;
+  onBuyClick: (listing: Listing) => void;
+}) {
+  const { isConnected } = useAccount();
   const allToppings = getAllToppings();
+  const canBuyOnSite = hasOrderData(listing);
+  const collectionInfo = COLLECTIONS.find((c) => c.slug === listing.collection);
+  const isERC1155 = collectionInfo?.standard === "ERC1155";
 
   const toppingDetails = useMemo(() => {
     return listing.toppings
@@ -94,8 +121,6 @@ function ListingCard({ listing }: { listing: Listing }) {
     return null;
   }, [listing.toppings]);
 
-  const collectionInfo = COLLECTIONS.find((c) => c.slug === listing.collection);
-
   return (
     <div className="group rounded-xl border border-[#333]/50 bg-[#111] transition-all hover:border-[#FFE135]/50">
       {/* Image area */}
@@ -107,6 +132,12 @@ function ListingCard({ listing }: { listing: Listing }) {
         <div className="absolute left-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-semibold text-white">
           {CHAIN_LABELS[listing.chainId] || `Chain ${listing.chainId}`}
         </div>
+        {/* ERC1155 badge */}
+        {isERC1155 && (
+          <div className="absolute left-2 top-7 rounded-full bg-[#7DD3E8]/20 px-2 py-0.5 text-[10px] font-semibold text-[#7DD3E8]">
+            ERC1155
+          </div>
+        )}
         {/* Rarity badge */}
         {highestRarity && (
           <div className="absolute right-2 top-2">
@@ -163,30 +194,62 @@ function ListingCard({ listing }: { listing: Listing }) {
           Listed by {truncateAddress(listing.seller)}
         </p>
 
-        {/* OpenSea link */}
-        <a
-          href={getOpenseaLink(listing)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 rounded-lg bg-[#FFE135] px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        {/* Action buttons */}
+        <div className="flex flex-col gap-2">
+          {/* Buy Now button — only if we have valid Seaport order data */}
+          {canBuyOnSite && (
+            <button
+              onClick={() => onBuyClick(listing)}
+              className="flex items-center justify-center gap-2 rounded-lg bg-[#FFE135] px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="9" cy="21" r="1" />
+                <circle cx="20" cy="21" r="1" />
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+              </svg>
+              Buy Now
+            </button>
+          )}
+
+          {/* View on OpenSea — primary if no order data, secondary if we have it */}
+          <a
+            href={getOpenseaLink(listing)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+              canBuyOnSite
+                ? "border border-[#333] bg-[#0a0a0a] text-[#7DD3E8] hover:border-[#555] hover:text-white"
+                : "bg-[#FFE135] text-black hover:bg-[#FFE135]/80"
+            }`}
           >
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-            <polyline points="15 3 21 3 21 9" />
-            <line x1="10" y1="14" x2="21" y2="3" />
-          </svg>
-          Buy on OpenSea
-        </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            {canBuyOnSite ? "View on OpenSea" : "Buy on OpenSea"}
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -258,6 +321,9 @@ function MarketplaceContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Buy modal state
+  const [buyListing, setBuyListing] = useState<Listing | null>(null);
+
   const classes = getClasses();
   const rarities = getRarities();
   const allToppings = getAllToppings();
@@ -286,48 +352,47 @@ function MarketplaceContent() {
   );
 
   // Fetch listings
-  useEffect(() => {
-    let cancelled = false;
+  const fetchListings = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-    async function fetchListings() {
-      setIsLoading(true);
-      setError(null);
+    try {
+      const params = new URLSearchParams();
+      if (activeCollection) params.set("collection", activeCollection);
+      if (activeRarity) params.set("rarity", activeRarity);
+      if (activeTopping) params.set("topping", activeTopping);
+      if (activeChain) params.set("chain", activeChain);
+      if (activeSort) params.set("sort", activeSort);
 
-      try {
-        const params = new URLSearchParams();
-        if (activeCollection) params.set("collection", activeCollection);
-        if (activeRarity) params.set("rarity", activeRarity);
-        if (activeTopping) params.set("topping", activeTopping);
-        if (activeChain) params.set("chain", activeChain);
-        if (activeSort) params.set("sort", activeSort);
+      const res = await fetch(`/api/marketplace/listings?${params.toString()}`);
+      if (!res.ok) throw new Error("Failed to fetch listings");
 
-        const res = await fetch(`/api/marketplace/listings?${params.toString()}`);
-        if (!res.ok) throw new Error("Failed to fetch listings");
-
-        const data = await res.json();
-        if (!cancelled) {
-          setListingsData(data.listings || []);
-          setTotal(data.total || 0);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          // If API is unavailable (e.g., no DATABASE_URL), show empty state gracefully
-          setListingsData([]);
-          setTotal(0);
-          setError(null); // Don't show error for expected empty state
-        }
-      } finally {
-        if (!cancelled) {
-          setIsLoading(false);
-        }
-      }
+      const data = await res.json();
+      setListingsData(data.listings || []);
+      setTotal(data.total || 0);
+    } catch (err) {
+      // If API is unavailable (e.g., no DATABASE_URL), show empty state gracefully
+      setListingsData([]);
+      setTotal(0);
+      setError(null); // Don't show error for expected empty state
+    } finally {
+      setIsLoading(false);
     }
-
-    fetchListings();
-    return () => {
-      cancelled = true;
-    };
   }, [activeCollection, activeRarity, activeTopping, activeChain, activeSort]);
+
+  useEffect(() => {
+    fetchListings();
+  }, [fetchListings]);
+
+  // Handle Buy Now click
+  const handleBuyClick = useCallback((listing: Listing) => {
+    setBuyListing(listing);
+  }, []);
+
+  // Handle buy success — refresh listings to reflect status change
+  const handleBuySuccess = useCallback(() => {
+    fetchListings();
+  }, [fetchListings]);
 
   return (
     <>
@@ -511,9 +576,22 @@ function MarketplaceContent() {
       {!isLoading && listingsData.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {listingsData.map((listing) => (
-            <ListingCard key={listing.orderId} listing={listing} />
+            <ListingCard
+              key={listing.orderId}
+              listing={listing}
+              onBuyClick={handleBuyClick}
+            />
           ))}
         </div>
+      )}
+
+      {/* Buy Modal */}
+      {buyListing && hasOrderData(buyListing) && (
+        <BuyModal
+          listing={buyListing as Listing & { orderData: OrderWithCounter }}
+          onClose={() => setBuyListing(null)}
+          onSuccess={handleBuySuccess}
+        />
       )}
     </>
   );
