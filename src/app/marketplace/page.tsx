@@ -337,8 +337,8 @@ function MarketplaceContent() {
           Marketplace
         </h1>
         <p className="mx-auto max-w-2xl text-lg text-[#7DD3E8]">
-          Browse and trade PizzaDAO NFTs by their toppings. Filter by rarity,
-          class, and specific toppings across all collections.
+          Browse and trade PizzaDAO NFTs. Filter by rarity, class, and
+          specific toppings across all collections.
         </p>
       </section>
 
