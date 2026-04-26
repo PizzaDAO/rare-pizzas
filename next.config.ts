@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const basePath = process.env.PAGES_BASE_PATH || "";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // Removed output: "export" to enable API routes for marketplace
   basePath,
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,

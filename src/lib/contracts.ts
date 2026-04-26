@@ -1,5 +1,6 @@
 export const PIZZA_BOX_CONTRACT = "0x4ae57798AEF4aF99eD03818f83d2d8AcA89952c7" as const;
 export const RARE_PIZZAS_CONTRACT = "0xe6616436ff001fe827e37c7fad100f531d0935f0" as const;
+export const PIZZA_STICKS_CONTRACT = "0x0c7fca14b968476c223db3ee0fda9da62e0e9106" as const;
 
 export const RECIPES = [
   { id: 0, name: "Rare" },
