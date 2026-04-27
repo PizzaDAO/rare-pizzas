@@ -342,6 +342,12 @@ function MarketplaceContent() {
   // Offer modal state
   const [offerListing, setOfferListing] = useState<Listing | null>(null);
 
+  // Floor price state
+  const [floorPrice, setFloorPrice] = useState<string | null>(null);
+  const [floorCurrency, setFloorCurrency] = useState("ETH");
+  const [floorCount, setFloorCount] = useState(0);
+  const [isFloorLoading, setIsFloorLoading] = useState(false);
+
   const classes = getClasses();
   const rarities = getRarities();
   const allToppings = getAllToppings();
@@ -402,6 +408,37 @@ function MarketplaceContent() {
     fetchListings();
   }, [fetchListings]);
 
+  // Fetch floor price for current filters
+  useEffect(() => {
+    async function loadFloor() {
+      setIsFloorLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (activeCollection) params.set("collection", activeCollection);
+        if (activeTopping) params.set("topping", activeTopping);
+        // Only include rarity/class for floor context if they are set
+        if (activeRarity) params.set("rarity", activeRarity);
+
+        const res = await fetch(`/api/marketplace/floor?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setFloorPrice(data.floor ?? null);
+          setFloorCurrency(data.currency || "ETH");
+          setFloorCount(data.count || 0);
+        } else {
+          setFloorPrice(null);
+          setFloorCount(0);
+        }
+      } catch {
+        setFloorPrice(null);
+        setFloorCount(0);
+      } finally {
+        setIsFloorLoading(false);
+      }
+    }
+    loadFloor();
+  }, [activeCollection, activeTopping, activeRarity]);
+
   // Handle Buy Now click
   const handleBuyClick = useCallback((listing: Listing) => {
     setBuyListing(listing);
@@ -453,6 +490,17 @@ function MarketplaceContent() {
             <line x1="16" y1="17" x2="8" y2="17" />
           </svg>
           My Listings & Offers
+        </Link>
+        <Link
+          href="/marketplace/floors"
+          className="inline-flex items-center gap-2 rounded-lg border border-[#333] bg-[#111] px-4 py-2 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#FFE135]/50 hover:text-white"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10" />
+            <line x1="12" y1="20" x2="12" y2="4" />
+            <line x1="6" y1="20" x2="6" y2="14" />
+          </svg>
+          Floor Prices
         </Link>
       </div>
 
@@ -594,6 +642,26 @@ function MarketplaceContent() {
           </select>
         </div>
       </div>
+
+      {/* Floor Price Indicator */}
+      {!isFloorLoading && floorPrice && (
+        <div className="mb-4 inline-flex items-center gap-3 rounded-lg border border-[#FFE135]/30 bg-[#FFE135]/5 px-4 py-2">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#555]">
+            {activeTopping
+              ? `${allToppings.find((t) => t.sku === Number(activeTopping))?.name || "Topping"} Floor`
+              : activeCollection
+                ? `${COLLECTIONS.find((c) => c.slug === activeCollection)?.name || "Collection"} Floor`
+                : activeRarity
+                  ? `${RARITY_LABELS[activeRarity] || activeRarity} Floor`
+                  : "Floor"}
+          </span>
+          <span className="text-lg font-bold text-[#FFE135]">{floorPrice}</span>
+          <span className="text-xs text-[#7DD3E8]">{floorCurrency}</span>
+          <span className="text-xs text-[#555]">
+            ({floorCount} listing{floorCount !== 1 ? "s" : ""})
+          </span>
+        </div>
+      )}
 
       {/* Results count */}
       {!isLoading && total > 0 && (
