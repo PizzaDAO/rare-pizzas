@@ -15,15 +15,25 @@ export async function GET(request: NextRequest) {
     const priceMin = searchParams.get("priceMin"); // min price in wei
     const priceMax = searchParams.get("priceMax"); // max price in wei
     const chain = searchParams.get("chain"); // chain ID
+    const seller = searchParams.get("seller"); // seller address filter
+    const status = searchParams.get("status"); // status filter (defaults to "active")
     const sort = searchParams.get("sort") || "newest"; // price-asc, price-desc, rarity, newest
     const limit = Math.min(Number(searchParams.get("limit")) || 50, 100);
     const offset = Number(searchParams.get("offset")) || 0;
 
-    // Build conditions
-    const conditions = [eq(listings.status, "active")];
+    // Build conditions — if seller is specified, show all statuses; otherwise only active
+    const conditions = seller
+      ? status
+        ? [eq(listings.status, status)]
+        : []
+      : [eq(listings.status, status || "active")];
 
     if (collection) {
       conditions.push(eq(listings.collection, collection));
+    }
+
+    if (seller) {
+      conditions.push(eq(listings.seller, seller.toLowerCase()));
     }
 
     if (chain) {

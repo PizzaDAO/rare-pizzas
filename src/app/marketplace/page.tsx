@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { useAccount } from "wagmi";
 import dynamic from "next/dynamic";
 import RarityBadge from "@/components/RarityBadge";
@@ -12,8 +13,9 @@ import { COLLECTIONS, CHAIN_LABELS } from "@/lib/collections";
 import type { Rarity } from "@/lib/types";
 import type { OrderWithCounter } from "@/lib/seaport";
 
-// Lazy-load BuyModal (client-only, heavy dependency on seaport/ethers)
+// Lazy-load BuyModal and OfferModal (client-only, heavy dependency on seaport/ethers)
 const BuyModal = dynamic(() => import("@/components/BuyModal"), { ssr: false });
+const OfferModal = dynamic(() => import("@/components/OfferModal"), { ssr: false });
 
 // ─── Types ───────────────────────────────────────────────────────────
 
@@ -96,9 +98,11 @@ function hasOrderData(listing: Listing): listing is Listing & { orderData: Order
 function ListingCard({
   listing,
   onBuyClick,
+  onOfferClick,
 }: {
   listing: Listing;
   onBuyClick: (listing: Listing) => void;
+  onOfferClick: (listing: Listing) => void;
 }) {
   const { isConnected } = useAccount();
   const allToppings = getAllToppings();
@@ -221,6 +225,18 @@ function ListingCard({
             </button>
           )}
 
+          {/* Make Offer button */}
+          <button
+            onClick={() => onOfferClick(listing)}
+            className="flex items-center justify-center gap-2 rounded-lg border border-[#7DD3E8]/30 px-4 py-2 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#7DD3E8] hover:text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+            Make Offer
+          </button>
+
           {/* View on OpenSea — primary if no order data, secondary if we have it */}
           <a
             href={getOpenseaLink(listing)}
@@ -323,6 +339,8 @@ function MarketplaceContent() {
 
   // Buy modal state
   const [buyListing, setBuyListing] = useState<Listing | null>(null);
+  // Offer modal state
+  const [offerListing, setOfferListing] = useState<Listing | null>(null);
 
   const classes = getClasses();
   const rarities = getRarities();
@@ -389,10 +407,15 @@ function MarketplaceContent() {
     setBuyListing(listing);
   }, []);
 
-  // Handle buy success — refresh listings to reflect status change
+  // Handle Buy Now success — refresh listings to reflect status change
   const handleBuySuccess = useCallback(() => {
     fetchListings();
   }, [fetchListings]);
+
+  // Handle Make Offer click
+  const handleOfferClick = useCallback((listing: Listing) => {
+    setOfferListing(listing);
+  }, []);
 
   return (
     <>
@@ -406,6 +429,32 @@ function MarketplaceContent() {
           specific toppings across all collections.
         </p>
       </section>
+
+      {/* Sub-navigation */}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <Link
+          href="/marketplace/list"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#FFE135] px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          List an NFT
+        </Link>
+        <Link
+          href="/marketplace/my-listings"
+          className="inline-flex items-center gap-2 rounded-lg border border-[#333] bg-[#111] px-4 py-2 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#FFE135]/50 hover:text-white"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+          </svg>
+          My Listings & Offers
+        </Link>
+      </div>
 
       {/* Collection Tabs */}
       <div className="mb-6 flex flex-wrap gap-2">
@@ -580,6 +629,7 @@ function MarketplaceContent() {
               key={listing.orderId}
               listing={listing}
               onBuyClick={handleBuyClick}
+              onOfferClick={handleOfferClick}
             />
           ))}
         </div>
@@ -591,6 +641,23 @@ function MarketplaceContent() {
           listing={buyListing as Listing & { orderData: OrderWithCounter }}
           onClose={() => setBuyListing(null)}
           onSuccess={handleBuySuccess}
+        />
+      )}
+
+      {/* Offer Modal */}
+      {offerListing && (
+        <OfferModal
+          target={{
+            collection: offerListing.collection,
+            tokenContract: offerListing.tokenContract,
+            chainId: offerListing.chainId,
+            tokenId: offerListing.tokenId,
+            toppings: offerListing.toppings,
+          }}
+          onClose={() => setOfferListing(null)}
+          onSuccess={() => {
+            setOfferListing(null);
+          }}
         />
       )}
     </>
