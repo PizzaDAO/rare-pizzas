@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { listings, listingToppings } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +24,13 @@ export const dynamic = "force-dynamic";
  * }
  */
 export async function POST(request: NextRequest) {
+  let db;
+  try {
+    db = getDb();
+  } catch {
+    return NextResponse.json({ error: "Database not configured" }, { status: 503 });
+  }
+
   try {
     const body = await request.json();
     const {

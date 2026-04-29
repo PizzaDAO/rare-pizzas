@@ -175,8 +175,8 @@ export function matchTopping(
   }
 
   const lookup = buildToppingLookup();
-  const className = attribute.trait_type;
-  const name = attribute.value;
+  const className = String(attribute.trait_type);
+  const name = String(attribute.value);
 
   // Tier 1: Exact normalized match
   const exactKey = makeKey(className, name);

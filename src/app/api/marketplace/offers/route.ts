@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { offers } from "@/db/schema";
 import { eq, and, desc, asc, sql } from "drizzle-orm";
 
@@ -21,6 +21,13 @@ export const dynamic = "force-dynamic";
  * - offset: pagination offset
  */
 export async function GET(request: NextRequest) {
+  let db;
+  try {
+    db = getDb();
+  } catch {
+    return NextResponse.json({ offers: [], total: 0 });
+  }
+
   try {
     const { searchParams } = request.nextUrl;
 

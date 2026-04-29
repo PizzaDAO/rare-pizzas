@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { listings, listingToppings } from "@/db/schema";
 import { eq, and, gte, lte, desc, asc, inArray, sql } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
 
+const EMPTY = NextResponse.json({ listings: [], total: 0 });
+
 export async function GET(request: NextRequest) {
+  let db;
+  try {
+    db = getDb();
+  } catch {
+    return EMPTY;
+  }
+
   try {
     const { searchParams } = request.nextUrl;
 

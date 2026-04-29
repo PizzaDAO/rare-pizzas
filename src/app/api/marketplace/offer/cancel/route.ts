@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { getDb } from "@/db";
 import { offers } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 
@@ -13,6 +13,13 @@ export const dynamic = "force-dynamic";
  * Body: { offerId: string, offerer: string }
  */
 export async function POST(request: NextRequest) {
+  let db;
+  try {
+    db = getDb();
+  } catch {
+    return NextResponse.json({ error: "Database not configured" }, { status: 503 });
+  }
+
   try {
     const body = await request.json();
     const { offerId, offerer } = body;
