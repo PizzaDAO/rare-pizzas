@@ -239,7 +239,7 @@ function BuyBoxSection() {
             <select
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
-              className="h-11 w-20 cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-3 pr-8 py-2 text-lg text-white focus:border-[#FFE135] focus:outline-none"
+              className="h-11 w-20 cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-3 pr-10 py-2 text-lg text-white focus:border-[#FFE135] focus:outline-none"
             >
               {quantityOptions.map((n) => (
                 <option key={n} value={n}>
@@ -496,7 +496,7 @@ function OrderPizzaSection() {
             <select
               value={selectedBox}
               onChange={(e) => setSelectedBox(e.target.value)}
-              className="h-11 w-full cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-4 pr-10 py-2 text-white focus:border-[#FFE135] focus:outline-none"
+              className="h-11 w-full cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-4 pr-12 py-2 text-white focus:border-[#FFE135] focus:outline-none"
             >
               <option value="">Select one...</option>
               {unredeemedBoxes.map((tokenId) => (
@@ -540,7 +540,7 @@ function OrderPizzaSection() {
             <select
               value={selectedRecipe}
               onChange={(e) => setSelectedRecipe(Number(e.target.value))}
-              className="h-11 w-full cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-4 pr-10 py-2 text-white focus:border-[#FFE135] focus:outline-none"
+              className="h-11 w-full cursor-pointer rounded-lg border border-white/20 bg-[#1f2937] px-4 pr-12 py-2 text-white focus:border-[#FFE135] focus:outline-none"
             >
               {RECIPES.map((recipe) => (
                 <option key={recipe.id} value={recipe.id}>

@@ -85,7 +85,7 @@ export async function createSeaportClient(
 /**
  * Fulfill a Seaport order (Buy Now).
  *
- * The order's consideration items already include marketplace fee + creator royalty
+ * The order's consideration items include seller proceeds + marketplace fee + creator royalty (fees deducted from listed price)
  * (baked in at listing time). The buyer just sends the total ETH value.
  *
  * @param seaport - Seaport client instance
@@ -151,7 +151,7 @@ export interface CreateListingParams {
   tokenId: string;
   /** ERC721 or ERC1155 */
   tokenStandard: "ERC721" | "ERC1155";
-  /** Price in wei (seller receives this, fees are added on top as consideration) */
+  /** Seller proceeds in wei (listed price minus fees) */
   priceWei: string;
   /** Marketplace fee in wei */
   marketplaceFeeWei: string;
@@ -168,12 +168,13 @@ export interface CreateListingParams {
 }
 
 /**
- * Build and sign a Seaport listing order (seller offers NFT, wants ETH + fees).
+ * Build and sign a Seaport listing order (seller offers NFT, wants ETH).
  * This is gasless — only an EIP-712 signature.
  *
  * The order structure:
  * - Offer: the NFT (ERC721 or ERC1155 item)
- * - Consideration: seller proceeds (ETH) + marketplace fee to feeRecipient + creator royalty to feeRecipient
+ * - Consideration: seller proceeds (ETH, after fees) + marketplace fee to feeRecipient + creator royalty to feeRecipient
+ * - Buyer pays: priceWei + marketplaceFeeWei + creatorRoyaltyWei (= the listed price)
  */
 export async function createSeaportListing(
   seaport: Seaport,
@@ -205,7 +206,7 @@ export async function createSeaportListing(
     ],
     consideration: [
       {
-        // Seller receives the base price in native ETH
+        // Seller receives proceeds (listed price minus fees)
         amount: priceWei,
         recipient: sellerAddress,
       },

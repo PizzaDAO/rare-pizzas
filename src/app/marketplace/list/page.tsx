@@ -13,8 +13,7 @@ import { COLLECTIONS, CHAIN_LABELS, CHAIN_CURRENCIES, type Collection } from "@/
 import {
   MARKETPLACE_FEE_BPS,
   CREATOR_ROYALTY_BPS,
-  calculateMarketplaceFee,
-  calculateCreatorRoyalty,
+  calculateFeesFromPrice,
   bpsToPercent,
 } from "@/lib/marketplace-config";
 import {
@@ -407,14 +406,10 @@ export default function ListPage() {
     }
   }, [priceInput]);
 
-  // Fee breakdown
+  // Fee breakdown (fees are deducted from the listed price)
   const feeBreakdown = useMemo(() => {
     if (!parsedPrice) return null;
-    const marketplaceFee = calculateMarketplaceFee(parsedPrice);
-    const creatorRoyalty = calculateCreatorRoyalty(parsedPrice);
-    const sellerReceives = parsedPrice;
-    const buyerPays = parsedPrice + marketplaceFee + creatorRoyalty;
-    return { sellerReceives, marketplaceFee, creatorRoyalty, buyerPays };
+    return calculateFeesFromPrice(parsedPrice);
   }, [parsedPrice]);
 
   // Handle listing creation
@@ -479,7 +474,7 @@ export default function ListPage() {
         tokenContract: selectedNFT.collection.contract,
         tokenId: selectedNFT.tokenId,
         tokenStandard: selectedNFT.collection.standard,
-        priceWei: parsedPrice.toString(),
+        priceWei: feeBreakdown.sellerReceives.toString(),
         marketplaceFeeWei: feeBreakdown.marketplaceFee.toString(),
         creatorRoyaltyWei: feeBreakdown.creatorRoyalty.toString(),
         feeRecipient: FEE_RECIPIENT,
@@ -575,10 +570,7 @@ export default function ListPage() {
         </Link>
       </div>
 
-      <h1 className="mb-2 text-3xl font-bold text-white">List an NFT</h1>
-      <p className="mb-6 text-[#7DD3E8]">
-        Create a gasless listing for your PizzaDAO NFT. Only signing costs no gas.
-      </p>
+      <h1 className="mb-6 text-3xl font-bold text-white">List an NFT</h1>
 
       {/* Steps indicator */}
       <div className="mb-8 flex items-center gap-2">
@@ -769,28 +761,28 @@ export default function ListPage() {
               </p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-[#7DD3E8]">You receive</span>
-                  <span className="text-lg font-bold text-[#FFE135]">
+                  <span className="text-[#7DD3E8]">Listed price</span>
+                  <span className="text-white">
                     {priceInput} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-[#7DD3E8]">Marketplace fee ({bpsToPercent(MARKETPLACE_FEE_BPS)})</span>
                   <span className="text-white">
-                    {formatEther(feeBreakdown.marketplaceFee)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                    -{formatEther(feeBreakdown.marketplaceFee)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-[#7DD3E8]">Creator royalty ({bpsToPercent(CREATOR_ROYALTY_BPS)})</span>
                   <span className="text-white">
-                    {formatEther(feeBreakdown.creatorRoyalty)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                    -{formatEther(feeBreakdown.creatorRoyalty)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
                   </span>
                 </div>
                 <div className="mt-2 border-t border-[#333] pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">Buyer pays</span>
-                    <span className="text-lg font-bold text-white">
-                      {formatEther(feeBreakdown.buyerPays)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                    <span className="text-sm font-semibold text-white">You receive</span>
+                    <span className="text-lg font-bold text-[#FFE135]">
+                      {formatEther(feeBreakdown.sellerReceives)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
                     </span>
                   </div>
                 </div>

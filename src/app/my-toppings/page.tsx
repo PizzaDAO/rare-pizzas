@@ -707,7 +707,7 @@ function ToppingsSection() {
             <select
               value={classFilter}
               onChange={(e) => setClassFilter(e.target.value)}
-              className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+              className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
             >
               <option value="">All Classes</option>
               {ownedClasses.map((c) => (
@@ -720,7 +720,7 @@ function ToppingsSection() {
             <select
               value={rarityFilter}
               onChange={(e) => setRarityFilter(e.target.value)}
-              className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+              className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
             >
               <option value="">All Rarities</option>
               {rarities.map((r) => (

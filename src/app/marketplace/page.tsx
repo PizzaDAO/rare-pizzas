@@ -531,7 +531,7 @@ function MarketplaceContent() {
             // For now, just use as a visual grouping hint
             updateParam("class", e.target.value);
           }}
-          className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+          className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
         >
           <option value="">All Classes</option>
           {classes.map((c) => (
@@ -545,7 +545,7 @@ function MarketplaceContent() {
         <select
           value={activeRarity}
           onChange={(e) => updateParam("rarity", e.target.value)}
-          className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+          className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
         >
           <option value="">All Rarities</option>
           {rarities.map((r) => (
@@ -559,7 +559,7 @@ function MarketplaceContent() {
         <select
           value={activeChain}
           onChange={(e) => updateParam("chain", e.target.value)}
-          className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+          className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
         >
           <option value="">All Chains</option>
           {Object.entries(CHAIN_LABELS).map(([id, name]) => (
@@ -632,7 +632,7 @@ function MarketplaceContent() {
           <select
             value={activeSort}
             onChange={(e) => updateParam("sort", e.target.value)}
-            className="rounded-lg border border-[#333] bg-[#111] px-3 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
+            className="rounded-lg border border-[#333] bg-[#111] px-3 pr-10 py-2 text-sm text-[#7DD3E8] outline-none focus:border-[#FFE135]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>

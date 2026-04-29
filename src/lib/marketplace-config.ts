@@ -29,20 +29,20 @@ export function calculateCreatorRoyalty(priceWei: bigint): bigint {
   return (priceWei * BigInt(CREATOR_ROYALTY_BPS)) / 10000n;
 }
 
-/** Calculate total price including all fees */
-export function calculateTotalWithFees(priceWei: bigint): {
-  itemPrice: bigint;
+/** Calculate fee breakdown from a listed price (fees are deducted, not added) */
+export function calculateFeesFromPrice(listedPriceWei: bigint): {
+  listedPrice: bigint;
   marketplaceFee: bigint;
   creatorRoyalty: bigint;
-  total: bigint;
+  sellerReceives: bigint;
 } {
-  const marketplaceFee = calculateMarketplaceFee(priceWei);
-  const creatorRoyalty = calculateCreatorRoyalty(priceWei);
+  const marketplaceFee = calculateMarketplaceFee(listedPriceWei);
+  const creatorRoyalty = calculateCreatorRoyalty(listedPriceWei);
   return {
-    itemPrice: priceWei,
+    listedPrice: listedPriceWei,
     marketplaceFee,
     creatorRoyalty,
-    total: priceWei + marketplaceFee + creatorRoyalty,
+    sellerReceives: listedPriceWei - marketplaceFee - creatorRoyalty,
   };
 }
 

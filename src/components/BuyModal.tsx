@@ -11,7 +11,7 @@ import { COLLECTIONS, CHAIN_LABELS } from "@/lib/collections";
 import {
   MARKETPLACE_FEE_BPS,
   CREATOR_ROYALTY_BPS,
-  calculateTotalWithFees,
+  calculateFeesFromPrice,
   bpsToPercent,
 } from "@/lib/marketplace-config";
 import {
@@ -98,7 +98,7 @@ export default function BuyModal({ listing, onClose, onSuccess }: BuyModalProps)
 
   // Price breakdown
   const priceBreakdown = useMemo(() => {
-    return calculateTotalWithFees(BigInt(listing.price));
+    return calculateFeesFromPrice(BigInt(listing.price));
   }, [listing.price]);
 
   // Top toppings for display
@@ -311,16 +311,16 @@ export default function BuyModal({ listing, onClose, onSuccess }: BuyModalProps)
             </p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-[#7DD3E8]">Item price</span>
-                <span className="text-white">
-                  {formatEthPrecise(priceBreakdown.itemPrice)} {listing.currency}
+                <span className="text-[#7DD3E8]">Price</span>
+                <span className="text-lg font-bold text-[#FFE135]">
+                  {formatEthPrecise(priceBreakdown.listedPrice)} {listing.currency}
                 </span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-[#7DD3E8]">
                   Marketplace fee ({bpsToPercent(MARKETPLACE_FEE_BPS)})
                 </span>
-                <span className="text-white">
+                <span className="text-[#555]">
                   {formatEthPrecise(priceBreakdown.marketplaceFee)} {listing.currency}
                 </span>
               </div>
@@ -328,17 +328,15 @@ export default function BuyModal({ listing, onClose, onSuccess }: BuyModalProps)
                 <span className="text-[#7DD3E8]">
                   Creator royalty ({bpsToPercent(CREATOR_ROYALTY_BPS)})
                 </span>
-                <span className="text-white">
+                <span className="text-[#555]">
                   {formatEthPrecise(priceBreakdown.creatorRoyalty)} {listing.currency}
                 </span>
               </div>
-              <div className="mt-2 border-t border-[#333] pt-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white">Total</span>
-                  <span className="text-lg font-bold text-[#FFE135]">
-                    {formatEthPrecise(priceBreakdown.total)} {listing.currency}
-                  </span>
-                </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[#7DD3E8]">Seller receives</span>
+                <span className="text-white">
+                  {formatEthPrecise(priceBreakdown.sellerReceives)} {listing.currency}
+                </span>
               </div>
             </div>
           </div>
