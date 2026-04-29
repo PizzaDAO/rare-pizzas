@@ -15,6 +15,7 @@ import {
   CREATOR_ROYALTY_BPS,
   calculateFeesFromPrice,
   bpsToPercent,
+  FEE_RECIPIENT,
 } from "@/lib/marketplace-config";
 import {
   createSeaportClient,
@@ -60,8 +61,6 @@ const EXPIRATION_OPTIONS = [
   { label: "30 days", seconds: 2592000 },
 ] as const;
 
-// Hardcoded fee recipient for now — in production resolve from ENS
-const FEE_RECIPIENT = "0x7F1D2C5a2a1d0E6E4B2E3F1c6b7A8d9E0F1C2D3";
 
 const IPFS_GATEWAYS = [
   "https://dweb.link/ipfs/",

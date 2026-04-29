@@ -11,8 +11,8 @@ export const CREATOR_ROYALTY_BPS = 625;
 /** Total fee in basis points (7.25%) */
 export const TOTAL_FEE_BPS = MARKETPLACE_FEE_BPS + CREATOR_ROYALTY_BPS;
 
-/** Fee recipient ENS name — resolve to address at order time */
-export const FEE_RECIPIENT_ENS = "dreadpizzaroberts.eth";
+/** Fee recipient (dreadpizzaroberts.eth) */
+export const FEE_RECIPIENT = "0xF41a98D4F2E52aa1ccB48F0b6539e955707b8F7a" as const;
 
 /** Seaport 1.6 contract address (same on all chains) */
 export const SEAPORT_ADDRESS = "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC" as const;

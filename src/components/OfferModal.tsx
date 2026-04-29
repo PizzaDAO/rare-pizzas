@@ -11,7 +11,7 @@ import { COLLECTIONS, CHAIN_LABELS } from "@/lib/collections";
 import {
   MARKETPLACE_FEE_BPS,
   CREATOR_ROYALTY_BPS,
-  FEE_RECIPIENT_ENS,
+  FEE_RECIPIENT,
   calculateMarketplaceFee,
   calculateCreatorRoyalty,
   bpsToPercent,
@@ -70,7 +70,6 @@ function truncateAddress(addr: string): string {
 }
 
 // Hardcoded fee recipient for now — in production you'd resolve ENS
-const FEE_RECIPIENT = "0x7F1D2C5a2a1d0E6E4B2E3F1c6b7A8d9E0F1C2D3" as const;
 
 // ─── Component ───────────────────────────────────────────────────────
 
