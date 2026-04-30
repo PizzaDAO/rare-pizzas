@@ -266,7 +266,7 @@ export async function GET(request: NextRequest) {
     const total = filtered.length;
     const paginated = filtered.slice(offset, offset + limit);
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       listings: paginated,
       total,
       _meta: {
@@ -276,6 +276,8 @@ export async function GET(request: NextRequest) {
         afterFilters: total,
       },
     });
+    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+    return response;
   } catch (error) {
     console.error("Error fetching listings:", error);
     return NextResponse.json(

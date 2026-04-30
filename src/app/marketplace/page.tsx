@@ -421,11 +421,14 @@ function MarketplaceContent() {
       if (activeChain) params.set("chain", activeChain);
       if (activeSort) params.set("sort", activeSort);
 
+      params.set("_t", String(Date.now())); // cache-bust
       const res = await fetch(`/api/marketplace/listings?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch listings");
 
       const data = await res.json();
-      setListingsData(data.listings || []);
+      const listings = data.listings || [];
+      console.log(`[marketplace] Received ${listings.length} listings:`, listings.map((l: Listing) => l.tokenId));
+      setListingsData(listings);
       setTotal(data.total || 0);
     } catch (err) {
       // If API is unavailable (e.g., no DATABASE_URL), show empty state gracefully
