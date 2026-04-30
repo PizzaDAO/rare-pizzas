@@ -64,22 +64,49 @@ export async function normalizeOpenSeaListings(
   for (const raw of rawListings) {
     try {
       const protocolData = raw.protocol_data;
-      if (!protocolData?.parameters) continue;
+      if (!protocolData?.parameters) {
+        console.warn(`[normalize] Skipping listing: missing protocol_data.parameters`, raw.order_hash);
+        continue;
+      }
 
       const params = protocolData.parameters;
 
       // Extract tokenId from offer
       const offer = params.offer;
-      if (!offer || offer.length === 0) continue;
+      if (!offer || offer.length === 0) {
+        console.warn(`[normalize] Skipping listing: missing offer`, raw.order_hash);
+        continue;
+      }
       const tokenId = String(offer[0].identifierOrCriteria);
+
+      // Skip criteria-based orders (collection offers) where tokenId is "0"
+      if (tokenId === "0") {
+        console.warn(`[normalize] Skipping criteria-based listing (tokenId=0)`, raw.order_hash);
+        continue;
+      }
 
       // Extract seller
       const seller = params.offerer?.toLowerCase() || "";
 
-      // Extract price — use price.current.value (total buyer pays in smallest unit)
+      // Extract price — try price.current.value first, fall back to consideration sum
+      let price: string;
       const priceValue = raw.price?.current?.value;
-      if (!priceValue) continue;
-      const price = String(priceValue);
+      if (priceValue) {
+        price = String(priceValue);
+      } else {
+        // Fallback: sum consideration startAmounts
+        const consideration = params.consideration;
+        if (consideration && consideration.length > 0) {
+          let total = BigInt(0);
+          for (const c of consideration) {
+            total += BigInt(c.startAmount || "0");
+          }
+          price = total.toString();
+        } else {
+          console.warn(`[normalize] Skipping listing: no price found`, raw.order_hash);
+          continue;
+        }
+      }
 
       // Extract currency
       const currency = raw.price?.current?.currency || "ETH";

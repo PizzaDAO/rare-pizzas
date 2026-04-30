@@ -38,10 +38,14 @@ export async function GET(request: NextRequest) {
 
     // ─── 2. Fetch OpenSea listings in parallel ──────────────────────
 
+    const rawCounts: Record<string, { raw: number; normalized: number }> = {};
+
     const openSeaResults = await Promise.allSettled(
       collectionsToFetch.map(async (col) => {
         const raw = await fetchCollectionListings(col.openseaSlug);
-        return normalizeOpenSeaListings(raw, col.slug, col);
+        const normalized = await normalizeOpenSeaListings(raw, col.slug, col);
+        rawCounts[col.slug] = { raw: raw.length, normalized: normalized.length };
+        return normalized;
       })
     );
 
@@ -265,6 +269,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       listings: paginated,
       total,
+      _meta: {
+        rawCounts,
+        beforeDedup: allListings.length,
+        afterDedup: merged.length,
+        afterFilters: total,
+      },
     });
   } catch (error) {
     console.error("Error fetching listings:", error);
