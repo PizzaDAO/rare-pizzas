@@ -14,6 +14,14 @@ import { getToppingEmoji } from "@/lib/topping-emojis";
 import type { Topping, NFTMetadata, NFTAttribute, OwnerLookupResult } from "@/lib/types";
 import pizzaIndex from "@/data/pizza-index.json";
 
+/** Handles confirmed dead/inactive — exclude from generated tweets */
+const DEAD_HANDLES = new Set(["ysgjay", "rubenalexand3r"]);
+
+function isActiveHandle(handle: string | undefined): boolean {
+  if (!handle || handle === "n/a" || handle === "N/A") return false;
+  return !DEAD_HANDLES.has(handle.replace("@", ""));
+}
+
 // --- IPFS helpers (same pattern as useWalletToppings) ---
 
 const IPFS_GATEWAYS = [
@@ -116,8 +124,8 @@ function generateTweet(
   // Artist tags (unique Twitter handles only)
   const handles = new Set<string>();
   for (const t of sorted) {
-    if (t.artistTwitter && t.artistTwitter !== "n/a" && t.artistTwitter !== "N/A") {
-      const clean = t.artistTwitter.replace("@", "");
+    if (isActiveHandle(t.artistTwitter)) {
+      const clean = t.artistTwitter!.replace("@", "");
       handles.add(clean);
     }
   }
@@ -150,7 +158,7 @@ function generateSpotlightTweet(topping: Topping): string {
   lines.push(`\u{1F4CA} Rarity: ${rarityLabel} \u{2022} Found on ${count} pizzas`);
 
   // Artist line
-  const hasTwitter = topping.artistTwitter && topping.artistTwitter !== "n/a" && topping.artistTwitter !== "N/A";
+  const hasTwitter = isActiveHandle(topping.artistTwitter);
   const artistTag = hasTwitter
     ? `${topping.artist} @${topping.artistTwitter!.replace("@", "")}`
     : topping.artist;
