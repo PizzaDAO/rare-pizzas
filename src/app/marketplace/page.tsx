@@ -190,7 +190,7 @@ function ListingCard({
           {collectionInfo?.name || listing.collection}
         </p>
         <h3 className="mb-2 truncate text-sm font-semibold text-white">
-          {listing.nftName || `#${listing.tokenId}`}
+          {listing.nftName ? `${listing.nftName} #${listing.tokenId}` : `#${listing.tokenId}`}
         </h3>
 
         {/* Top toppings */}
