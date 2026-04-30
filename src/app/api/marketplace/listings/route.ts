@@ -152,22 +152,32 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ─── 4. Merge — prefer local version when same token exists ─────
+    // ─── 4. Merge — deduplicate by token, prefer local, then cheapest ─
 
-    const localByToken = new Map<string, NormalizedListing>();
+    const byToken = new Map<string, NormalizedListing>();
+
+    // Local listings take priority
     for (const local of localListings) {
       const key = `${local.tokenContract.toLowerCase()}:${local.tokenId}`;
-      localByToken.set(key, local);
+      byToken.set(key, local);
     }
 
-    const merged: NormalizedListing[] = [...localListings];
-
+    // OpenSea listings — only add if no local version; keep cheapest if duplicates
     for (const osListing of allListings) {
       const key = `${osListing.tokenContract.toLowerCase()}:${osListing.tokenId}`;
-      if (!localByToken.has(key)) {
-        merged.push(osListing);
+      const existing = byToken.get(key);
+      if (!existing) {
+        byToken.set(key, osListing);
+      } else if (existing.source === "opensea") {
+        // Same token, both from OpenSea — keep the cheaper one
+        if (BigInt(osListing.price) < BigInt(existing.price)) {
+          byToken.set(key, osListing);
+        }
       }
+      // If existing is local, keep local (already set)
     }
+
+    const merged = Array.from(byToken.values());
 
     // ─── 5. Apply in-memory filters ────────────────────────────────
 
