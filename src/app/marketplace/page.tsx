@@ -361,7 +361,7 @@ function MarketplaceContent() {
   const activeRarity = searchParams.get("rarity") || "";
   const activeTopping = searchParams.get("topping") || "";
   const activeChain = searchParams.get("chain") || "";
-  const activeSort = searchParams.get("sort") || "newest";
+  const activeSort = searchParams.get("sort") || "price-asc";
   const searchQuery = searchParams.get("search") || "";
 
   // Data
