@@ -26,6 +26,7 @@ interface ListingTopping {
 
 interface Listing {
   orderId: string;
+  source?: "opensea" | "local";
   collection: string;
   tokenContract: string;
   chainId: number;
@@ -38,6 +39,10 @@ interface Listing {
   createdAt: string;
   orderData?: OrderWithCounter;
   toppings: ListingTopping[];
+  imageUrl?: string;
+  nftName?: string;
+  isBoxOpened?: boolean;
+  openseaUrl?: string;
 }
 
 // ─── Constants ───────────────────────────────────────────────────────
@@ -76,11 +81,11 @@ function truncateAddress(addr: string): string {
 }
 
 function getOpenseaLink(listing: Listing): string {
-  const collection = COLLECTIONS.find((c) => c.slug === listing.collection);
-  if (collection) {
-    return `${collection.opensea}`;
+  if (listing.openseaUrl) {
+    return listing.openseaUrl;
   }
-  return `https://opensea.io/assets/ethereum/${listing.tokenContract}/${listing.tokenId}`;
+  const chain = listing.chainId === 10 ? "optimism" : "ethereum";
+  return `https://opensea.io/assets/${chain}/${listing.tokenContract}/${listing.tokenId}`;
 }
 
 /** Check if a listing has valid Seaport order data for on-site buying */
@@ -109,6 +114,7 @@ function ListingCard({
   const canBuyOnSite = hasOrderData(listing);
   const collectionInfo = COLLECTIONS.find((c) => c.slug === listing.collection);
   const isERC1155 = collectionInfo?.standard === "ERC1155";
+  const isBoxCollection = listing.collection === "rare-pizzas-box";
 
   const toppingDetails = useMemo(() => {
     return listing.toppings
@@ -129,9 +135,18 @@ function ListingCard({
     <div className="group rounded-xl border border-[#333]/50 bg-[#111] transition-all hover:border-[#FFE135]/50">
       {/* Image area */}
       <div className="relative aspect-square overflow-hidden rounded-t-xl bg-[#0a0a0a]">
-        <div className="flex h-full w-full items-center justify-center text-7xl">
-          <span role="img" aria-label="pizza">&#127829;</span>
-        </div>
+        {listing.imageUrl ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={listing.imageUrl}
+            alt={listing.nftName || `#${listing.tokenId}`}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-7xl">
+            <span role="img" aria-label="pizza">&#127829;</span>
+          </div>
+        )}
         {/* Chain badge */}
         <div className="absolute left-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-semibold text-white">
           {CHAIN_LABELS[listing.chainId] || `Chain ${listing.chainId}`}
@@ -142,10 +157,28 @@ function ListingCard({
             ERC1155
           </div>
         )}
+        {/* Box redemption badge */}
+        {isBoxCollection && listing.isBoxOpened !== undefined && (
+          <div
+            className={`absolute left-2 ${isERC1155 ? "top-12" : "top-7"} rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+              listing.isBoxOpened
+                ? "bg-amber-500/20 text-amber-400"
+                : "bg-green-500/20 text-green-400"
+            }`}
+          >
+            {listing.isBoxOpened ? "Opened" : "Unopened"}
+          </div>
+        )}
         {/* Rarity badge */}
         {highestRarity && (
           <div className="absolute right-2 top-2">
             <RarityBadge rarity={highestRarity} />
+          </div>
+        )}
+        {/* Source indicator */}
+        {listing.source && (
+          <div className="absolute bottom-2 right-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-[#7DD3E8]">
+            {listing.source === "opensea" ? "OpenSea" : "Listed here"}
           </div>
         )}
       </div>
@@ -157,7 +190,7 @@ function ListingCard({
           {collectionInfo?.name || listing.collection}
         </p>
         <h3 className="mb-2 truncate text-sm font-semibold text-white">
-          #{listing.tokenId}
+          {listing.nftName || `#${listing.tokenId}`}
         </h3>
 
         {/* Top toppings */}
@@ -200,7 +233,7 @@ function ListingCard({
 
         {/* Action buttons */}
         <div className="flex flex-col gap-2">
-          {/* Buy Now button — only if we have valid Seaport order data */}
+          {/* Buy Now button — only if we have valid Seaport order data (local listing) */}
           {canBuyOnSite && (
             <button
               onClick={() => onBuyClick(listing)}
@@ -237,7 +270,7 @@ function ListingCard({
             Make Offer
           </button>
 
-          {/* View on OpenSea — primary if no order data, secondary if we have it */}
+          {/* Buy on OpenSea / View on OpenSea */}
           <a
             href={getOpenseaLink(listing)}
             target="_blank"

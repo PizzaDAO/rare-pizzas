@@ -1,10 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/db";
-import { listings, listingToppings } from "@/db/schema";
-import { eq, and, sql, inArray } from "drizzle-orm";
+import { COLLECTIONS } from "@/lib/collections";
+import { fetchCollectionListings } from "@/lib/opensea-api";
+import {
+  normalizeOpenSeaListings,
+  type NormalizedListing,
+} from "@/lib/normalize-listings";
 import { getAllToppings } from "@/lib/toppings";
 
 export const dynamic = "force-dynamic";
+
+const EMPTY_RESPONSE = {
+  floor: null,
+  currency: "ETH",
+  count: 0,
+  listing: null,
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,134 +23,185 @@ export async function GET(request: NextRequest) {
     const collection = searchParams.get("collection"); // slug filter
     const topping = searchParams.get("topping"); // topping SKU
     const rarity = searchParams.get("rarity"); // rarity filter
-    const toppingClass = searchParams.get("class"); // topping class filter (Cheese, Meat, etc.)
+    const toppingClass = searchParams.get("class"); // topping class filter
 
-    let db: ReturnType<typeof getDb>;
-    try {
-      db = getDb();
-    } catch {
-      // No DATABASE_URL — return empty result gracefully
-      return NextResponse.json({
-        floor: null,
-        currency: "ETH",
-        count: 0,
-        listing: null,
-      });
+    // ─── 1. Determine which collections to fetch ─────────────────────
+
+    const collectionsToFetch = collection
+      ? COLLECTIONS.filter((c) => c.slug === collection)
+      : [...COLLECTIONS];
+
+    // ─── 2. Fetch OpenSea listings in parallel ──────────────────────
+
+    const openSeaResults = await Promise.allSettled(
+      collectionsToFetch.map(async (col) => {
+        const raw = await fetchCollectionListings(col.openseaSlug);
+        return normalizeOpenSeaListings(raw, col.slug, col);
+      })
+    );
+
+    let allListings: NormalizedListing[] = [];
+
+    for (const result of openSeaResults) {
+      if (result.status === "fulfilled") {
+        allListings.push(...result.value);
+      }
     }
 
-    // Base condition: only active listings
-    const conditions = [eq(listings.status, "active")];
+    // ─── 3. Optionally fetch local DB listings ──────────────────────
+
+    let localListings: NormalizedListing[] = [];
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { getDb } = await import("@/db");
+        const { listings: listingsTable, listingToppings } = await import(
+          "@/db/schema"
+        );
+        const { eq, and, inArray } = await import("drizzle-orm");
+
+        const db = getDb();
+
+        const conditions = [eq(listingsTable.status, "active")];
+
+        if (collection) {
+          conditions.push(eq(listingsTable.collection, collection));
+        }
+
+        const whereClause = and(...conditions);
+
+        const dbResults = await db
+          .select()
+          .from(listingsTable)
+          .where(whereClause);
+
+        // Fetch toppings for DB listings
+        const dbOrderIds = dbResults.map((l) => l.orderId);
+        let toppingsMap: Record<
+          string,
+          Array<{ toppingSku: number; rarity: string }>
+        > = {};
+
+        if (dbOrderIds.length > 0) {
+          const toppingsResult = await db
+            .select()
+            .from(listingToppings)
+            .where(inArray(listingToppings.orderId, dbOrderIds));
+
+          for (const t of toppingsResult) {
+            if (!toppingsMap[t.orderId]) {
+              toppingsMap[t.orderId] = [];
+            }
+            toppingsMap[t.orderId].push({
+              toppingSku: t.toppingSku,
+              rarity: t.rarity,
+            });
+          }
+        }
+
+        for (const dbListing of dbResults) {
+          localListings.push({
+            orderId: dbListing.orderId,
+            source: "local",
+            collection: dbListing.collection,
+            tokenContract: dbListing.tokenContract,
+            chainId: dbListing.chainId,
+            tokenId: dbListing.tokenId,
+            seller: dbListing.seller,
+            price: dbListing.price,
+            currency: dbListing.currency,
+            expiry:
+              dbListing.expiry instanceof Date
+                ? dbListing.expiry.toISOString()
+                : String(dbListing.expiry),
+            status: dbListing.status,
+            createdAt:
+              dbListing.createdAt instanceof Date
+                ? dbListing.createdAt.toISOString()
+                : String(dbListing.createdAt),
+            orderData: dbListing.orderData,
+            toppings: toppingsMap[dbListing.orderId] || [],
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching local DB listings for floor:", err);
+      }
+    }
+
+    // ─── 4. Merge — prefer local version when same token exists ─────
+
+    const localByToken = new Map<string, NormalizedListing>();
+    for (const local of localListings) {
+      const key = `${local.tokenContract.toLowerCase()}:${local.tokenId}`;
+      localByToken.set(key, local);
+    }
+
+    const merged: NormalizedListing[] = [...localListings];
+
+    for (const osListing of allListings) {
+      const key = `${osListing.tokenContract.toLowerCase()}:${osListing.tokenId}`;
+      if (!localByToken.has(key)) {
+        merged.push(osListing);
+      }
+    }
+
+    // ─── 5. Apply filters ──────────────────────────────────────────
+
+    let filtered = merged.filter((l) => l.status === "active");
 
     if (collection) {
-      conditions.push(eq(listings.collection, collection));
+      filtered = filtered.filter((l) => l.collection === collection);
     }
 
-    // If filtering by topping, rarity, or class, find matching order IDs via listing_toppings
-    if (topping || rarity || toppingClass) {
-      const toppingConditions = [];
+    // Topping filter
+    if (topping) {
+      const toppingSku = Number(topping);
+      filtered = filtered.filter((l) =>
+        l.toppings.some((t) => t.toppingSku === toppingSku)
+      );
+    }
 
-      if (topping) {
-        toppingConditions.push(
-          eq(listingToppings.toppingSku, Number(topping))
-        );
-      }
+    // Rarity filter
+    if (rarity) {
+      filtered = filtered.filter((l) =>
+        l.toppings.some((t) => t.rarity === rarity)
+      );
+    }
 
-      if (rarity) {
-        toppingConditions.push(eq(listingToppings.rarity, rarity));
-      }
-
-      if (toppingClass) {
-        // Find all SKUs belonging to this class
-        const allToppings = getAllToppings();
-        const classSKUs = allToppings
+    // Class filter
+    if (toppingClass) {
+      const allToppingsData = getAllToppings();
+      const classSKUs = new Set(
+        allToppingsData
           .filter(
             (t) => t.class.toLowerCase() === toppingClass.toLowerCase()
           )
-          .map((t) => t.sku);
+          .map((t) => t.sku)
+      );
 
-        if (classSKUs.length === 0) {
-          return NextResponse.json({
-            floor: null,
-            currency: "ETH",
-            count: 0,
-            listing: null,
-          });
-        }
-
-        toppingConditions.push(
-          inArray(listingToppings.toppingSku, classSKUs)
-        );
+      if (classSKUs.size === 0) {
+        return NextResponse.json(EMPTY_RESPONSE);
       }
 
-      const matchingOrderIds = await db
-        .select({ orderId: listingToppings.orderId })
-        .from(listingToppings)
-        .where(
-          toppingConditions.length > 1
-            ? and(...toppingConditions)
-            : toppingConditions[0]
-        );
-
-      const orderIds = [
-        ...new Set(matchingOrderIds.map((r) => r.orderId)),
-      ];
-
-      if (orderIds.length === 0) {
-        return NextResponse.json({
-          floor: null,
-          currency: "ETH",
-          count: 0,
-          listing: null,
-        });
-      }
-
-      conditions.push(inArray(listings.orderId, orderIds));
+      filtered = filtered.filter((l) =>
+        l.toppings.some((t) => classSKUs.has(t.toppingSku))
+      );
     }
 
-    const whereClause = and(...conditions);
+    // ─── 6. Find floor ─────────────────────────────────────────────
 
-    // Get aggregate floor + count
-    const aggResult = await db
-      .select({
-        floor: sql<string>`MIN(CAST(${listings.price} AS NUMERIC))`,
-        count: sql<number>`count(*)`,
-      })
-      .from(listings)
-      .where(whereClause);
-
-    const floor = aggResult[0]?.floor ?? null;
-    const count = Number(aggResult[0]?.count ?? 0);
-
-    if (!floor || count === 0) {
-      return NextResponse.json({
-        floor: null,
-        currency: "ETH",
-        count: 0,
-        listing: null,
-      });
+    if (filtered.length === 0) {
+      return NextResponse.json(EMPTY_RESPONSE);
     }
 
-    // Find the actual cheapest listing to return its details
-    const cheapest = await db
-      .select({
-        orderId: listings.orderId,
-        tokenId: listings.tokenId,
-        collection: listings.collection,
-        tokenContract: listings.tokenContract,
-        chainId: listings.chainId,
-        seller: listings.seller,
-        price: listings.price,
-        currency: listings.currency,
-      })
-      .from(listings)
-      .where(whereClause)
-      .orderBy(sql`CAST(${listings.price} AS NUMERIC)`)
-      .limit(1);
+    // Sort by price ascending and pick cheapest
+    filtered.sort((a, b) => {
+      const diff = BigInt(a.price) - BigInt(b.price);
+      return diff < 0n ? -1 : diff > 0n ? 1 : 0;
+    });
 
-    const cheapestListing = cheapest[0] || null;
-
-    // Format floor price from wei to ETH
-    const floorWei = BigInt(String(floor).split(".")[0]); // strip any decimal
+    const cheapest = filtered[0];
+    const floorWei = BigInt(cheapest.price);
     const floorEth = Number(floorWei) / 1e18;
     const floorFormatted =
       floorEth < 0.001 ? "<0.001" : floorEth.toFixed(floorEth < 1 ? 4 : 3);
@@ -148,9 +209,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       floor: floorFormatted,
       floorWei: String(floorWei),
-      currency: cheapestListing?.currency || "ETH",
-      count,
-      listing: cheapestListing,
+      currency: cheapest.currency || "ETH",
+      count: filtered.length,
+      listing: {
+        orderId: cheapest.orderId,
+        tokenId: cheapest.tokenId,
+        collection: cheapest.collection,
+        tokenContract: cheapest.tokenContract,
+        chainId: cheapest.chainId,
+        seller: cheapest.seller,
+        price: cheapest.price,
+        currency: cheapest.currency,
+      },
     });
   } catch (error) {
     console.error("Error fetching floor price:", error);

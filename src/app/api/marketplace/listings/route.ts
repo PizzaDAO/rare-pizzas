@@ -1,20 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/db";
-import { listings, listingToppings } from "@/db/schema";
-import { eq, and, gte, lte, desc, asc, inArray, sql } from "drizzle-orm";
+import { COLLECTIONS } from "@/lib/collections";
+import { fetchCollectionListings } from "@/lib/opensea-api";
+import {
+  normalizeOpenSeaListings,
+  type NormalizedListing,
+} from "@/lib/normalize-listings";
 
 export const dynamic = "force-dynamic";
 
 const EMPTY = NextResponse.json({ listings: [], total: 0 });
 
 export async function GET(request: NextRequest) {
-  let db;
-  try {
-    db = getDb();
-  } catch {
-    return EMPTY;
-  }
-
   try {
     const { searchParams } = request.nextUrl;
 
@@ -25,127 +21,239 @@ export async function GET(request: NextRequest) {
     const priceMax = searchParams.get("priceMax"); // max price in wei
     const chain = searchParams.get("chain"); // chain ID
     const seller = searchParams.get("seller"); // seller address filter
-    const status = searchParams.get("status"); // status filter (defaults to "active")
-    const sort = searchParams.get("sort") || "newest"; // price-asc, price-desc, rarity, newest
+    const status = searchParams.get("status"); // status filter
+    const sort = searchParams.get("sort") || "newest";
     const limit = Math.min(Number(searchParams.get("limit")) || 50, 100);
     const offset = Number(searchParams.get("offset")) || 0;
 
-    // Build conditions — if seller is specified, show all statuses; otherwise only active
-    const conditions = seller
-      ? status
-        ? [eq(listings.status, status)]
-        : []
-      : [eq(listings.status, status || "active")];
+    // ─── 1. Determine which collections to fetch ─────────────────────
 
+    const collectionsToFetch = collection
+      ? COLLECTIONS.filter((c) => c.slug === collection)
+      : [...COLLECTIONS];
+
+    if (collectionsToFetch.length === 0) {
+      return EMPTY;
+    }
+
+    // ─── 2. Fetch OpenSea listings in parallel ──────────────────────
+
+    const openSeaResults = await Promise.allSettled(
+      collectionsToFetch.map(async (col) => {
+        const raw = await fetchCollectionListings(col.openseaSlug);
+        return normalizeOpenSeaListings(raw, col.slug, col);
+      })
+    );
+
+    let allListings: NormalizedListing[] = [];
+
+    for (const result of openSeaResults) {
+      if (result.status === "fulfilled") {
+        allListings.push(...result.value);
+      }
+    }
+
+    // ─── 3. Optionally fetch local DB listings ──────────────────────
+
+    let localListings: NormalizedListing[] = [];
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { getDb } = await import("@/db");
+        const { listings: listingsTable, listingToppings } = await import(
+          "@/db/schema"
+        );
+        const { eq, and, inArray } = await import("drizzle-orm");
+
+        const db = getDb();
+
+        // Build conditions for DB query
+        const conditions = [];
+
+        // When seller is specified, show all statuses; otherwise only active
+        if (seller) {
+          if (status) {
+            conditions.push(eq(listingsTable.status, status));
+          }
+        } else {
+          conditions.push(eq(listingsTable.status, status || "active"));
+        }
+
+        if (collection) {
+          conditions.push(eq(listingsTable.collection, collection));
+        }
+        if (seller) {
+          conditions.push(eq(listingsTable.seller, seller.toLowerCase()));
+        }
+        if (chain) {
+          conditions.push(eq(listingsTable.chainId, Number(chain)));
+        }
+
+        const whereClause =
+          conditions.length > 0 ? and(...conditions) : undefined;
+
+        const dbResults = await db
+          .select()
+          .from(listingsTable)
+          .where(whereClause);
+
+        // Fetch toppings for DB listings
+        const dbOrderIds = dbResults.map((l) => l.orderId);
+        let toppingsMap: Record<
+          string,
+          Array<{ toppingSku: number; rarity: string }>
+        > = {};
+
+        if (dbOrderIds.length > 0) {
+          const toppingsResult = await db
+            .select()
+            .from(listingToppings)
+            .where(inArray(listingToppings.orderId, dbOrderIds));
+
+          for (const t of toppingsResult) {
+            if (!toppingsMap[t.orderId]) {
+              toppingsMap[t.orderId] = [];
+            }
+            toppingsMap[t.orderId].push({
+              toppingSku: t.toppingSku,
+              rarity: t.rarity,
+            });
+          }
+        }
+
+        // Convert DB listings to NormalizedListing
+        for (const dbListing of dbResults) {
+          localListings.push({
+            orderId: dbListing.orderId,
+            source: "local",
+            collection: dbListing.collection,
+            tokenContract: dbListing.tokenContract,
+            chainId: dbListing.chainId,
+            tokenId: dbListing.tokenId,
+            seller: dbListing.seller,
+            price: dbListing.price,
+            currency: dbListing.currency,
+            expiry:
+              dbListing.expiry instanceof Date
+                ? dbListing.expiry.toISOString()
+                : String(dbListing.expiry),
+            status: dbListing.status,
+            createdAt:
+              dbListing.createdAt instanceof Date
+                ? dbListing.createdAt.toISOString()
+                : String(dbListing.createdAt),
+            orderData: dbListing.orderData,
+            toppings: toppingsMap[dbListing.orderId] || [],
+          });
+        }
+      } catch (err) {
+        console.error("Error fetching local DB listings:", err);
+        // Continue with OpenSea-only listings
+      }
+    }
+
+    // ─── 4. Merge — prefer local version when same token exists ─────
+
+    const localByToken = new Map<string, NormalizedListing>();
+    for (const local of localListings) {
+      const key = `${local.tokenContract.toLowerCase()}:${local.tokenId}`;
+      localByToken.set(key, local);
+    }
+
+    const merged: NormalizedListing[] = [...localListings];
+
+    for (const osListing of allListings) {
+      const key = `${osListing.tokenContract.toLowerCase()}:${osListing.tokenId}`;
+      if (!localByToken.has(key)) {
+        merged.push(osListing);
+      }
+    }
+
+    // ─── 5. Apply in-memory filters ────────────────────────────────
+
+    let filtered = merged;
+
+    // Collection filter
     if (collection) {
-      conditions.push(eq(listings.collection, collection));
+      filtered = filtered.filter((l) => l.collection === collection);
     }
 
-    if (seller) {
-      conditions.push(eq(listings.seller, seller.toLowerCase()));
-    }
-
+    // Chain filter
     if (chain) {
-      conditions.push(eq(listings.chainId, Number(chain)));
+      filtered = filtered.filter((l) => l.chainId === Number(chain));
     }
 
+    // Seller filter (case-insensitive)
+    if (seller) {
+      const sellerLower = seller.toLowerCase();
+      filtered = filtered.filter((l) => l.seller.toLowerCase() === sellerLower);
+    }
+
+    // Status filter — when no seller, only show active by default
+    if (!seller) {
+      const statusFilter = status || "active";
+      filtered = filtered.filter((l) => l.status === statusFilter);
+    } else if (status) {
+      filtered = filtered.filter((l) => l.status === status);
+    }
+
+    // Topping filter
+    if (topping) {
+      const toppingSku = Number(topping);
+      filtered = filtered.filter((l) =>
+        l.toppings.some((t) => t.toppingSku === toppingSku)
+      );
+    }
+
+    // Rarity filter
+    if (rarity) {
+      filtered = filtered.filter((l) =>
+        l.toppings.some((t) => t.rarity === rarity)
+      );
+    }
+
+    // Price filters
     if (priceMin) {
-      conditions.push(gte(listings.price, priceMin));
+      const min = BigInt(priceMin);
+      filtered = filtered.filter((l) => BigInt(l.price) >= min);
     }
 
     if (priceMax) {
-      conditions.push(lte(listings.price, priceMax));
+      const max = BigInt(priceMax);
+      filtered = filtered.filter((l) => BigInt(l.price) <= max);
     }
 
-    // If filtering by topping, we need a subquery to find matching order IDs
-    let orderIdFilter: string[] | null = null;
+    // ─── 6. Sort ────────────────────────────────────────────────────
 
-    if (topping || rarity) {
-      const toppingConditions = [];
-      if (topping) {
-        toppingConditions.push(eq(listingToppings.toppingSku, Number(topping)));
-      }
-      if (rarity) {
-        toppingConditions.push(eq(listingToppings.rarity, rarity));
-      }
-
-      const matchingOrderIds = await db
-        .select({ orderId: listingToppings.orderId })
-        .from(listingToppings)
-        .where(and(...toppingConditions));
-
-      orderIdFilter = matchingOrderIds.map((r) => r.orderId);
-
-      if (orderIdFilter.length === 0) {
-        return NextResponse.json({ listings: [], total: 0 });
-      }
-
-      conditions.push(inArray(listings.orderId, orderIdFilter));
-    }
-
-    // Determine sort order
-    let orderBy;
     switch (sort) {
       case "price-asc":
-        orderBy = asc(sql`CAST(${listings.price} AS NUMERIC)`);
+        filtered.sort((a, b) => {
+          const diff = BigInt(a.price) - BigInt(b.price);
+          return diff < 0n ? -1 : diff > 0n ? 1 : 0;
+        });
         break;
       case "price-desc":
-        orderBy = desc(sql`CAST(${listings.price} AS NUMERIC)`);
+        filtered.sort((a, b) => {
+          const diff = BigInt(b.price) - BigInt(a.price);
+          return diff < 0n ? -1 : diff > 0n ? 1 : 0;
+        });
         break;
       case "newest":
       default:
-        orderBy = desc(listings.createdAt);
+        filtered.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         break;
     }
 
-    const whereClause = and(...conditions);
+    // ─── 7. Paginate ───────────────────────────────────────────────
 
-    // Get total count
-    const countResult = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(listings)
-      .where(whereClause);
-
-    const total = Number(countResult[0]?.count ?? 0);
-
-    // Get paginated listings
-    const results = await db
-      .select()
-      .from(listings)
-      .where(whereClause)
-      .orderBy(orderBy)
-      .limit(limit)
-      .offset(offset);
-
-    // Fetch toppings for each listing
-    const listingOrderIds = results.map((l) => l.orderId);
-    let toppingsMap: Record<string, Array<{ toppingSku: number; rarity: string }>> = {};
-
-    if (listingOrderIds.length > 0) {
-      const toppingsResult = await db
-        .select()
-        .from(listingToppings)
-        .where(inArray(listingToppings.orderId, listingOrderIds));
-
-      for (const t of toppingsResult) {
-        if (!toppingsMap[t.orderId]) {
-          toppingsMap[t.orderId] = [];
-        }
-        toppingsMap[t.orderId].push({
-          toppingSku: t.toppingSku,
-          rarity: t.rarity,
-        });
-      }
-    }
-
-    // Combine listings with their toppings
-    const enrichedListings = results.map((listing) => ({
-      ...listing,
-      toppings: toppingsMap[listing.orderId] || [],
-    }));
+    const total = filtered.length;
+    const paginated = filtered.slice(offset, offset + limit);
 
     return NextResponse.json({
-      listings: enrichedListings,
+      listings: paginated,
       total,
     });
   } catch (error) {

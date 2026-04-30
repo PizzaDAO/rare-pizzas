@@ -5,6 +5,7 @@ export interface Collection {
   readonly chainId: number;
   readonly standard: "ERC721" | "ERC1155";
   readonly opensea: string;
+  readonly openseaSlug: string;
 }
 
 export const COLLECTIONS = [
@@ -15,6 +16,7 @@ export const COLLECTIONS = [
     chainId: 1,
     standard: "ERC721",
     opensea: "https://opensea.io/collection/rare-pizzas-box",
+    openseaSlug: "rare-pizzas-box",
   },
   {
     slug: "rare-pizzas",
@@ -23,6 +25,7 @@ export const COLLECTIONS = [
     chainId: 1,
     standard: "ERC721",
     opensea: "https://opensea.io/collection/rare-pizzas",
+    openseaSlug: "rare-pizzas",
   },
   {
     slug: "pizza-sticks",
@@ -31,6 +34,7 @@ export const COLLECTIONS = [
     chainId: 10,
     standard: "ERC1155",
     opensea: "https://opensea.io/collection/neo-bambinos-pizza-sticks-and-sauce",
+    openseaSlug: "neo-bambinos-pizza-sticks-and-sauce",
   },
 ] as const satisfies readonly Collection[];
 
