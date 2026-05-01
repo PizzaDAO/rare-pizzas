@@ -23,7 +23,7 @@ import {
   checkApproval,
   approveForSeaport,
 } from "@/lib/seaport";
-import { BOX_ABI } from "@/lib/contracts";
+import { BOX_ABI, PIZZA_ABI, RARE_PIZZAS_CONTRACT } from "@/lib/contracts";
 import type { Rarity, NFTAttribute, Topping } from "@/lib/types";
 
 const ConnectButton = dynamic(
@@ -40,6 +40,7 @@ interface OwnedNFT {
   image?: string;
   toppings: Array<{ sku: number; rarity: string; name: string }>;
   quantity?: number; // For ERC1155
+  isBoxOpened?: boolean; // Redemption status for boxes
 }
 
 type ListStep = "configure" | "sign";
@@ -187,6 +188,17 @@ function NFTCard({
         {nft.quantity && nft.quantity > 1 && (
           <div className="absolute right-2 top-2 rounded-full bg-[#FFE135] px-2 py-0.5 text-[10px] font-bold text-black">
             x{nft.quantity}
+          </div>
+        )}
+        {nft.isBoxOpened !== undefined && (
+          <div
+            className={`absolute left-2 top-7 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+              nft.isBoxOpened
+                ? "bg-amber-500/20 text-amber-400"
+                : "bg-green-500/20 text-green-400"
+            }`}
+          >
+            {nft.isBoxOpened ? "Opened" : "Closed"}
           </div>
         )}
       </div>
@@ -340,12 +352,28 @@ export default function ListPage() {
     return () => { cancelled = true; };
   }, [boxTokens.tokenIds, pizzaTokens.tokenIds]);
 
+  // Check box redemption status
+  const boxRedemptionContracts = useMemo(() => {
+    return boxTokens.tokenIds.map((tokenId) => ({
+      address: RARE_PIZZAS_CONTRACT as `0x${string}`,
+      abi: PIZZA_ABI,
+      functionName: "isRedeemed" as const,
+      args: [BigInt(tokenId)] as const,
+    }));
+  }, [boxTokens.tokenIds]);
+
+  const { data: boxRedemptionResults } = useReadContracts({
+    contracts: boxRedemptionContracts,
+    query: { enabled: boxRedemptionContracts.length > 0 },
+  });
+
   // Build owned NFTs list
   const allToppings = getAllToppings();
   const ownedNFTs = useMemo(() => {
     const nfts: OwnedNFT[] = [];
 
-    for (const tokenId of boxTokens.tokenIds) {
+    for (let i = 0; i < boxTokens.tokenIds.length; i++) {
+      const tokenId = boxTokens.tokenIds[i];
       const key = `${COLLECTIONS[0].contract}-${tokenId}`;
       const meta = nftMeta[key];
       const toppings: OwnedNFT["toppings"] = [];
@@ -359,12 +387,20 @@ export default function ListPage() {
         }
       }
 
+      // Redemption status from on-chain multicall
+      const redemptionResult = boxRedemptionResults?.[i];
+      const isBoxOpened =
+        redemptionResult?.status === "success"
+          ? (redemptionResult.result as boolean)
+          : undefined;
+
       nfts.push({
         collection: COLLECTIONS[0] as unknown as Collection,
         tokenId: String(tokenId),
         name: meta?.name,
         image: meta?.image,
         toppings,
+        isBoxOpened,
       });
     }
 
@@ -392,7 +428,7 @@ export default function ListPage() {
     }
 
     return nfts;
-  }, [boxTokens.tokenIds, pizzaTokens.tokenIds, nftMeta, allToppings]);
+  }, [boxTokens.tokenIds, pizzaTokens.tokenIds, nftMeta, allToppings, boxRedemptionResults]);
 
   const isLoadingNFTs = boxTokens.isLoading || pizzaTokens.isLoading;
 

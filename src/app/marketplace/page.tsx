@@ -166,7 +166,7 @@ function ListingCard({
                 : "bg-green-500/20 text-green-400"
             }`}
           >
-            {listing.isBoxOpened ? "Opened" : "Unopened"}
+            {listing.isBoxOpened ? "Opened" : "Closed"}
           </div>
         )}
         {/* Rarity badge */}
