@@ -193,3 +193,62 @@ export async function fetchNFTMetadata(
     return null;
   }
 }
+
+// ─── Cross-post listing to OpenSea ───────────────────────────────────
+
+/**
+ * Submit a signed Seaport order to OpenSea's order book so it appears
+ * on both rarepizzas.com and opensea.io.
+ *
+ * @param chainId - Chain ID (1 = Ethereum, 10 = Optimism)
+ * @param orderData - The signed OrderWithCounter from seaport-js
+ * @param protocolAddress - Seaport contract address used to create the order
+ * @returns true if successful, false otherwise
+ */
+export async function crossPostToOpenSea(
+  chainId: number,
+  orderData: { parameters: Record<string, unknown>; signature: string },
+  protocolAddress: string
+): Promise<boolean> {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    console.warn("[opensea] No API key — skipping cross-post");
+    return false;
+  }
+
+  const chain = chainName(chainId);
+  const url = `${OPENSEA_API_BASE}/orders/${chain}/seaport/listings`;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        parameters: {
+          ...orderData.parameters,
+          protocol_address: protocolAddress,
+        },
+        signature: orderData.signature,
+      }),
+    });
+
+    if (!res.ok) {
+      const errBody = await res.text().catch(() => "");
+      console.error(
+        `[opensea] Cross-post failed: ${res.status} ${res.statusText}`,
+        errBody
+      );
+      return false;
+    }
+
+    console.log(`[opensea] Cross-posted listing to OpenSea (${chain})`);
+    return true;
+  } catch (error) {
+    console.error("[opensea] Cross-post error:", error);
+    return false;
+  }
+}

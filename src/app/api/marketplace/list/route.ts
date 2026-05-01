@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/db";
 import { listings, listingToppings } from "@/db/schema";
+import { crossPostToOpenSea } from "@/lib/opensea-api";
 
 export const dynamic = "force-dynamic";
 
@@ -125,11 +126,27 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Cross-post to OpenSea (best-effort, don't block on failure)
+    let openSeaCrossPosted = false;
+    if (orderData.parameters && orderData.signature) {
+      // Determine which Seaport contract was used
+      const protocolAddress =
+        orderData.parameters.protocol_address ||
+        "0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC";
+
+      openSeaCrossPosted = await crossPostToOpenSea(
+        chainId,
+        orderData as { parameters: Record<string, unknown>; signature: string },
+        protocolAddress as string
+      );
+    }
+
     return NextResponse.json({
       success: true,
       orderId,
       collection,
       tokenId,
+      openSeaCrossPosted,
     });
   } catch (error) {
     console.error("Error creating listing:", error);
