@@ -42,7 +42,7 @@ interface OwnedNFT {
   quantity?: number; // For ERC1155
 }
 
-type ListStep = "select" | "configure" | "sign";
+type ListStep = "configure" | "sign";
 
 type SignState =
   | { status: "idle" }
@@ -210,7 +210,8 @@ export default function ListPage() {
   const { switchChainAsync } = useSwitchChain();
   const { data: connectorClient } = useConnectorClient();
 
-  const [step, setStep] = useState<ListStep>("select");
+  const [step, setStep] = useState<ListStep>("configure");
+  const [showModal, setShowModal] = useState(false);
   const [selectedNFT, setSelectedNFT] = useState<OwnedNFT | null>(null);
   const [priceInput, setPriceInput] = useState("");
   const [expirationIdx, setExpirationIdx] = useState(2); // 7 days
@@ -544,6 +545,24 @@ export default function ListPage() {
     signState.status === "signing" ||
     signState.status === "submitting";
 
+  // Close modal and reset state
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+    setSelectedNFT(null);
+    setStep("configure");
+    setPriceInput("");
+    setSignState({ status: "idle" });
+  }, []);
+
+  // Open modal when clicking an NFT
+  const openListingModal = useCallback((nft: OwnedNFT) => {
+    setSelectedNFT(nft);
+    setStep("configure");
+    setPriceInput("");
+    setSignState({ status: "idle" });
+    setShowModal(true);
+  }, []);
+
   // ─── Render ────────────────────────────────────────────────────────
 
   if (!isConnected) {
@@ -571,395 +590,358 @@ export default function ListPage() {
 
       <h1 className="mb-6 text-3xl font-bold text-white">List an NFT</h1>
 
-      {/* Steps indicator */}
-      <div className="mb-8 flex items-center gap-2">
-        {[
-          { key: "select", label: "1. Select NFT" },
-          { key: "configure", label: "2. Set Price" },
-          { key: "sign", label: "3. Sign & List" },
-        ].map((s, idx) => (
-          <div key={s.key} className="flex items-center gap-2">
-            {idx > 0 && <div className="h-px w-8 bg-[#333]" />}
-            <span
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                step === s.key
-                  ? "bg-[#FFE135] text-black"
-                  : step === "sign" && s.key === "configure"
-                    ? "bg-[#FFE135]/20 text-[#FFE135]"
-                    : step === "sign" && s.key === "select"
-                      ? "bg-[#FFE135]/20 text-[#FFE135]"
-                      : step === "configure" && s.key === "select"
-                        ? "bg-[#FFE135]/20 text-[#FFE135]"
-                        : "bg-[#222] text-[#555]"
-              }`}
-            >
-              {s.label}
-            </span>
+      {/* NFT Grid — always visible */}
+      <div>
+        {isLoadingNFTs ? (
+          <div className="flex items-center gap-3 rounded-xl bg-[#111] p-6">
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+            <p className="text-sm text-[#7DD3E8]">Loading your NFTs...</p>
           </div>
-        ))}
-      </div>
-
-      {/* Step 1: Select NFT */}
-      {step === "select" && (
-        <div>
-          {isLoadingNFTs ? (
-            <div className="flex items-center gap-3 rounded-xl bg-[#111] p-6">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
-              <p className="text-sm text-[#7DD3E8]">Loading your NFTs...</p>
-            </div>
-          ) : ownedNFTs.length === 0 ? (
-            <div className="rounded-xl border border-[#333]/30 bg-[#111] p-10 text-center">
-              <p className="mb-2 text-lg font-semibold text-white">No PizzaDAO NFTs found</p>
-              <p className="text-sm text-[#7DD3E8]">
-                You don&apos;t own any Rare Pizzas Box or Rare Pizzas NFTs in this wallet.
-              </p>
-            </div>
-          ) : (
-            <>
-              <p className="mb-4 text-sm text-[#7DD3E8]">
-                Select an NFT to list ({ownedNFTs.length} found)
-              </p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                {ownedNFTs.map((nft) => (
-                  <NFTCard
-                    key={`${nft.collection.contract}-${nft.tokenId}`}
-                    nft={nft}
-                    selected={
-                      selectedNFT?.collection.contract === nft.collection.contract &&
-                      selectedNFT?.tokenId === nft.tokenId
-                    }
-                    onSelect={() => setSelectedNFT(nft)}
-                  />
-                ))}
-              </div>
-              {selectedNFT && (
-                <div className="mt-6 flex justify-end">
-                  <button
-                    onClick={() => setStep("configure")}
-                    className="rounded-lg bg-[#FFE135] px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
-                  >
-                    Continue
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
-
-      {/* Step 2: Configure Listing */}
-      {step === "configure" && selectedNFT && (
-        <div className="mx-auto max-w-xl">
-          {/* Selected NFT display */}
-          <div className="mb-6 flex items-start gap-4 rounded-xl border border-[#333] bg-[#111] p-4">
-            <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#0a0a0a]">
-              {selectedNFT.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={ipfsUrl(selectedNFT.image)}
-                  alt={selectedNFT.name || `#${selectedNFT.tokenId}`}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-4xl" role="img" aria-label="pizza">&#127829;</span>
-              )}
-            </div>
-            <div className="flex-1">
-              <p className="text-xs text-[#7DD3E8]">{selectedNFT.collection.name}</p>
-              <h3 className="text-lg font-bold text-white">
-                {selectedNFT.name || `#${selectedNFT.tokenId}`}
-              </h3>
-              <div className="mt-1 flex items-center gap-2">
-                <span className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-white">
-                  {CHAIN_LABELS[selectedNFT.collection.chainId]}
-                </span>
-              </div>
-              {selectedNFT.toppings.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1">
-                  {selectedNFT.toppings.slice(0, 4).map((t) => (
-                    <span key={t.sku} className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-[#7DD3E8]">
-                      {t.name}
-                    </span>
-                  ))}
-                  {selectedNFT.toppings.length > 4 && (
-                    <span className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-[#555]">
-                      +{selectedNFT.toppings.length - 4} more
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-            <button
-              onClick={() => { setStep("select"); setSelectedNFT(null); }}
-              className="text-xs text-[#555] transition-colors hover:text-white"
-            >
-              Change
-            </button>
-          </div>
-
-          {/* Price Input */}
-          <div className="mb-4">
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
-              Price ({CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"})
-            </label>
-            <input
-              type="number"
-              step="0.001"
-              min="0"
-              placeholder="0.00"
-              value={priceInput}
-              onChange={(e) => setPriceInput(e.target.value)}
-              className="w-full rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-lg font-semibold text-white outline-none placeholder:text-[#555] focus:border-[#FFE135]"
-            />
-          </div>
-
-          {/* ERC1155 Quantity */}
-          {selectedNFT.collection.standard === "ERC1155" && (
-            <div className="mb-4">
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
-                Quantity
-              </label>
-              <input
-                type="number"
-                min="1"
-                max={selectedNFT.quantity || 1}
-                value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-                className="w-full rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-lg font-semibold text-white outline-none placeholder:text-[#555] focus:border-[#FFE135]"
-              />
-            </div>
-          )}
-
-          {/* Expiration */}
-          <div className="mb-4">
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
-              Expiration
-            </label>
-            <div className="flex gap-2">
-              {EXPIRATION_OPTIONS.map((opt, idx) => (
-                <button
-                  key={opt.seconds}
-                  onClick={() => setExpirationIdx(idx)}
-                  className={`flex-1 rounded-lg px-2 py-2 text-xs font-medium transition-colors ${
-                    expirationIdx === idx
-                      ? "bg-[#FFE135] text-black"
-                      : "border border-[#333] bg-[#0a0a0a] text-[#7DD3E8] hover:border-[#FFE135]/50"
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Fee Breakdown */}
-          {feeBreakdown && (
-            <div className="mb-6 rounded-xl bg-[#0a0a0a] p-4">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#555]">
-                Fee Breakdown
-              </p>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-[#7DD3E8]">Listed price</span>
-                  <span className="text-white">
-                    {priceInput} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-[#7DD3E8]">Marketplace fee ({bpsToPercent(MARKETPLACE_FEE_BPS)})</span>
-                  <span className="text-white">
-                    -{formatEther(feeBreakdown.marketplaceFee)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-[#7DD3E8]">Creator royalty ({bpsToPercent(CREATOR_ROYALTY_BPS)})</span>
-                  <span className="text-white">
-                    -{formatEther(feeBreakdown.creatorRoyalty)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
-                  </span>
-                </div>
-                <div className="mt-2 border-t border-[#333] pt-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-white">You receive</span>
-                    <span className="text-lg font-bold text-[#FFE135]">
-                      {formatEther(feeBreakdown.sellerReceives)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Navigation */}
-          <div className="flex gap-3">
-            <button
-              onClick={() => setStep("select")}
-              className="flex-1 rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#555] hover:text-white"
-            >
-              Back
-            </button>
-            <button
-              onClick={() => setStep("sign")}
-              disabled={!parsedPrice}
-              className="flex-1 rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3: Sign & Submit */}
-      {step === "sign" && selectedNFT && (
-        <div className="mx-auto max-w-xl">
-          {/* Summary */}
-          <div className="mb-6 rounded-xl border border-[#333] bg-[#111] p-6">
-            <h2 className="mb-4 text-lg font-bold text-white">Listing Summary</h2>
-
-            <div className="mb-4 flex items-start gap-4">
-              <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#0a0a0a]">
-                {selectedNFT.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={ipfsUrl(selectedNFT.image)} alt="" className="h-full w-full object-cover" />
-                ) : (
-                  <span className="text-3xl" role="img" aria-label="pizza">&#127829;</span>
-                )}
-              </div>
-              <div>
-                <p className="text-xs text-[#7DD3E8]">{selectedNFT.collection.name}</p>
-                <p className="font-semibold text-white">{selectedNFT.name || `#${selectedNFT.tokenId}`}</p>
-                <p className="text-xs text-[#555]">{CHAIN_LABELS[selectedNFT.collection.chainId]}</p>
-              </div>
-            </div>
-
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-[#7DD3E8]">Price</span>
-                <span className="font-semibold text-[#FFE135]">
-                  {priceInput} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#7DD3E8]">Expires</span>
-                <span className="text-white">{EXPIRATION_OPTIONS[expirationIdx].label}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#7DD3E8]">Total fees</span>
-                <span className="text-white">7.25%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Approval notice */}
-          <div className="mb-4 rounded-lg border border-[#7DD3E8]/30 bg-[#7DD3E8]/10 px-4 py-3">
-            <p className="text-xs text-[#7DD3E8]">
-              <strong>Gasless listing:</strong> Creating a listing only requires an EIP-712 signature (no gas).
-              If this is your first time listing from this collection, a one-time approval transaction will be required.
+        ) : ownedNFTs.length === 0 ? (
+          <div className="rounded-xl border border-[#333]/30 bg-[#111] p-10 text-center">
+            <p className="mb-2 text-lg font-semibold text-white">No PizzaDAO NFTs found</p>
+            <p className="text-sm text-[#7DD3E8]">
+              You don&apos;t own any Rare Pizzas Box or Rare Pizzas NFTs in this wallet.
             </p>
           </div>
-
-          {/* Status Messages */}
-          {signState.status === "switching-chain" && (
-            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
-                <p className="text-sm text-[#FFE135]">
-                  Switching to {CHAIN_LABELS[selectedNFT.collection.chainId]}...
-                </p>
-              </div>
+        ) : (
+          <>
+            <p className="mb-4 text-sm text-[#7DD3E8]">
+              Select an NFT to list ({ownedNFTs.length} found)
+            </p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {ownedNFTs.map((nft) => (
+                <NFTCard
+                  key={`${nft.collection.contract}-${nft.tokenId}`}
+                  nft={nft}
+                  selected={false}
+                  onSelect={() => openListingModal(nft)}
+                />
+              ))}
             </div>
-          )}
+          </>
+        )}
+      </div>
 
-          {signState.status === "checking-approval" && (
-            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#7DD3E8] border-t-transparent" />
-                <p className="text-sm text-[#7DD3E8]">Checking approval status...</p>
-              </div>
-            </div>
-          )}
+      {/* ─── Listing Modal ─────────────────────────────────────────────── */}
+      {showModal && selectedNFT && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => { if (!isProcessing) closeModal(); }}
+          />
 
-          {signState.status === "approving" && (
-            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
-                <p className="text-sm text-[#FFE135]">
-                  One-time approval required. Confirm in wallet...
-                </p>
-              </div>
-            </div>
-          )}
-
-          {signState.status === "signing" && (
-            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
-                <p className="text-sm text-[#FFE135]">Sign listing in wallet...</p>
-              </div>
-            </div>
-          )}
-
-          {signState.status === "submitting" && (
-            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#7DD3E8] border-t-transparent" />
-                <p className="text-sm text-[#7DD3E8]">Submitting listing...</p>
-              </div>
-            </div>
-          )}
-
-          {signState.status === "success" && (
-            <div className="mb-4 rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3">
-              <p className="text-sm font-semibold text-green-400">Listing created!</p>
-              <p className="mt-1 text-xs text-green-400/80">
-                Your NFT is now listed on the marketplace.
-              </p>
-              <Link
-                href="/marketplace"
-                className="mt-2 inline-block text-xs font-semibold text-[#FFE135] underline"
+          {/* Modal content */}
+          <div className="relative mx-4 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-[#333] bg-[#111] p-6 shadow-2xl">
+            {/* Close button */}
+            {!isProcessing && signState.status !== "success" && (
+              <button
+                onClick={closeModal}
+                className="absolute right-4 top-4 text-[#555] transition-colors hover:text-white"
               >
-                View on Marketplace
-              </Link>
-            </div>
-          )}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            )}
 
-          {signState.status === "error" && (
-            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3">
-              <p className="text-sm text-red-400">{signState.message}</p>
-            </div>
-          )}
-
-          {/* Actions */}
-          <div className="flex gap-3">
-            {signState.status === "success" ? (
-              <Link
-                href="/marketplace"
-                className="flex flex-1 items-center justify-center rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
-              >
-                Go to Marketplace
-              </Link>
-            ) : (
+            {/* ─── Configure step ─────────────────────────────────── */}
+            {step === "configure" && (
               <>
-                <button
-                  onClick={() => { setStep("configure"); setSignState({ status: "idle" }); }}
-                  disabled={isProcessing}
-                  className="flex-1 rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#555] hover:text-white disabled:opacity-50"
-                >
-                  Back
-                </button>
-                <button
-                  onClick={handleCreateListing}
-                  disabled={isProcessing}
-                  className="flex-1 rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
-                >
-                  {isProcessing ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
-                      Processing...
+                {/* Selected NFT header */}
+                <div className="mb-6 flex items-start gap-4">
+                  <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#0a0a0a]">
+                    {selectedNFT.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={ipfsUrl(selectedNFT.image)}
+                        alt={selectedNFT.name || `#${selectedNFT.tokenId}`}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-4xl" role="img" aria-label="pizza">&#127829;</span>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-[#7DD3E8]">{selectedNFT.collection.name}</p>
+                    <h3 className="text-lg font-bold text-white">
+                      {selectedNFT.name || `#${selectedNFT.tokenId}`}
+                    </h3>
+                    <span className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-white">
+                      {CHAIN_LABELS[selectedNFT.collection.chainId]}
                     </span>
-                  ) : (
-                    "Sign & Create Listing"
-                  )}
+                    {selectedNFT.toppings.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {selectedNFT.toppings.slice(0, 4).map((t) => (
+                          <span key={t.sku} className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-[#7DD3E8]">
+                            {t.name}
+                          </span>
+                        ))}
+                        {selectedNFT.toppings.length > 4 && (
+                          <span className="rounded-full bg-[#222] px-2 py-0.5 text-[10px] text-[#555]">
+                            +{selectedNFT.toppings.length - 4} more
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Price Input */}
+                <div className="mb-4">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
+                    Price ({CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"})
+                  </label>
+                  <input
+                    type="number"
+                    step="0.001"
+                    min="0"
+                    placeholder="0.00"
+                    value={priceInput}
+                    onChange={(e) => setPriceInput(e.target.value)}
+                    autoFocus
+                    className="w-full rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-lg font-semibold text-white outline-none placeholder:text-[#555] focus:border-[#FFE135]"
+                  />
+                </div>
+
+                {/* ERC1155 Quantity */}
+                {selectedNFT.collection.standard === "ERC1155" && (
+                  <div className="mb-4">
+                    <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
+                      Quantity
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max={selectedNFT.quantity || 1}
+                      value={quantity}
+                      onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                      className="w-full rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-lg font-semibold text-white outline-none placeholder:text-[#555] focus:border-[#FFE135]"
+                    />
+                  </div>
+                )}
+
+                {/* Expiration */}
+                <div className="mb-4">
+                  <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-[#555]">
+                    Expiration
+                  </label>
+                  <div className="flex gap-2">
+                    {EXPIRATION_OPTIONS.map((opt, idx) => (
+                      <button
+                        key={opt.seconds}
+                        onClick={() => setExpirationIdx(idx)}
+                        className={`flex-1 rounded-lg px-2 py-2 text-xs font-medium transition-colors ${
+                          expirationIdx === idx
+                            ? "bg-[#FFE135] text-black"
+                            : "border border-[#333] bg-[#0a0a0a] text-[#7DD3E8] hover:border-[#FFE135]/50"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Fee Breakdown */}
+                {feeBreakdown && (
+                  <div className="mb-6 rounded-xl bg-[#0a0a0a] p-4">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#555]">
+                      Fee Breakdown
+                    </p>
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[#7DD3E8]">Listed price</span>
+                        <span className="text-white">
+                          {priceInput} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[#7DD3E8]">Marketplace fee ({bpsToPercent(MARKETPLACE_FEE_BPS)})</span>
+                        <span className="text-white">
+                          -{formatEther(feeBreakdown.marketplaceFee)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-[#7DD3E8]">Creator royalty ({bpsToPercent(CREATOR_ROYALTY_BPS)})</span>
+                        <span className="text-white">
+                          -{formatEther(feeBreakdown.creatorRoyalty)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                        </span>
+                      </div>
+                      <div className="mt-2 border-t border-[#333] pt-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-semibold text-white">You receive</span>
+                          <span className="text-lg font-bold text-[#FFE135]">
+                            {formatEther(feeBreakdown.sellerReceives)} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Gasless notice */}
+                <div className="mb-4 rounded-lg border border-[#7DD3E8]/30 bg-[#7DD3E8]/10 px-4 py-3">
+                  <p className="text-xs text-[#7DD3E8]">
+                    <strong>Gasless listing:</strong> Only requires an EIP-712 signature (no gas).
+                    First-time listing from this collection requires a one-time approval tx.
+                  </p>
+                </div>
+
+                {/* Action */}
+                <button
+                  onClick={() => setStep("sign")}
+                  disabled={!parsedPrice}
+                  className="w-full rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
+                >
+                  Review & Sign
                 </button>
+              </>
+            )}
+
+            {/* ─── Sign step ──────────────────────────────────────── */}
+            {step === "sign" && (
+              <>
+                {/* Summary */}
+                <div className="mb-6">
+                  <h2 className="mb-4 text-lg font-bold text-white">Listing Summary</h2>
+
+                  <div className="mb-4 flex items-start gap-4">
+                    <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#0a0a0a]">
+                      {selectedNFT.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={ipfsUrl(selectedNFT.image)} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="text-3xl" role="img" aria-label="pizza">&#127829;</span>
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-xs text-[#7DD3E8]">{selectedNFT.collection.name}</p>
+                      <p className="font-semibold text-white">{selectedNFT.name || `#${selectedNFT.tokenId}`}</p>
+                      <p className="text-xs text-[#555]">{CHAIN_LABELS[selectedNFT.collection.chainId]}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 rounded-xl bg-[#0a0a0a] p-4 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-[#7DD3E8]">Price</span>
+                      <span className="font-semibold text-[#FFE135]">
+                        {priceInput} {CHAIN_CURRENCIES[selectedNFT.collection.chainId] || "ETH"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#7DD3E8]">Expires</span>
+                      <span className="text-white">{EXPIRATION_OPTIONS[expirationIdx].label}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#7DD3E8]">Total fees</span>
+                      <span className="text-white">7.25%</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Status Messages */}
+                {signState.status === "switching-chain" && (
+                  <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                      <p className="text-sm text-[#FFE135]">
+                        Switching to {CHAIN_LABELS[selectedNFT.collection.chainId]}...
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {signState.status === "checking-approval" && (
+                  <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#7DD3E8] border-t-transparent" />
+                      <p className="text-sm text-[#7DD3E8]">Checking approval status...</p>
+                    </div>
+                  </div>
+                )}
+
+                {signState.status === "approving" && (
+                  <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                      <p className="text-sm text-[#FFE135]">
+                        One-time approval required. Confirm in wallet...
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {signState.status === "signing" && (
+                  <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                      <p className="text-sm text-[#FFE135]">Sign listing in wallet...</p>
+                    </div>
+                  </div>
+                )}
+
+                {signState.status === "submitting" && (
+                  <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#7DD3E8] border-t-transparent" />
+                      <p className="text-sm text-[#7DD3E8]">Submitting listing...</p>
+                    </div>
+                  </div>
+                )}
+
+                {signState.status === "success" && (
+                  <div className="mb-4 rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3">
+                    <p className="text-sm font-semibold text-green-400">Listing created!</p>
+                    <p className="mt-1 text-xs text-green-400/80">
+                      Your NFT is now listed on the marketplace.
+                    </p>
+                  </div>
+                )}
+
+                {signState.status === "error" && (
+                  <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3">
+                    <p className="text-sm text-red-400">{signState.message}</p>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="flex gap-3">
+                  {signState.status === "success" ? (
+                    <Link
+                      href="/marketplace"
+                      className="flex flex-1 items-center justify-center rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80"
+                    >
+                      Go to Marketplace
+                    </Link>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => { setStep("configure"); setSignState({ status: "idle" }); }}
+                        disabled={isProcessing}
+                        className="flex-1 rounded-lg border border-[#333] bg-[#0a0a0a] px-4 py-3 text-sm font-semibold text-[#7DD3E8] transition-colors hover:border-[#555] hover:text-white disabled:opacity-50"
+                      >
+                        Back
+                      </button>
+                      <button
+                        onClick={handleCreateListing}
+                        disabled={isProcessing}
+                        className="flex-1 rounded-lg bg-[#FFE135] px-4 py-3 text-sm font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
+                      >
+                        {isProcessing ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <span className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />
+                            Processing...
+                          </span>
+                        ) : (
+                          "Sign & Create Listing"
+                        )}
+                      </button>
+                    </>
+                  )}
+                </div>
               </>
             )}
           </div>

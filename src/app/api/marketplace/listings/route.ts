@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { COLLECTIONS } from "@/lib/collections";
-import { fetchCollectionListings } from "@/lib/opensea-api";
+import { fetchCollectionListings, fetchNFTMetadata, getChainName } from "@/lib/opensea-api";
 import {
   normalizeOpenSeaListings,
   type NormalizedListing,
@@ -149,6 +149,27 @@ export async function GET(request: NextRequest) {
             orderData: dbListing.orderData,
             toppings: toppingsMap[dbListing.orderId] || [],
           });
+        }
+        // ─── Enrich local listings with NFT metadata (image, name) ────
+        if (localListings.length > 0) {
+          const CONCURRENCY = 5;
+          for (let i = 0; i < localListings.length; i += CONCURRENCY) {
+            const batch = localListings.slice(i, i + CONCURRENCY);
+            const metaResults = await Promise.allSettled(
+              batch.map((l) => {
+                const col = COLLECTIONS.find((c) => c.slug === l.collection);
+                const chainName = getChainName(col?.chainId ?? 1);
+                return fetchNFTMetadata(chainName, l.tokenContract, l.tokenId);
+              })
+            );
+            for (let j = 0; j < batch.length; j++) {
+              const result = metaResults[j];
+              if (result.status === "fulfilled" && result.value) {
+                batch[j].imageUrl = result.value.image_url || undefined;
+                batch[j].nftName = result.value.name || undefined;
+              }
+            }
+          }
         }
       } catch (err) {
         console.error("Error fetching local DB listings:", err);
