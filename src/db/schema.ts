@@ -56,3 +56,45 @@ export const offers = pgTable("offers", {
   status: text("status").notNull().default("active"), // active, accepted, cancelled, expired
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ─── Leaderboard ─────────────────────────────────────────────────────
+
+export const leaderboardSnapshots = pgTable("leaderboard_snapshots", {
+  id: text("id").primaryKey(),
+  startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+  completedAt: timestamp("completed_at", { withTimezone: true }),
+  status: text("status").notNull().default("running"), // running, completed, failed
+  holderCount: integer("holder_count"),
+  tokenCount: integer("token_count"),
+});
+
+export const leaderboardHolders = pgTable(
+  "leaderboard_holders",
+  {
+    snapshotId: text("snapshot_id")
+      .notNull()
+      .references(() => leaderboardSnapshots.id, { onDelete: "cascade" }),
+    wallet: text("wallet").notNull(),
+    pizzaCount: integer("pizza_count").notNull().default(0),
+    boxCount: integer("box_count").notNull().default(0),
+    totalNfts: integer("total_nfts").notNull().default(0),
+    rarityScore: integer("rarity_score").notNull().default(0),
+    uniqueToppings: integer("unique_toppings").notNull().default(0),
+    completenessScore: integer("completeness_score").notNull().default(0), // 0-10000 = xx.xx%
+    ensName: text("ens_name"),
+    ensAvatar: text("ens_avatar"),
+    rankByTotal: integer("rank_by_total"),
+    rankByRarity: integer("rank_by_rarity"),
+    rankByCompleteness: integer("rank_by_completeness"),
+  },
+  (table) => [
+    primaryKey({ columns: [table.snapshotId, table.wallet] }),
+  ]
+);
+
+export const ensCache = pgTable("ens_cache", {
+  wallet: text("wallet").primaryKey(),
+  ensName: text("ens_name"),
+  ensAvatar: text("ens_avatar"),
+  resolvedAt: timestamp("resolved_at", { withTimezone: true }).notNull().defaultNow(),
+});
