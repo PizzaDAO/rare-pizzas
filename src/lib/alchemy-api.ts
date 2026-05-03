@@ -97,7 +97,7 @@ export async function getNftMetadataBatch(
   for (let i = 0; i < tokens.length; i += 100) {
     const batch = tokens.slice(i, i + 100);
 
-    const res = await fetch(`${base}/getNftMetadataBatch`, {
+    const res = await fetch(`${base}/getNFTMetadataBatch`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tokens: batch }),
@@ -110,7 +110,8 @@ export async function getNftMetadataBatch(
       );
     }
 
-    const data = (await res.json()) as AlchemyNftMetadata[];
+    const json = (await res.json()) as { nfts?: AlchemyNftMetadata[] } | AlchemyNftMetadata[];
+    const data = Array.isArray(json) ? json : (json.nfts || []);
 
     for (const nft of data) {
       results.push({

@@ -3,6 +3,7 @@ import { getDb } from "@/db";
 import { runSnapshot } from "@/lib/leaderboard-ingestion";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 300;
 
 export async function GET(request: NextRequest) {
   try {
