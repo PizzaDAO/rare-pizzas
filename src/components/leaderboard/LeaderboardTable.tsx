@@ -66,7 +66,6 @@ export default function LeaderboardTable({
               <th className="px-4 py-3 text-center">Pizzas</th>
               <th className="px-4 py-3 text-center">Boxes</th>
               <th className="px-4 py-3 text-center">Total</th>
-              <th className="px-4 py-3 text-center">Rarity Score</th>
               <th className="px-4 py-3 text-center">Unique Toppings</th>
             </tr>
           </thead>

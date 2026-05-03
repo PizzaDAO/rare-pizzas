@@ -9,7 +9,6 @@ interface CategoryTabsProps {
 
 const TABS: { value: SortCategory; label: string }[] = [
   { value: "total", label: "Total NFTs" },
-  { value: "rarity", label: "Rarity Score" },
   { value: "completeness", label: "Topping Collection" },
 ];
 

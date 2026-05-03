@@ -123,9 +123,6 @@ export function LeaderboardRowDesktop({
       <td className="px-4 py-3 text-center text-sm font-semibold text-white">
         {holder.totalNfts}
       </td>
-      <td className="px-4 py-3 text-center text-sm text-[#FFE135]">
-        {holder.rarityScore.toLocaleString()}
-      </td>
       <td className="px-4 py-3 text-center text-sm text-[#7DD3E8]">
         {holder.uniqueToppings}
         <span className="ml-1 text-xs text-[#555]">
@@ -191,12 +188,6 @@ export function LeaderboardRowMobile({
           <span className="text-[#555]">Total</span>
           <span className="ml-2 font-semibold text-white">
             {holder.totalNfts}
-          </span>
-        </div>
-        <div className="rounded-lg bg-[#0a0a0a] px-3 py-2">
-          <span className="text-[#555]">Rarity</span>
-          <span className="ml-2 font-medium text-[#FFE135]">
-            {holder.rarityScore.toLocaleString()}
           </span>
         </div>
         <div className="col-span-2 rounded-lg bg-[#0a0a0a] px-3 py-2">
