@@ -18,6 +18,7 @@ import type {
 
 const SESSION_STORAGE_PREFIX = "rp-meta-";
 const ALCHEMY_BATCH_SIZE = 100;
+const ALCHEMY_BASE = `https://eth-mainnet.g.alchemy.com/nft/v3/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
 
 function getCachedMetadata(tokenId: number): NFTMetadata | null {
   try {
@@ -63,70 +64,73 @@ function parseToppings(metadata: NFTMetadata | null): {
 }
 
 /**
- * Fetch metadata via server-side Alchemy proxy (/api/nft-metadata).
- * Falls back gracefully — tokens without metadata get null.
+ * Fetch metadata directly from Alchemy's NFT API (client-side).
+ * No serverless function in the path = no cold start latency.
  */
 async function fetchAllMetadata(
   tokenIds: number[],
   onProgress: (completed: number, tokenData: PizzaTokenData) => void
 ): Promise<PizzaTokenData[]> {
   const results: PizzaTokenData[] = [];
-  const uncached: { tokenId: number; index: number }[] = [];
+  const uncached: number[] = [];
 
   // Check session cache first
   for (const tokenId of tokenIds) {
     const cached = getCachedMetadata(tokenId);
     if (cached) {
       const { toppings, unmatchedTraits } = parseToppings(cached);
-      const data: PizzaTokenData = {
-        tokenId,
-        metadata: cached,
-        toppings,
-        unmatchedTraits,
-      };
-      results.push(data);
-      onProgress(results.length, data);
+      results.push({ tokenId, metadata: cached, toppings, unmatchedTraits });
+      onProgress(results.length, results[results.length - 1]);
     } else {
-      uncached.push({ tokenId, index: results.length });
+      uncached.push(tokenId);
     }
   }
 
   if (uncached.length === 0) return results;
 
-  // Batch fetch uncached tokens via Alchemy API route
+  // Batch fetch uncached tokens directly from Alchemy (up to 100 per call)
   for (let i = 0; i < uncached.length; i += ALCHEMY_BATCH_SIZE) {
     const batch = uncached.slice(i, i + ALCHEMY_BATCH_SIZE);
-    const tokens = batch.map((t) => ({
+    const tokens = batch.map((id) => ({
       contractAddress: RARE_PIZZAS_CONTRACT,
-      tokenId: String(t.tokenId),
+      tokenId: String(id),
     }));
 
     try {
-      const res = await fetch("/api/nft-metadata", {
+      const res = await fetch(`${ALCHEMY_BASE}/getNFTMetadataBatch`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tokens }),
       });
 
-      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      if (!res.ok) throw new Error(`Alchemy returned ${res.status}`);
 
-      const data = await res.json();
-      const apiResults: { tokenId: string; metadata: NFTMetadata }[] =
-        data.results || [];
+      const json = await res.json();
+      const nfts = json.nfts || json;
 
-      // Map results back by tokenId
+      // Index by tokenId for fast lookup
       const metaMap = new Map<string, NFTMetadata>();
-      for (const r of apiResults) {
-        metaMap.set(r.tokenId, r.metadata);
+      for (const nft of nfts) {
+        const meta: NFTMetadata = {
+          name: nft.raw?.metadata?.name || nft.name || undefined,
+          description: nft.raw?.metadata?.description || undefined,
+          image:
+            nft.image?.cachedUrl ||
+            nft.image?.originalUrl ||
+            nft.raw?.metadata?.image ||
+            undefined,
+          attributes: nft.raw?.metadata?.attributes || [],
+        };
+        metaMap.set(nft.tokenId, meta);
       }
 
-      for (const item of batch) {
-        const metadata = metaMap.get(String(item.tokenId)) || null;
-        if (metadata) setCachedMetadata(item.tokenId, metadata);
+      for (const tokenId of batch) {
+        const metadata = metaMap.get(String(tokenId)) || null;
+        if (metadata) setCachedMetadata(tokenId, metadata);
 
         const { toppings, unmatchedTraits } = parseToppings(metadata);
         const tokenData: PizzaTokenData = {
-          tokenId: item.tokenId,
+          tokenId,
           metadata,
           toppings,
           unmatchedTraits,
@@ -135,16 +139,15 @@ async function fetchAllMetadata(
         onProgress(results.length, tokenData);
       }
     } catch {
-      // If API fails, add tokens with null metadata
-      for (const item of batch) {
-        const tokenData: PizzaTokenData = {
-          tokenId: item.tokenId,
+      // If Alchemy fails, add tokens with null metadata
+      for (const tokenId of batch) {
+        results.push({
+          tokenId,
           metadata: null,
           toppings: [],
           unmatchedTraits: [],
-        };
-        results.push(tokenData);
-        onProgress(results.length, tokenData);
+        });
+        onProgress(results.length, results[results.length - 1]);
       }
     }
   }
