@@ -54,6 +54,9 @@ export default function Header() {
             <Link href="/marketplace" className={navColor("/marketplace", pathname)}>
               Marketplace
             </Link>
+            <Link href="/leaderboard" className={navColor("/leaderboard", pathname)}>
+              Leaderboard
+            </Link>
             <a
               href="https://globalpizza.party"
               target="_blank"
@@ -129,6 +132,9 @@ export default function Header() {
           </Link>
           <Link href="/marketplace" className={navColor("/marketplace", pathname, true)} onClick={() => setMenuOpen(false)}>
             Marketplace
+          </Link>
+          <Link href="/leaderboard" className={navColor("/leaderboard", pathname, true)} onClick={() => setMenuOpen(false)}>
+            Leaderboard
           </Link>
           <a
             href="https://globalpizza.party"
