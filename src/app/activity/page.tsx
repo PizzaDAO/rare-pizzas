@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import EventTypeToggle from "@/components/activity/EventTypeToggle";
 import ActivityList from "@/components/activity/ActivityList";
 import type { ActivityEvent } from "@/components/activity/ActivityEventRow";
 
 const PAGE_SIZE = 50;
+const POLL_INTERVAL_MS = 30_000;
 
 const COLLECTION_TABS = [
   { value: "", label: "All" },
@@ -32,8 +33,8 @@ function ActivityPageInner() {
     () => Number(searchParams.get("page") || 1) * PAGE_SIZE - PAGE_SIZE
   );
 
-  const fetchActivity = useCallback(async () => {
-    setLoading(true);
+  const fetchActivity = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const params = new URLSearchParams();
       params.set("types", activeTypes.join(","));
@@ -48,16 +49,30 @@ function ActivityPageInner() {
       setEvents(data.events || []);
       setTotal(data.total || 0);
     } catch {
-      setEvents([]);
-      setTotal(0);
+      if (!silent) {
+        setEvents([]);
+        setTotal(0);
+      }
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, [activeTypes, collection, offset]);
 
   useEffect(() => {
     fetchActivity();
   }, [fetchActivity]);
+
+  // Auto-refresh every 30s on page 1
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => {
+    if (pollRef.current) clearInterval(pollRef.current);
+    if (offset === 0) {
+      pollRef.current = setInterval(() => fetchActivity(true), POLL_INTERVAL_MS);
+    }
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
+  }, [fetchActivity, offset]);
 
   // Reset offset when filters change
   useEffect(() => {
@@ -113,9 +128,17 @@ function ActivityPageInner() {
 
       {/* Results count */}
       {!loading && total > 0 && (
-        <p className="mb-4 text-sm text-[#7DD3E8]">
-          Showing {events.length} of {total.toLocaleString()} event
-          {total !== 1 ? "s" : ""}
+        <p className="mb-4 flex items-center gap-2 text-sm text-[#7DD3E8]">
+          <span>
+            Showing {events.length} of {total.toLocaleString()} event
+            {total !== 1 ? "s" : ""}
+          </span>
+          {offset === 0 && (
+            <span className="flex items-center gap-1 text-xs text-[#555]">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-green-400" />
+              Live
+            </span>
+          )}
         </p>
       )}
 
