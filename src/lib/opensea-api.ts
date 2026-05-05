@@ -194,6 +194,111 @@ export async function fetchNFTMetadata(
   }
 }
 
+// ─── OpenSea Event Types ────────────────────────────────────────────
+
+export interface OpenSeaEvent {
+  event_type: string;
+  chain: string;
+  transaction?: string;
+  event_timestamp: string;
+  nft?: {
+    identifier: string;
+    contract: string;
+    name?: string;
+    image_url?: string;
+    collection?: string;
+  };
+  payment?: {
+    quantity: string;
+    token_address: string;
+    symbol: string;
+    decimals: number;
+  };
+  seller?: string;
+  buyer?: string;
+  from_address?: string;
+  to_address?: string;
+  maker?: string;
+  taker?: string;
+  price?: {
+    current: {
+      value: string;
+      currency: string;
+      decimals: number;
+    };
+  };
+}
+
+export interface OpenSeaEventsResponse {
+  asset_events: OpenSeaEvent[];
+  next: string | null;
+}
+
+/**
+ * Fetch events for a collection from OpenSea Events API.
+ * @param openseaSlug - Collection slug
+ * @param eventType - Event type to fetch (sale, transfer, listing, offer, cancel)
+ * @param options - Pagination cursor, after timestamp, max pages
+ */
+export async function fetchCollectionEvents(
+  openseaSlug: string,
+  eventType: string,
+  options: { cursor?: string | null; after?: number; maxPages?: number } = {}
+): Promise<{ events: OpenSeaEvent[]; nextCursor: string | null }> {
+  const apiKey = getApiKey();
+  if (!apiKey) return { events: [], nextCursor: null };
+
+  const { cursor = null, after, maxPages = 4 } = options;
+  const allEvents: OpenSeaEvent[] = [];
+  let nextCursor: string | null = cursor;
+
+  try {
+    for (let page = 0; page < maxPages; page++) {
+      const url = new URL(
+        `${OPENSEA_API_BASE}/events/collection/${openseaSlug}`
+      );
+      url.searchParams.set("event_type", eventType);
+      url.searchParams.set("limit", "50");
+      if (nextCursor) url.searchParams.set("next", nextCursor);
+      if (after) url.searchParams.set("after", String(after));
+
+      const res = await fetch(url.toString(), {
+        headers: {
+          "x-api-key": apiKey,
+          Accept: "application/json",
+        },
+        next: { revalidate: 0 },
+      });
+
+      if (res.status === 429) {
+        console.warn(
+          `[opensea] Rate limit hit fetching ${eventType} events for ${openseaSlug}`
+        );
+        break;
+      }
+
+      if (!res.ok) {
+        console.error(
+          `[opensea] Events API error for ${openseaSlug}: ${res.status}`
+        );
+        break;
+      }
+
+      const data = await res.json();
+      allEvents.push(...(data.asset_events || []));
+      nextCursor = data.next || null;
+      if (!nextCursor || (data.asset_events || []).length === 0) break;
+    }
+  } catch (error) {
+    console.error(
+      `[opensea] Events fetch error for ${openseaSlug}:`,
+      error
+    );
+  }
+
+  return { events: allEvents, nextCursor };
+}
+
 // ─── Cross-post listing to OpenSea ───────────────────────────────────
 
 /**
