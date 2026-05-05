@@ -2,12 +2,9 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useReadContract } from "wagmi";
 import {
   RARE_PIZZAS_CONTRACT,
-  ERC721_ENUMERABLE_ABI,
   EXCLUDED_TRAIT_TYPES,
-  OPENSEA_BASE_URL,
 } from "@/lib/constants";
 import { matchTopping, getAllToppings } from "@/lib/toppings";
 import { getToppingEmoji } from "@/lib/topping-emojis";
@@ -22,39 +19,36 @@ function isActiveHandle(handle: string | undefined): boolean {
   return !DEAD_HANDLES.has(handle.replace("@", ""));
 }
 
-// --- IPFS helpers (same pattern as useWalletToppings) ---
+// --- Alchemy metadata fetch (same pattern as useWalletToppings) ---
 
-const IPFS_GATEWAYS = [
-  "https://dweb.link/ipfs/",
-  "https://cloudflare-ipfs.com/ipfs/",
-  "https://ipfs.io/ipfs/",
-];
+const ALCHEMY_BASE = `https://eth-mainnet.g.alchemy.com/nft/v3/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
 
-function ipfsToHttp(uri: string, gateway: string = IPFS_GATEWAYS[0]): string {
-  if (uri.startsWith("ipfs://")) {
-    return `${gateway}${uri.slice(7)}`;
-  }
-  return uri;
-}
+async function fetchMetadataFromAlchemy(tokenId: number): Promise<NFTMetadata> {
+  const res = await fetch(`${ALCHEMY_BASE}/getNFTMetadataBatch`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      tokens: [{ contractAddress: RARE_PIZZAS_CONTRACT, tokenId: String(tokenId) }],
+    }),
+  });
 
-async function fetchMetadataWithRetry(
-  uri: string,
-  retries = 2
-): Promise<NFTMetadata> {
-  for (const gateway of IPFS_GATEWAYS) {
-    const url = ipfsToHttp(uri, gateway);
-    for (let attempt = 0; attempt <= retries; attempt++) {
-      try {
-        const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return (await res.json()) as NFTMetadata;
-      } catch {
-        if (attempt === retries) break;
-        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
-      }
-    }
-  }
-  throw new Error("All IPFS gateways failed");
+  if (!res.ok) throw new Error(`Alchemy returned ${res.status}`);
+
+  const json = await res.json();
+  const nfts = json.nfts || json;
+  const nft = nfts[0];
+  if (!nft) throw new Error("No metadata returned");
+
+  return {
+    name: nft.raw?.metadata?.name || nft.name || undefined,
+    description: nft.raw?.metadata?.description || undefined,
+    image:
+      nft.image?.cachedUrl ||
+      nft.image?.originalUrl ||
+      nft.raw?.metadata?.image ||
+      undefined,
+    attributes: nft.raw?.metadata?.attributes || [],
+  };
 }
 
 // --- Owner lookup via serverless function ---
@@ -199,35 +193,19 @@ export default function ComposePage() {
   const [spotlightCopied, setSpotlightCopied] = useState(false);
   const spotlightTextareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Step 1: Read tokenURI from contract
-  const {
-    data: tokenURI,
-    isLoading: isLoadingURI,
-    error: uriError,
-  } = useReadContract({
-    address: RARE_PIZZAS_CONTRACT,
-    abi: ERC721_ENUMERABLE_ABI,
-    functionName: "tokenURI",
-    args: activeTokenId !== null ? [BigInt(activeTokenId)] : undefined,
-    query: {
-      enabled: activeTokenId !== null,
-    },
-  });
-
-  // Step 2: Fetch IPFS metadata when URI is available
+  // Step 1: Fetch metadata from Alchemy when activeTokenId changes
   useEffect(() => {
-    if (!tokenURI || typeof tokenURI !== "string") return;
+    if (activeTokenId === null) return;
 
     let cancelled = false;
     setIsLoadingMeta(true);
     setError(null);
 
-    fetchMetadataWithRetry(tokenURI)
+    fetchMetadataFromAlchemy(activeTokenId)
       .then((meta) => {
         if (cancelled) return;
         setMetadata(meta);
 
-        // Match toppings from attributes
         const matched: Topping[] = [];
         const unmatched: NFTAttribute[] = [];
         if (meta.attributes) {
@@ -249,12 +227,10 @@ export default function ComposePage() {
         if (!cancelled) setIsLoadingMeta(false);
       });
 
-    return () => {
-      cancelled = true;
-    };
-  }, [tokenURI]);
+    return () => { cancelled = true; };
+  }, [activeTokenId]);
 
-  // Step 3: Look up owner via OpenSea when activeTokenId changes
+  // Step 2: Look up owner via OpenSea when activeTokenId changes
   useEffect(() => {
     if (activeTokenId === null) return;
 
@@ -353,14 +329,14 @@ export default function ComposePage() {
     }
   }, [activeTokenId]);
 
-  const isLoading = isLoadingURI || isLoadingMeta || isLoadingRandom;
+  const isLoading = isLoadingMeta || isLoadingRandom;
 
   const tweetText =
     activeTokenId !== null && toppings.length > 0
       ? generateTweet(activeTokenId, toppings, ownerHandle)
       : "";
 
-  const imageUrl = metadata?.image ? ipfsToHttp(metadata.image) : null;
+  const imageUrl = metadata?.image || null;
 
   const handleCopy = useCallback(async () => {
     if (!tweetText) return;
@@ -531,7 +507,7 @@ export default function ComposePage() {
             disabled={isLoading || !tokenIdInput}
             className="rounded-lg bg-[#FFE135] px-6 py-2.5 font-semibold text-black transition-colors hover:bg-[#FFE135]/80 disabled:opacity-50"
           >
-            {isLoadingURI || isLoadingMeta ? "Loading..." : "Load Pizza"}
+            {isLoadingMeta ? "Loading..." : "Load Pizza"}
           </button>
           <button
             onClick={handleRandom}
@@ -558,16 +534,16 @@ export default function ComposePage() {
       </div>
 
       {/* Error */}
-      {(error || uriError) && (
+      {error && (
         <div className="mb-6 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-          {error || uriError?.message || "Failed to load pizza"}
+          {error}
         </div>
       )}
 
       {/* Loading */}
       {isLoading && (
         <div className="mb-6 text-sm text-[#7DD3E8]">
-          {isLoadingURI ? "Reading contract..." : "Fetching metadata from IPFS..."}
+          Fetching metadata...
         </div>
       )}
 
