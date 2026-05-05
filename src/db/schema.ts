@@ -5,6 +5,7 @@ import {
   timestamp,
   jsonb,
   primaryKey,
+  index,
 } from "drizzle-orm/pg-core";
 
 // ─── Listings ────────────────────────────────────────────────────────
@@ -97,4 +98,34 @@ export const ensCache = pgTable("ens_cache", {
   ensName: text("ens_name"),
   ensAvatar: text("ens_avatar"),
   resolvedAt: timestamp("resolved_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// ─── Activity Feed ──────────────────────────────────────────────────
+
+export const activityEvents = pgTable("activity_events", {
+  id: text("id").primaryKey(),
+  eventType: text("event_type").notNull(),
+  collection: text("collection").notNull(),
+  tokenContract: text("token_contract").notNull(),
+  chainId: integer("chain_id").notNull(),
+  tokenId: text("token_id").notNull(),
+  fromAddress: text("from_address"),
+  toAddress: text("to_address"),
+  priceWei: text("price_wei"),
+  currency: text("currency"),
+  nftName: text("nft_name"),
+  imageUrl: text("image_url"),
+  txHash: text("tx_hash"),
+  happenedAt: timestamp("happened_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (table) => [
+  index("activity_events_type_time_idx").on(table.eventType, table.happenedAt),
+  index("activity_events_collection_time_idx").on(table.collection, table.happenedAt),
+  index("activity_events_happened_at_idx").on(table.happenedAt),
+]);
+
+export const activityCursors = pgTable("activity_cursors", {
+  slug: text("slug").primaryKey(),
+  cursor: text("cursor"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
