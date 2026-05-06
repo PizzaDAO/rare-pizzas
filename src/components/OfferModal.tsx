@@ -22,6 +22,10 @@ import {
   getExplorerTxUrl,
   getExplorerName,
   WETH_ADDRESSES,
+  getWethBalance,
+  getWethAllowance,
+  approveWethForSeaport,
+  wrapEthToWeth,
 } from "@/lib/seaport";
 import type { Rarity } from "@/lib/types";
 
@@ -43,6 +47,9 @@ interface OfferTarget {
 type OfferState =
   | { status: "idle" }
   | { status: "switching-chain" }
+  | { status: "checking-balance" }
+  | { status: "wrapping"; amount: string }
+  | { status: "approving-weth" }
   | { status: "signing" }
   | { status: "submitting" }
   | { status: "success"; offerId: string }
@@ -81,6 +88,7 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
   const [offerState, setOfferState] = useState<OfferState>({ status: "idle" });
   const [offerAmount, setOfferAmount] = useState("");
   const [expirationIdx, setExpirationIdx] = useState(2); // Default: 7 days
+  const [wethBalance, setWethBalance] = useState<bigint | null>(null);
 
   const allToppings = getAllToppings();
   const collectionInfo = COLLECTIONS.find((c) => c.slug === target.collection);
@@ -125,6 +133,15 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
     return null;
   }, [target.toppings]);
 
+  // Fetch WETH balance when modal opens
+  useEffect(() => {
+    if (!connectorClient || !address) return;
+    const provider = connectorClient.transport;
+    getWethBalance(provider, target.chainId, address)
+      .then(setWethBalance)
+      .catch(() => setWethBalance(null));
+  }, [connectorClient, address, target.chainId]);
+
   // Close on escape
   useEffect(() => {
     function handleEsc(e: KeyboardEvent) {
@@ -159,10 +176,33 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
         }
       }
 
-      // Step 2: Sign the offer order
+      // Step 2: Check WETH balance
+      setOfferState({ status: "checking-balance" });
+      const provider = connectorClient.transport;
+
+      let currentWethBalance = await getWethBalance(provider, target.chainId, address);
+      setWethBalance(currentWethBalance);
+
+      // Step 3: Wrap ETH if WETH balance insufficient
+      if (currentWethBalance < parsedAmount) {
+        const shortfall = parsedAmount - currentWethBalance;
+        setOfferState({ status: "wrapping", amount: formatEther(shortfall) });
+        await wrapEthToWeth(provider, target.chainId, shortfall);
+        // Re-fetch balance
+        currentWethBalance = await getWethBalance(provider, target.chainId, address);
+        setWethBalance(currentWethBalance);
+      }
+
+      // Step 4: Check WETH allowance for Seaport conduit
+      const allowance = await getWethAllowance(provider, target.chainId, address);
+      if (allowance < parsedAmount) {
+        setOfferState({ status: "approving-weth" });
+        await approveWethForSeaport(provider, target.chainId);
+      }
+
+      // Step 5: Sign the offer order
       setOfferState({ status: "signing" });
 
-      const provider = connectorClient.transport;
       const seaport = await createSeaportClient(provider, target.chainId);
 
       const expirationTimestamp = Math.floor(Date.now() / 1000) + EXPIRATION_OPTIONS[expirationIdx].seconds;
@@ -241,7 +281,10 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
   const isProcessing =
     offerState.status === "signing" ||
     offerState.status === "submitting" ||
-    offerState.status === "switching-chain";
+    offerState.status === "switching-chain" ||
+    offerState.status === "checking-balance" ||
+    offerState.status === "wrapping" ||
+    offerState.status === "approving-weth";
 
   return (
     <div
@@ -329,7 +372,9 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
                   </span>
                 </div>
                 <p className="mt-1 text-[10px] text-[#555]">
-                  Offers use WETH (Wrapped ETH). You need WETH balance to make an offer.
+                  {wethBalance !== null
+                    ? `Your WETH balance: ${formatEther(wethBalance)} WETH`
+                    : "Offers use WETH (Wrapped ETH). You need WETH balance to make an offer."}
                 </p>
               </div>
 
@@ -413,6 +458,33 @@ export default function OfferModal({ target, onClose, onSuccess }: OfferModalPro
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
                 <p className="text-sm text-[#FFE135]">Switching network...</p>
+              </div>
+            </div>
+          )}
+
+          {offerState.status === "checking-balance" && (
+            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                <p className="text-sm text-[#FFE135]">Checking WETH balance...</p>
+              </div>
+            </div>
+          )}
+
+          {offerState.status === "wrapping" && (
+            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                <p className="text-sm text-[#FFE135]">Wrapping {offerState.amount} ETH → WETH...</p>
+              </div>
+            </div>
+          )}
+
+          {offerState.status === "approving-weth" && (
+            <div className="mb-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+                <p className="text-sm text-[#FFE135]">Approve WETH for Seaport...</p>
               </div>
             </div>
           )}
