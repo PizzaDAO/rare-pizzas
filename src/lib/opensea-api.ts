@@ -196,18 +196,23 @@ export async function fetchNFTMetadata(
 
 // ─── OpenSea Event Types ────────────────────────────────────────────
 
+interface OpenSeaNft {
+  identifier: string;
+  contract: string;
+  name?: string;
+  image_url?: string;
+  collection?: string;
+}
+
 export interface OpenSeaEvent {
   event_type: string;
+  order_type?: string; // "listing" or "offer" for order events
   chain: string;
   transaction?: string;
-  event_timestamp: string;
-  nft?: {
-    identifier: string;
-    contract: string;
-    name?: string;
-    image_url?: string;
-    collection?: string;
-  };
+  order_hash?: string;
+  event_timestamp: number | string;
+  nft?: OpenSeaNft;
+  asset?: OpenSeaNft; // listings/offers use "asset" instead of "nft"
   payment?: {
     quantity: string;
     token_address: string;
@@ -220,13 +225,7 @@ export interface OpenSeaEvent {
   to_address?: string;
   maker?: string;
   taker?: string;
-  price?: {
-    current: {
-      value: string;
-      currency: string;
-      decimals: number;
-    };
-  };
+  quantity?: number;
 }
 
 export interface OpenSeaEventsResponse {
