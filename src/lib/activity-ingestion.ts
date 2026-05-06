@@ -16,7 +16,7 @@ import { COLLECTIONS } from "./collections";
 import type * as schema from "@/db/schema";
 
 const NULL_ADDRESS = "0x0000000000000000000000000000000000000000";
-const EVENT_TYPES = ["sale", "transfer", "listing", "offer", "cancel"];
+const EVENT_TYPES = ["sale", "transfer", "listing", "offer"];
 const RETENTION_DAYS = 90;
 
 interface NormalizedEvent {
@@ -41,10 +41,16 @@ function normalizeEvent(
   collectionSlug: string,
   chainId: number
 ): NormalizedEvent | null {
-  const nft = raw.nft;
+  // OpenSea uses "nft" for sales/transfers, "asset" for listings/offers
+  const nft = raw.nft || raw.asset;
   if (!nft) return null;
 
+  // OpenSea returns "order" as event_type for listings/offers; use order_type to distinguish
   let eventType = raw.event_type;
+  if (eventType === "order" && raw.order_type) {
+    eventType = raw.order_type; // "listing" or "offer"
+  }
+
   let fromAddress = raw.from_address || raw.seller || raw.maker || null;
   let toAddress = raw.to_address || raw.buyer || raw.taker || null;
 
@@ -62,9 +68,8 @@ function normalizeEvent(
     currency = raw.payment.symbol || "ETH";
   }
 
-  const id = raw.transaction
-    ? `${raw.transaction}:${nft.contract}:${nft.identifier}:${eventType}`
-    : `${collectionSlug}:${eventType}:${nft.identifier}:${raw.event_timestamp}`;
+  const uniqueKey = raw.transaction || raw.order_hash || `${raw.event_timestamp}`;
+  const id = `${uniqueKey}:${nft.contract}:${nft.identifier}:${eventType}`;
 
   return {
     id,
