@@ -80,7 +80,11 @@ function normalizeEvent(
     nftName: nft.name || null,
     imageUrl: nft.image_url || null,
     txHash: raw.transaction || null,
-    happenedAt: new Date(raw.event_timestamp),
+    happenedAt: new Date(
+      typeof raw.event_timestamp === "number"
+        ? raw.event_timestamp * 1000
+        : raw.event_timestamp
+    ),
   };
 }
 

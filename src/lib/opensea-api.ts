@@ -200,7 +200,7 @@ export interface OpenSeaEvent {
   event_type: string;
   chain: string;
   transaction?: string;
-  event_timestamp: string;
+  event_timestamp: number | string;
   nft?: {
     identifier: string;
     contract: string;
