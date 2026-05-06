@@ -16,6 +16,8 @@ import {
   fulfillSeaportOffer,
   getExplorerTxUrl,
   getExplorerName,
+  checkApproval,
+  approveForSeaport,
 } from "@/lib/seaport";
 import type { OrderWithCounter } from "@/lib/seaport";
 import type { Rarity } from "@/lib/types";
@@ -367,10 +369,57 @@ export default function MyListingsPage() {
         setOutgoingOffers(data.offers || []);
       }
 
-      // For incoming offers, we'd need to query offers on tokens we own.
-      // For now, we'll show a placeholder or query by collection.
-      // TODO: This requires knowing which tokens the user owns, then querying offers for those.
-      setIncomingOffers([]);
+      // Fetch owned NFTs via Alchemy, then query for incoming offers
+      try {
+        const alchemyKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
+        if (alchemyKey) {
+          const ownedTokens: Array<{ tokenContract: string; tokenId: string; chainId: number }> = [];
+
+          // Fetch from Ethereum (chainId 1)
+          const ethRes = await fetch(
+            `https://eth-mainnet.g.alchemy.com/nft/v3/${alchemyKey}/getNFTsForOwner?owner=${address}&contractAddresses[]=0x4ae57798AEF4aF99eD03818f83d2d8AcA89952c7&contractAddresses[]=0xe6616436ff001fe827e37c7fad100f531d0935f0&withMetadata=false`
+          );
+          if (ethRes.ok) {
+            const ethData = await ethRes.json();
+            for (const nft of ethData.ownedNfts || []) {
+              ownedTokens.push({
+                tokenContract: nft.contract.address,
+                tokenId: nft.tokenId,
+                chainId: 1,
+              });
+            }
+          }
+
+          // Fetch from Optimism (chainId 10)
+          const optRes = await fetch(
+            `https://opt-mainnet.g.alchemy.com/nft/v3/${alchemyKey}/getNFTsForOwner?owner=${address}&contractAddresses[]=0x0c7fca14b968476c223db3ee0fda9da62e0e9106&withMetadata=false`
+          );
+          if (optRes.ok) {
+            const optData = await optRes.json();
+            for (const nft of optData.ownedNfts || []) {
+              ownedTokens.push({
+                tokenContract: nft.contract.address,
+                tokenId: nft.tokenId,
+                chainId: 10,
+              });
+            }
+          }
+
+          if (ownedTokens.length > 0) {
+            const incomingRes = await fetch("/api/marketplace/offers/incoming", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tokens: ownedTokens }),
+            });
+            if (incomingRes.ok) {
+              const incomingData = await incomingRes.json();
+              setIncomingOffers(incomingData.offers || []);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching incoming offers:", err);
+      }
     } catch (err) {
       console.error("Error fetching marketplace data:", err);
     } finally {
@@ -434,8 +483,24 @@ export default function MyListingsPage() {
         await switchChainAsync({ chainId: offer.chainId });
       }
 
-      // Fulfill the offer on-chain (seller sends NFT, receives WETH)
+      // Check NFT approval for Seaport conduit
       const provider = connectorClient.transport;
+      const collectionInfo = COLLECTIONS.find((c) => c.slug === offer.collection);
+      const tokenStandard = collectionInfo?.standard === "ERC1155" ? "ERC1155" as const : "ERC721" as const;
+      const isApproved = await checkApproval(
+        provider,
+        offer.chainId,
+        offer.tokenContract,
+        address,
+        tokenStandard
+      );
+
+      if (!isApproved) {
+        // Approve the collection for Seaport
+        await approveForSeaport(provider, offer.chainId, offer.tokenContract);
+      }
+
+      // Fulfill the offer on-chain (seller sends NFT, receives WETH)
       const seaport = await createSeaportClient(provider, offer.chainId);
       const txHash = await fulfillSeaportOffer(seaport, offer.orderData, address);
 

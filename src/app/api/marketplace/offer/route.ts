@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/db";
 import { offers } from "@/db/schema";
+import { crossPostOfferToOpenSea } from "@/lib/opensea-api";
 
 export const dynamic = "force-dynamic";
 
@@ -97,6 +98,13 @@ export async function POST(request: NextRequest) {
       expiry: expiryDate,
       status: "active",
     });
+
+    // Cross-post to OpenSea (fire-and-forget — don't block the response)
+    crossPostOfferToOpenSea(
+      chainId,
+      orderData as { parameters: Record<string, unknown>; signature: string },
+      "0x0000000000000068F116a894984e2DB1123eB395" // Seaport 1.6
+    ).catch((err) => console.error("[offer] OpenSea cross-post error:", err));
 
     return NextResponse.json({
       success: true,
