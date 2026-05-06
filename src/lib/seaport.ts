@@ -419,3 +419,71 @@ export async function approveForSeaport(
   const receipt = await tx.wait();
   return receipt.hash;
 }
+
+/**
+ * Get WETH balance for an address.
+ */
+export async function getWethBalance(
+  walletProvider: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> },
+  chainId: number,
+  address: string
+): Promise<bigint> {
+  const wethAddress = WETH_ADDRESSES[chainId];
+  if (!wethAddress) throw new Error(`No WETH address for chain ${chainId}`);
+  const provider = new BrowserProvider(walletProvider, chainId);
+  const contract = new Contract(wethAddress, ["function balanceOf(address) view returns (uint256)"], provider);
+  const balance = await contract.balanceOf(address);
+  return BigInt(balance.toString());
+}
+
+/**
+ * Get WETH allowance for the Seaport conduit.
+ */
+export async function getWethAllowance(
+  walletProvider: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> },
+  chainId: number,
+  address: string
+): Promise<bigint> {
+  const wethAddress = WETH_ADDRESSES[chainId];
+  if (!wethAddress) throw new Error(`No WETH address for chain ${chainId}`);
+  const provider = new BrowserProvider(walletProvider, chainId);
+  const contract = new Contract(wethAddress, ["function allowance(address,address) view returns (uint256)"], provider);
+  const allowance = await contract.allowance(address, SEAPORT_CONDUIT_ADDRESS);
+  return BigInt(allowance.toString());
+}
+
+/**
+ * Approve WETH spending for the Seaport conduit (MaxUint256).
+ */
+export async function approveWethForSeaport(
+  walletProvider: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> },
+  chainId: number
+): Promise<string> {
+  const wethAddress = WETH_ADDRESSES[chainId];
+  if (!wethAddress) throw new Error(`No WETH address for chain ${chainId}`);
+  const provider = new BrowserProvider(walletProvider, chainId);
+  const signer = await provider.getSigner();
+  const contract = new Contract(wethAddress, ["function approve(address,uint256) returns (bool)"], signer);
+  const maxUint256 = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+  const tx = await contract.approve(SEAPORT_CONDUIT_ADDRESS, maxUint256);
+  const receipt = await tx.wait();
+  return receipt.hash;
+}
+
+/**
+ * Wrap ETH to WETH by calling deposit() with value.
+ */
+export async function wrapEthToWeth(
+  walletProvider: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> },
+  chainId: number,
+  amountWei: bigint
+): Promise<string> {
+  const wethAddress = WETH_ADDRESSES[chainId];
+  if (!wethAddress) throw new Error(`No WETH address for chain ${chainId}`);
+  const provider = new BrowserProvider(walletProvider, chainId);
+  const signer = await provider.getSigner();
+  const contract = new Contract(wethAddress, ["function deposit() payable"], signer);
+  const tx = await contract.deposit({ value: amountWei });
+  const receipt = await tx.wait();
+  return receipt.hash;
+}

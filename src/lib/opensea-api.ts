@@ -357,3 +357,55 @@ export async function crossPostToOpenSea(
     return false;
   }
 }
+
+/**
+ * Cross-post a signed Seaport offer to OpenSea's order book.
+ * Similar to crossPostToOpenSea but targets the /offers endpoint.
+ */
+export async function crossPostOfferToOpenSea(
+  chainId: number,
+  orderData: { parameters: Record<string, unknown>; signature: string },
+  protocolAddress: string
+): Promise<boolean> {
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    console.warn("[opensea] No API key — skipping offer cross-post");
+    return false;
+  }
+
+  const chain = chainName(chainId);
+  const url = `${OPENSEA_API_BASE}/orders/${chain}/seaport/offers`;
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        parameters: {
+          ...orderData.parameters,
+          protocol_address: protocolAddress,
+        },
+        signature: orderData.signature,
+      }),
+    });
+
+    if (!res.ok) {
+      const errBody = await res.text().catch(() => "");
+      console.error(
+        `[opensea] Offer cross-post failed: ${res.status} ${res.statusText}`,
+        errBody
+      );
+      return false;
+    }
+
+    console.log(`[opensea] Cross-posted offer to OpenSea (${chain})`);
+    return true;
+  } catch (error) {
+    console.error("[opensea] Offer cross-post error:", error);
+    return false;
+  }
+}
