@@ -102,8 +102,8 @@ export default function Header() {
             </a>
           </div>
           <WalletStatus />
-          <div className="hidden sm:block"><ConnectButton showBalance={false} /></div>
-          <div className="sm:hidden"><ConnectButton showBalance={false} label="Connect" /></div>
+          <div className="hidden sm:block"><ConnectButton showBalance={false} chainStatus="none" /></div>
+          <div className="sm:hidden"><ConnectButton showBalance={false} chainStatus="none" label="Connect" /></div>
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
