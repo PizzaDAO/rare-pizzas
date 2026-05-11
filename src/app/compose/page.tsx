@@ -16,6 +16,7 @@ const DEAD_HANDLES = new Set(["ysgjay", "rubenalexand3r"]);
 
 function isActiveHandle(handle: string | undefined): boolean {
   if (!handle || handle === "n/a" || handle === "N/A") return false;
+  if (handle.toLowerCase().startsWith("ig:")) return false;
   return !DEAD_HANDLES.has(handle.replace("@", ""));
 }
 
