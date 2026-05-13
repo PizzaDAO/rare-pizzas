@@ -108,6 +108,20 @@
     "artistBioGenerated": true
   },
   {
+    "sku": 1080,
+    "class": "Crust",
+    "name": "Keto Crustless Crust",
+    "description": "",
+    "artist": "",
+    "rarity": "epic",
+    "probability": 0,
+    "image": "/art/1080.webp",
+    "variants": [],
+    "nutrition": {},
+    "artistBio": "",
+    "artistBioGenerated": false
+  },
+  {
     "sku": 2000,
     "class": "Sauce",
     "name": "Tomato Sauce",
@@ -359,6 +373,20 @@
     "nutrition": {},
     "artistBio": "Artist and smart city advocate who designed the rare Quattro Formaggi cheese topping for the Rare Pizzas collection.",
     "artistBioGenerated": true
+  },
+  {
+    "sku": 3090,
+    "class": "Cheese",
+    "name": "Doge Cheese",
+    "description": "",
+    "artist": "",
+    "rarity": "epic",
+    "probability": 0,
+    "image": "/art/3090.webp",
+    "variants": [],
+    "nutrition": {},
+    "artistBio": "",
+    "artistBioGenerated": false
   },
   {
     "sku": 3170,
