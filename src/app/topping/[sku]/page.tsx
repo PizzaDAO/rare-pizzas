@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAllToppings, getToppingBySku, slugify } from "@/lib/toppings";
-import { getImageUrl, getWoodTileUrl, OPENSEA_BASE_URL } from "@/lib/constants";
+import { getWoodTileUrl } from "@/lib/constants";
 import RarityBadge from "@/components/RarityBadge";
 import NutritionLabel from "@/components/NutritionLabel";
 import ToppingImage from "./ToppingImage";
 import MyPizzas from "./MyPizzas";
+import PizzaGrid from "./PizzaGrid";
 import pizzaIndex from "@/data/pizza-index.json";
 
 interface ToppingPageProps {
@@ -216,35 +217,7 @@ export default async function ToppingPage({ params }: ToppingPageProps) {
 
       {/* All Rare Pizzas with this topping */}
       {pizzaTokenIds.length > 0 && (
-        <section className="mt-12">
-          <h2 className="mb-1 text-sm font-semibold uppercase tracking-wider text-[#7DD3E8]">
-            Rare Pizzas with this topping
-          </h2>
-          <p className="mb-4 text-sm text-[#555]">
-            Found on {pizzaTokenIds.length} pizza{pizzaTokenIds.length !== 1 ? "s" : ""}
-          </p>
-          <div className="grid grid-cols-4 gap-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
-            {pizzaTokenIds.map((tokenId) => (
-              <a
-                key={tokenId}
-                href={`${OPENSEA_BASE_URL}/${tokenId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group overflow-hidden rounded-lg border border-[#333]/50 transition-all hover:border-[#FFE135]/50 hover:shadow-lg hover:shadow-[#FFE135]/10"
-                title={`Rare Pizza #${tokenId}`}
-              >
-                <img
-                  src={`/pizzas/${tokenId}.webp`}
-                  alt={`Rare Pizza #${tokenId}`}
-                  width={200}
-                  height={200}
-                  className="h-auto w-full transition-transform group-hover:scale-105"
-                  loading="lazy"
-                />
-              </a>
-            ))}
-          </div>
-        </section>
+        <PizzaGrid pizzaTokenIds={pizzaTokenIds} />
       )}
     </div>
   );
