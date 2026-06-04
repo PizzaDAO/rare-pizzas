@@ -2,6 +2,9 @@ import { Seaport } from "@opensea/seaport-js";
 import { BrowserProvider, Contract } from "ethers";
 import { ItemType } from "@opensea/seaport-js/lib/constants";
 import type { OrderWithCounter, CreateOrderInput } from "@opensea/seaport-js/lib/types";
+import { isAddress, getAddress } from "viem";
+import { normalize } from "viem/ens";
+import { getPublicClient } from "@/lib/viem-client";
 
 // Re-export for consumers
 export type { OrderWithCounter };
@@ -486,4 +489,86 @@ export async function wrapEthToWeth(
   const tx = await contract.deposit({ value: amountWei });
   const receipt = await tx.wait();
   return receipt.hash;
+}
+
+// ─── Direct Transfer & Recipient Resolution ─────────────────────────
+
+export interface TransferNftParams {
+  /** The NFT contract address */
+  tokenContract: string;
+  /** The token ID */
+  tokenId: string;
+  /** Current owner (the connected wallet sending the NFT) */
+  from: string;
+  /** Already-resolved 0x recipient address */
+  to: string;
+  /** ERC721 or ERC1155 */
+  standard: "ERC721" | "ERC1155";
+  /** For ERC1155: quantity to transfer. Defaults to 1. */
+  amount?: number;
+}
+
+/**
+ * Transfer an owned NFT directly to a recipient via safeTransferFrom.
+ * No approval is required — the owner moves their own token.
+ *
+ * @param walletProvider - The EIP-1193 provider from the connected wallet
+ *                         (connectorClient.transport), same as the other helpers.
+ * @returns The transaction hash
+ */
+export async function transferNft(
+  walletProvider: { request: (args: { method: string; params?: unknown[] }) => Promise<unknown> },
+  params: TransferNftParams
+): Promise<string> {
+  const { tokenContract, tokenId, from, to, standard, amount = 1 } = params;
+
+  const provider = new BrowserProvider(walletProvider);
+  const signer = await provider.getSigner();
+
+  if (standard === "ERC1155") {
+    const abi = [
+      "function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes data)",
+    ];
+    const contract = new Contract(tokenContract, abi, signer);
+    const tx = await contract.safeTransferFrom(from, to, tokenId, amount, "0x");
+    const receipt = await tx.wait();
+    return receipt.hash;
+  }
+
+  const abi = [
+    "function safeTransferFrom(address from, address to, uint256 tokenId)",
+  ];
+  const contract = new Contract(tokenContract, abi, signer);
+  const tx = await contract.safeTransferFrom(from, to, tokenId);
+  const receipt = await tx.wait();
+  return receipt.hash;
+}
+
+/**
+ * Resolve a recipient string into a checksummed 0x address.
+ *
+ * - A valid 0x address is returned checksummed.
+ * - An ENS name (`*.eth`) is resolved on mainnet (ENS lives on mainnet
+ *   regardless of which chain the NFT is on).
+ * - Anything else returns `null` (invalid).
+ */
+export async function resolveRecipient(input: string): Promise<string | null> {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+
+  if (isAddress(trimmed)) {
+    return getAddress(trimmed);
+  }
+
+  if (trimmed.toLowerCase().endsWith(".eth")) {
+    try {
+      const client = getPublicClient(1);
+      const resolved = await client.getEnsAddress({ name: normalize(trimmed) });
+      return resolved ? getAddress(resolved) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
 }
