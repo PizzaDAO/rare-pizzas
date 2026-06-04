@@ -20,12 +20,38 @@ import {
   PIZZA_ABI,
 } from "@/lib/contracts";
 import RarityBadge from "@/components/RarityBadge";
+import { COLLECTIONS } from "@/lib/collections";
 import type { OwnedTopping } from "@/lib/types";
+import type { SendTarget } from "@/components/SendModal";
 
 const ConnectButton = dynamic(
   () => import("@rainbow-me/rainbowkit").then((mod) => mod.ConnectButton),
   { ssr: false }
 );
+
+// Lazy-load SendModal (client-only, heavy dependency on seaport/ethers)
+const SendModal = dynamic(() => import("@/components/SendModal"), { ssr: false });
+
+const BOX_COLLECTION = COLLECTIONS.find((c) => c.slug === "rare-pizzas-box")!;
+const PIZZA_COLLECTION = COLLECTIONS.find((c) => c.slug === "rare-pizzas")!;
+
+// Small "Send" affordance shown on card hover. Sits inside a `group relative`
+// wrapper so it can overlay the OpenSea link without nesting a button in an anchor.
+function SendButton({ onClick }: { onClick: (e: React.MouseEvent) => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute right-2 top-2 z-10 hidden items-center gap-1 rounded-full bg-[#FFE135] px-2 py-1 text-[10px] font-bold text-black shadow-lg transition-transform hover:scale-105 group-hover:flex"
+      aria-label="Send this NFT"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13" />
+        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+      </svg>
+      Send
+    </button>
+  );
+}
 
 const RARITY_LABELS: Record<string, string> = {
   common: "Common",
@@ -150,7 +176,7 @@ function ipfsImageUrl(url: string, gateway: string = BOX_IPFS_GATEWAYS[0]): stri
   return hash ? `${gateway}${hash}` : url;
 }
 
-function PizzaBoxesSection() {
+function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
   const { address, isConnected } = useAccount();
   const { total, tokenIds, isLoading } = useOwnedTokenIds(
     PIZZA_BOX_CONTRACT,
@@ -292,45 +318,62 @@ function PizzaBoxesSection() {
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {boxes.map(({ tokenId, redeemed }) => {
             const meta = boxMeta[tokenId];
+            const imageUrl = meta ? ipfsImageUrl(meta.image) : "/images/pizza-box.gif";
             return (
-              <a
-                key={tokenId}
-                href={`${OPENSEA_BOX_URL}/${tokenId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-xl border border-[#333]/50 bg-[#111] p-3 transition-all hover:border-[#FFE135]/50"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={meta ? ipfsImageUrl(meta.image) : "/images/pizza-box.gif"}
-                  alt={meta?.name || `Box #${tokenId}`}
-                  className="mb-2 aspect-square w-full rounded-lg object-cover"
-                  loading="lazy"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src !== "/images/pizza-box.gif") {
-                      img.src = "/images/pizza-box.gif";
-                    }
+              <div key={tokenId} className="group relative">
+                <SendButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onSend({
+                      collection: BOX_COLLECTION.slug,
+                      tokenContract: BOX_COLLECTION.contract,
+                      chainId: BOX_COLLECTION.chainId,
+                      tokenId: String(tokenId),
+                      standard: BOX_COLLECTION.standard,
+                      imageUrl,
+                      name: meta?.name || `Box #${tokenId}`,
+                    });
                   }}
                 />
-                <p className="text-center text-xs font-semibold text-white">
-                  #{tokenId}
-                </p>
-                {meta?.name && (
-                  <p className="mt-0.5 truncate text-center text-[10px] text-[#7DD3E8]">
-                    {meta.name}
+                <a
+                  href={`${OPENSEA_BOX_URL}/${tokenId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-xl border border-[#333]/50 bg-[#111] p-3 transition-all hover:border-[#FFE135]/50"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={imageUrl}
+                    alt={meta?.name || `Box #${tokenId}`}
+                    className="mb-2 aspect-square w-full rounded-lg object-cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.src !== "/images/pizza-box.gif") {
+                        img.src = "/images/pizza-box.gif";
+                      }
+                    }}
+                  />
+                  <p className="text-center text-xs font-semibold text-white">
+                    #{tokenId}
                   </p>
-                )}
-                {redeemed !== undefined && (
-                  <p
-                    className={`mt-1 text-center text-xs ${
-                      redeemed ? "text-[#FFE135]" : "text-green-400"
-                    }`}
-                  >
-                    {redeemed ? "Redeemed" : "Unredeemed"}
-                  </p>
-                )}
-              </a>
+                  {meta?.name && (
+                    <p className="mt-0.5 truncate text-center text-[10px] text-[#7DD3E8]">
+                      {meta.name}
+                    </p>
+                  )}
+                  {redeemed !== undefined && (
+                    <p
+                      className={`mt-1 text-center text-xs ${
+                        redeemed ? "text-[#FFE135]" : "text-green-400"
+                      }`}
+                    >
+                      {redeemed ? "Redeemed" : "Unredeemed"}
+                    </p>
+                  )}
+                </a>
+              </div>
             );
           })}
         </div>
@@ -341,7 +384,7 @@ function PizzaBoxesSection() {
 
 // ─── Rare Pizzas Section ────────────────────────────────────────────
 
-function RarePizzasSection() {
+function RarePizzasSection({ onSend }: { onSend: (t: SendTarget) => void }) {
   const { address, isConnected } = useAccount();
   const { total, tokenIds, isLoading } = useOwnedTokenIds(
     RARE_PIZZAS_CONTRACT,
@@ -366,26 +409,42 @@ function RarePizzasSection() {
       ) : (
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {tokenIds.map((tokenId) => (
-            <a
-              key={tokenId}
-              href={`${OPENSEA_PIZZA_URL}/${tokenId}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group overflow-hidden rounded-xl border border-[#333]/50 transition-all hover:border-[#FFE135]/50"
-              title={`Rare Pizza #${tokenId}`}
-            >
-              <img
-                src={`/pizzas/${tokenId}.webp`}
-                alt={`Rare Pizza #${tokenId}`}
-                width={200}
-                height={200}
-                className="h-auto w-full transition-transform group-hover:scale-105"
-                loading="lazy"
+            <div key={tokenId} className="group relative">
+              <SendButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onSend({
+                    collection: PIZZA_COLLECTION.slug,
+                    tokenContract: PIZZA_COLLECTION.contract,
+                    chainId: PIZZA_COLLECTION.chainId,
+                    tokenId: String(tokenId),
+                    standard: PIZZA_COLLECTION.standard,
+                    imageUrl: `/pizzas/${tokenId}.webp`,
+                    name: `Rare Pizza #${tokenId}`,
+                  });
+                }}
               />
-              <p className="bg-[#111] py-1.5 text-center text-xs font-semibold text-white">
-                #{tokenId}
-              </p>
-            </a>
+              <a
+                href={`${OPENSEA_PIZZA_URL}/${tokenId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block overflow-hidden rounded-xl border border-[#333]/50 transition-all hover:border-[#FFE135]/50"
+                title={`Rare Pizza #${tokenId}`}
+              >
+                <img
+                  src={`/pizzas/${tokenId}.webp`}
+                  alt={`Rare Pizza #${tokenId}`}
+                  width={200}
+                  height={200}
+                  className="h-auto w-full transition-transform group-hover:scale-105"
+                  loading="lazy"
+                />
+                <p className="bg-[#111] py-1.5 text-center text-xs font-semibold text-white">
+                  #{tokenId}
+                </p>
+              </a>
+            </div>
           ))}
         </div>
       )}
@@ -789,6 +848,10 @@ function ToppingsSection() {
 
 export default function MyCollectionPage() {
   const { isConnected } = useAccount();
+  const [sendTarget, setSendTarget] = useState<SendTarget | null>(null);
+  // Bump to remount the ownership sections after a successful transfer so the
+  // sent NFT disappears (wagmi read hooks re-run on mount).
+  const [refreshKey, setRefreshKey] = useState(0);
 
   return (
     <div>
@@ -802,11 +865,19 @@ export default function MyCollectionPage() {
       {!isConnected ? (
         <WalletPrompt />
       ) : (
-        <>
-          <PizzaBoxesSection />
-          <RarePizzasSection />
+        <div key={refreshKey}>
+          <PizzaBoxesSection onSend={setSendTarget} />
+          <RarePizzasSection onSend={setSendTarget} />
           <ToppingsSection />
-        </>
+        </div>
+      )}
+
+      {sendTarget && (
+        <SendModal
+          target={sendTarget}
+          onClose={() => setSendTarget(null)}
+          onSuccess={() => setRefreshKey((k) => k + 1)}
+        />
       )}
     </div>
   );
