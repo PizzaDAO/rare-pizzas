@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import { useWalletToppings } from "@/hooks/useWalletToppings";
+import { useFavorites } from "@/hooks/useFavorites";
 import { getClasses, getRarities } from "@/lib/toppings";
 import {
   getImageUrl,
@@ -49,6 +50,43 @@ function SendButton({ onClick }: { onClick: (e: React.MouseEvent) => void }) {
         <polygon points="22 2 15 22 11 13 2 9 22 2" />
       </svg>
       Send
+    </button>
+  );
+}
+
+// Star/favorite affordance shown on each NFT card. Sits inside the same
+// `group relative` wrapper as SendButton, positioned top-left so the two never
+// overlap. Filled gold when favorited (always visible); outline on hover when
+// not. preventDefault/stopPropagation keep clicks off the OpenSea anchor.
+function StarButton({
+  active,
+  onClick,
+}: {
+  active: boolean;
+  onClick: (e: React.MouseEvent) => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-pressed={active}
+      aria-label={active ? "Unstar this NFT" : "Star this NFT"}
+      className={`absolute left-2 top-2 z-10 items-center justify-center rounded-full bg-black/60 p-1 shadow-lg transition-transform hover:scale-110 ${
+        active ? "flex" : "hidden group-hover:flex"
+      }`}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill={active ? "#FFE135" : "none"}
+        stroke="#FFE135"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
     </button>
   );
 }
@@ -176,8 +214,12 @@ function ipfsImageUrl(url: string, gateway: string = BOX_IPFS_GATEWAYS[0]): stri
   return hash ? `${gateway}${hash}` : url;
 }
 
+const FAVORITES_LIMIT = 10;
+
 function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
   const { address, isConnected } = useAccount();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [expanded, setExpanded] = useState(false);
   const { total, tokenIds, isLoading } = useOwnedTokenIds(
     PIZZA_BOX_CONTRACT,
     BOX_ABI,
@@ -301,6 +343,23 @@ function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
     }));
   }, [tokenIds, redeemedResults]);
 
+  // Stable favorites-first ordering: starred boxes float to the front, others
+  // keep their existing (ascending token-id) order.
+  const sortedBoxes = useMemo(() => {
+    return boxes
+      .map((box, index) => ({ box, index }))
+      .sort((a, b) => {
+        const aFav = isFavorite(`rare-pizzas-box:${a.box.tokenId}`) ? 0 : 1;
+        const bFav = isFavorite(`rare-pizzas-box:${b.box.tokenId}`) ? 0 : 1;
+        return aFav - bFav || a.index - b.index;
+      })
+      .map((entry) => entry.box);
+  }, [boxes, isFavorite]);
+
+  const visibleBoxes = expanded
+    ? sortedBoxes
+    : sortedBoxes.slice(0, FAVORITES_LIMIT);
+
   if (total === 0 && !isLoading) return null;
 
   return (
@@ -315,12 +374,22 @@ function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
           <p className="text-sm text-[#7DD3E8]">Loading boxes...</p>
         </div>
       ) : (
+        <>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-          {boxes.map(({ tokenId, redeemed }) => {
+          {visibleBoxes.map(({ tokenId, redeemed }) => {
             const meta = boxMeta[tokenId];
             const imageUrl = meta ? ipfsImageUrl(meta.image) : "/images/pizza-box.gif";
+            const favKey = `rare-pizzas-box:${tokenId}`;
             return (
               <div key={tokenId} className="group relative">
+                <StarButton
+                  active={isFavorite(favKey)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorite(favKey);
+                  }}
+                />
                 <SendButton
                   onClick={(e) => {
                     e.preventDefault();
@@ -377,6 +446,15 @@ function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
             );
           })}
         </div>
+        {sortedBoxes.length > FAVORITES_LIMIT && (
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-4 rounded-full border border-[#FFE135] px-4 py-1.5 text-sm font-semibold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10"
+          >
+            {expanded ? "Show less" : `Show all (${sortedBoxes.length})`}
+          </button>
+        )}
+        </>
       )}
     </section>
   );
@@ -386,12 +464,30 @@ function PizzaBoxesSection({ onSend }: { onSend: (t: SendTarget) => void }) {
 
 function RarePizzasSection({ onSend }: { onSend: (t: SendTarget) => void }) {
   const { address, isConnected } = useAccount();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const [expanded, setExpanded] = useState(false);
   const { total, tokenIds, isLoading } = useOwnedTokenIds(
     RARE_PIZZAS_CONTRACT,
     PIZZA_ERC721_ABI,
     isConnected,
     address
   );
+
+  // Stable favorites-first ordering for owned pizzas.
+  const sortedTokenIds = useMemo(() => {
+    return tokenIds
+      .map((tokenId, index) => ({ tokenId, index }))
+      .sort((a, b) => {
+        const aFav = isFavorite(`rare-pizzas:${a.tokenId}`) ? 0 : 1;
+        const bFav = isFavorite(`rare-pizzas:${b.tokenId}`) ? 0 : 1;
+        return aFav - bFav || a.index - b.index;
+      })
+      .map((entry) => entry.tokenId);
+  }, [tokenIds, isFavorite]);
+
+  const visibleTokenIds = expanded
+    ? sortedTokenIds
+    : sortedTokenIds.slice(0, FAVORITES_LIMIT);
 
   if (total === 0 && !isLoading) return null;
 
@@ -407,9 +503,18 @@ function RarePizzasSection({ onSend }: { onSend: (t: SendTarget) => void }) {
           <p className="text-sm text-[#7DD3E8]">Loading pizzas...</p>
         </div>
       ) : (
+        <>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-          {tokenIds.map((tokenId) => (
+          {visibleTokenIds.map((tokenId) => (
             <div key={tokenId} className="group relative">
+              <StarButton
+                active={isFavorite(`rare-pizzas:${tokenId}`)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleFavorite(`rare-pizzas:${tokenId}`);
+                }}
+              />
               <SendButton
                 onClick={(e) => {
                   e.preventDefault();
@@ -447,6 +552,15 @@ function RarePizzasSection({ onSend }: { onSend: (t: SendTarget) => void }) {
             </div>
           ))}
         </div>
+        {sortedTokenIds.length > FAVORITES_LIMIT && (
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-4 rounded-full border border-[#FFE135] px-4 py-1.5 text-sm font-semibold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10"
+          >
+            {expanded ? "Show less" : `Show all (${sortedTokenIds.length})`}
+          </button>
+        )}
+        </>
       )}
     </section>
   );
