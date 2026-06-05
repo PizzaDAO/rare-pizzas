@@ -548,6 +548,11 @@ function OrderPizzaSection() {
                 </option>
               ))}
             </select>
+            {RECIPES.find((r) => r.id === selectedRecipe)?.description && (
+              <p className="mt-2 text-sm leading-relaxed text-white/60">
+                {RECIPES.find((r) => r.id === selectedRecipe)?.description}
+              </p>
+            )}
           </div>
 
           <button
