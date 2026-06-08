@@ -167,8 +167,17 @@ export interface UseWalletToppingsReturn {
   unmatchedTraits: NFTAttribute[];
 }
 
-export function useWalletToppings(): UseWalletToppingsReturn {
-  const { address, isConnected } = useAccount();
+export function useWalletToppings(
+  overrideAddress?: `0x${string}`
+): UseWalletToppingsReturn {
+  const { address: connectedAddress, isConnected: walletConnected } =
+    useAccount();
+
+  // When an override address is supplied (public collection view), use it and
+  // treat fetching as enabled regardless of wallet connection. Otherwise fall
+  // back to the connected wallet (unchanged `/my-toppings` behavior).
+  const address = overrideAddress ?? connectedAddress;
+  const isConnected = overrideAddress ? true : walletConnected;
 
   const [pizzas, setPizzas] = useState<PizzaTokenData[]>([]);
   const [loadedPizzas, setLoadedPizzas] = useState(0);
