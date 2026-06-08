@@ -187,7 +187,9 @@ const BOX_IPFS_GATEWAYS = [
   "https://ipfs.io/ipfs/",
 ];
 
-const BOX_CACHE_PREFIX = "rp-box-";
+// Cache prefix bumped to `rp-boxd-` so older `{name,image}`-only entries from
+// the previous cache shape don't shadow the new `{name,image,design}` shape.
+const BOX_CACHE_PREFIX = "rp-boxd-";
 
 function extractIpfsHash(url: string): string | null {
   const match = url.match(/\/ipfs\/(.+)$/);
@@ -202,6 +204,193 @@ function ipfsImageUrl(url: string, gateway: string = BOX_IPFS_GATEWAYS[0]): stri
 const FAVORITES_LIMIT = 10;
 
 // ─── Pizza Boxes Section ────────────────────────────────────────────
+
+type BoxMeta = { name: string; image: string; design: number | null };
+
+type OwnedBox = { tokenId: number; redeemed?: boolean };
+
+type DesignGroup = {
+  design: number;
+  name: string;
+  image: string;
+  tokens: OwnedBox[];
+};
+
+// A single owned token shown as a pill under a design card. Colored by redeemed
+// state (green = unredeemed, gold/amber = redeemed). Links to OpenSea, and—when
+// interactive—carries the per-token Star toggle and Send mini-button. The whole
+// chip is a `group/chip relative` wrapper so the Star/Send overlays can sit on
+// top of the anchor without nesting controls inside it.
+function BoxTokenChip({
+  tokenId,
+  redeemed,
+  imageUrl,
+  name,
+  isFavorite,
+  toggleFavorite,
+  onSend,
+}: {
+  tokenId: number;
+  redeemed?: boolean;
+  imageUrl: string;
+  name: string;
+  isFavorite: (key: string) => boolean;
+  toggleFavorite?: (key: string) => void;
+  onSend?: (t: SendTarget) => void;
+}) {
+  const favKey = `rare-pizzas-box:${tokenId}`;
+  const fav = isFavorite(favKey);
+  const redeemedKnown = redeemed !== undefined;
+  const chipColor = !redeemedKnown
+    ? "border-[#333] bg-[#1a1a1a] text-[#7DD3E8]"
+    : redeemed
+      ? "border-[#FFE135]/40 bg-[#FFE135]/10 text-[#FFE135]"
+      : "border-green-500/40 bg-green-500/10 text-green-400";
+
+  return (
+    <span className="group/chip relative inline-flex">
+      <a
+        href={`${OPENSEA_BOX_URL}/${tokenId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={
+          redeemedKnown
+            ? `#${tokenId} · ${redeemed ? "Redeemed" : "Unredeemed"}`
+            : `#${tokenId}`
+        }
+        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold transition-colors hover:brightness-125 ${chipColor}`}
+      >
+        {fav && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="9"
+            height="9"
+            viewBox="0 0 24 24"
+            fill="#FFE135"
+            stroke="#FFE135"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        )}
+        #{tokenId}
+        {toggleFavorite && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleFavorite(favKey);
+            }}
+            aria-pressed={fav}
+            aria-label={fav ? "Unstar this box" : "Star this box"}
+            className={`ml-0.5 ${fav ? "hidden" : "hidden group-hover/chip:inline-flex"}`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="9"
+              height="9"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#FFE135"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          </button>
+        )}
+        {onSend && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onSend({
+                collection: BOX_COLLECTION.slug,
+                tokenContract: BOX_COLLECTION.contract,
+                chainId: BOX_COLLECTION.chainId,
+                tokenId: String(tokenId),
+                standard: BOX_COLLECTION.standard,
+                imageUrl,
+                name: name || `Box #${tokenId}`,
+              });
+            }}
+            aria-label="Send this box"
+            className="ml-0.5 hidden text-black group-hover/chip:inline-flex"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FFE135" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        )}
+      </a>
+    </span>
+  );
+}
+
+// One card per Box Design: the design art + name + "Design #N · <count>", with
+// the owned token IDs rendered as chips below. Mirrors the previous box card's
+// visual language (dark card, #FFE135 accent, IPFS image fallback).
+function BoxDesignCard({
+  group,
+  isFavorite,
+  toggleFavorite,
+  onSend,
+}: {
+  group: DesignGroup;
+  isFavorite: (key: string) => boolean;
+  toggleFavorite?: (key: string) => void;
+  onSend?: (t: SendTarget) => void;
+}) {
+  const imageUrl = group.image
+    ? ipfsImageUrl(group.image)
+    : "/images/pizza-box.gif";
+  const count = group.tokens.length;
+
+  return (
+    <div className="rounded-xl border border-[#333]/50 bg-[#111] p-3">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={imageUrl}
+        alt={group.name || `Design #${group.design}`}
+        className="mb-2 aspect-square w-full rounded-lg object-cover"
+        loading="lazy"
+        onError={(e) => {
+          const img = e.currentTarget;
+          if (img.src !== "/images/pizza-box.gif") {
+            img.src = "/images/pizza-box.gif";
+          }
+        }}
+      />
+      {group.name && (
+        <p className="truncate text-center text-xs font-semibold text-white">
+          {group.name}
+        </p>
+      )}
+      <p className="mt-0.5 text-center text-[10px] text-[#7DD3E8]">
+        Design #{group.design} · {count} owned
+      </p>
+      <div className="mt-2 flex flex-wrap justify-center gap-1">
+        {group.tokens.map(({ tokenId, redeemed }) => (
+          <BoxTokenChip
+            key={tokenId}
+            tokenId={tokenId}
+            redeemed={redeemed}
+            imageUrl={imageUrl}
+            name={group.name}
+            isFavorite={isFavorite}
+            toggleFavorite={toggleFavorite}
+            onSend={onSend}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function PizzaBoxesSection({
   address,
@@ -252,9 +441,10 @@ function PizzaBoxesSection({
     query: { enabled: tokenURIContracts.length > 0 },
   });
 
-  // Fetch box metadata from IPFS
+  // Fetch box metadata from IPFS. `design` is the on-chain "Box Design" trait
+  // (1–100) pulled from the metadata `attributes`; it drives the grouping below.
   const [boxMeta, setBoxMeta] = useState<
-    Record<number, { name: string; image: string }>
+    Record<number, BoxMeta>
   >({});
 
   useEffect(() => {
@@ -265,7 +455,7 @@ function PizzaBoxesSection({
     async function fetchBoxMeta(
       tokenId: number,
       uri: string
-    ): Promise<{ name: string; image: string } | null> {
+    ): Promise<BoxMeta | null> {
       // Check sessionStorage cache
       try {
         const cached = sessionStorage.getItem(`${BOX_CACHE_PREFIX}${tokenId}`);
@@ -282,7 +472,18 @@ function PizzaBoxesSection({
           });
           if (!res.ok) continue;
           const data = await res.json();
-          const meta = { name: data.name || "", image: data.image || "" };
+          const designAttr = Array.isArray(data.attributes)
+            ? data.attributes.find(
+                (a: { trait_type?: string; value?: unknown }) =>
+                  a?.trait_type === "Box Design"
+              )
+            : undefined;
+          const designNum = designAttr != null ? Number(designAttr.value) : NaN;
+          const meta: BoxMeta = {
+            name: data.name || "",
+            image: data.image || "",
+            design: Number.isFinite(designNum) ? designNum : null,
+          };
           try {
             sessionStorage.setItem(
               `${BOX_CACHE_PREFIX}${tokenId}`,
@@ -328,7 +529,7 @@ function PizzaBoxesSection({
     };
   }, [tokenIds, tokenURIResults]);
 
-  const boxes = useMemo(() => {
+  const boxes = useMemo<OwnedBox[]>(() => {
     return tokenIds.map((tokenId, i) => ({
       tokenId,
       redeemed:
@@ -338,22 +539,66 @@ function PizzaBoxesSection({
     }));
   }, [tokenIds, redeemedResults]);
 
-  // Stable favorites-first ordering: starred boxes float to the front, others
-  // keep their existing (ascending token-id) order.
-  const sortedBoxes = useMemo(() => {
-    return boxes
-      .map((box, index) => ({ box, index }))
-      .sort((a, b) => {
-        const aFav = isFavorite(`rare-pizzas-box:${a.box.tokenId}`) ? 0 : 1;
-        const bFav = isFavorite(`rare-pizzas-box:${b.box.tokenId}`) ? 0 : 1;
-        return aFav - bFav || a.index - b.index;
-      })
-      .map((entry) => entry.box);
-  }, [boxes, isFavorite]);
+  // Group owned boxes by their on-chain Box Design (1–100). Tokens whose IPFS
+  // metadata hasn't resolved yet (unknown design) are surfaced separately as a
+  // small "loading N boxes…" affordance rather than an "unknown" bucket. Groups
+  // update progressively as `boxMeta` fills in, keyed on design number to avoid
+  // flicker.
+  const { designGroups, pendingCount } = useMemo(() => {
+    const groups = new Map<number, DesignGroup>();
+    let pending = 0;
 
-  const visibleBoxes = expanded
-    ? sortedBoxes
-    : sortedBoxes.slice(0, FAVORITES_LIMIT);
+    for (const box of boxes) {
+      const meta = boxMeta[box.tokenId];
+      const design = meta?.design;
+      if (meta == null || design == null) {
+        pending += 1;
+        continue;
+      }
+      let group = groups.get(design);
+      if (!group) {
+        group = { design, name: meta.name, image: meta.image, tokens: [] };
+        groups.set(design, group);
+      }
+      group.tokens.push(box);
+    }
+
+    // Within each group: favorites-first, then ascending token id.
+    for (const group of groups.values()) {
+      group.tokens.sort((a, b) => {
+        const aFav = isFavorite(`rare-pizzas-box:${a.tokenId}`) ? 0 : 1;
+        const bFav = isFavorite(`rare-pizzas-box:${b.tokenId}`) ? 0 : 1;
+        return aFav - bFav || a.tokenId - b.tokenId;
+      });
+    }
+
+    return { designGroups: Array.from(groups.values()), pendingCount: pending };
+  }, [boxes, boxMeta, isFavorite]);
+
+  // Favorites-first at the group level: a group floats to the front if ANY owned
+  // token in it is starred. Stable secondary ordering by design number.
+  const sortedGroups = useMemo(() => {
+    return designGroups
+      .map((group, index) => ({ group, index }))
+      .sort((a, b) => {
+        const aFav = a.group.tokens.some((t) =>
+          isFavorite(`rare-pizzas-box:${t.tokenId}`)
+        )
+          ? 0
+          : 1;
+        const bFav = b.group.tokens.some((t) =>
+          isFavorite(`rare-pizzas-box:${t.tokenId}`)
+        )
+          ? 0
+          : 1;
+        return aFav - bFav || a.group.design - b.group.design;
+      })
+      .map((entry) => entry.group);
+  }, [designGroups, isFavorite]);
+
+  const visibleGroups = expanded
+    ? sortedGroups
+    : sortedGroups.slice(0, FAVORITES_LIMIT);
 
   if (total === 0 && !isLoading) return null;
 
@@ -362,7 +607,10 @@ function PizzaBoxesSection({
       <h2 className="mb-1 text-xl font-semibold text-white">
         My Pizza Boxes
       </h2>
-      <p className="mb-4 text-sm text-[#7DD3E8]">{total} box{total !== 1 ? "es" : ""}</p>
+      <p className="mb-4 text-sm text-[#7DD3E8]">
+        {total} box{total !== 1 ? "es" : ""} · {sortedGroups.length} design
+        {sortedGroups.length !== 1 ? "s" : ""}
+      </p>
       {isLoading ? (
         <div className="flex items-center gap-3 rounded-xl bg-[#111] p-4">
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
@@ -370,89 +618,31 @@ function PizzaBoxesSection({
         </div>
       ) : (
         <>
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-          {visibleBoxes.map(({ tokenId, redeemed }) => {
-            const meta = boxMeta[tokenId];
-            const imageUrl = meta ? ipfsImageUrl(meta.image) : "/images/pizza-box.gif";
-            const favKey = `rare-pizzas-box:${tokenId}`;
-            return (
-              <div key={tokenId} className="group relative">
-                <StarButton
-                  active={isFavorite(favKey)}
-                  onClick={
-                    toggleFavorite
-                      ? (e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          toggleFavorite(favKey);
-                        }
-                      : undefined
-                  }
-                />
-                {onSend && (
-                  <SendButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onSend({
-                        collection: BOX_COLLECTION.slug,
-                        tokenContract: BOX_COLLECTION.contract,
-                        chainId: BOX_COLLECTION.chainId,
-                        tokenId: String(tokenId),
-                        standard: BOX_COLLECTION.standard,
-                        imageUrl,
-                        name: meta?.name || `Box #${tokenId}`,
-                      });
-                    }}
-                  />
-                )}
-                <a
-                  href={`${OPENSEA_BOX_URL}/${tokenId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-xl border border-[#333]/50 bg-[#111] p-3 transition-all hover:border-[#FFE135]/50"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={imageUrl}
-                    alt={meta?.name || `Box #${tokenId}`}
-                    className="mb-2 aspect-square w-full rounded-lg object-cover"
-                    loading="lazy"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      if (img.src !== "/images/pizza-box.gif") {
-                        img.src = "/images/pizza-box.gif";
-                      }
-                    }}
-                  />
-                  <p className="text-center text-xs font-semibold text-white">
-                    #{tokenId}
-                  </p>
-                  {meta?.name && (
-                    <p className="mt-0.5 truncate text-center text-[10px] text-[#7DD3E8]">
-                      {meta.name}
-                    </p>
-                  )}
-                  {redeemed !== undefined && (
-                    <p
-                      className={`mt-1 text-center text-xs ${
-                        redeemed ? "text-[#FFE135]" : "text-green-400"
-                      }`}
-                    >
-                      {redeemed ? "Redeemed" : "Unredeemed"}
-                    </p>
-                  )}
-                </a>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {visibleGroups.map((group) => (
+            <BoxDesignCard
+              key={group.design}
+              group={group}
+              isFavorite={isFavorite}
+              toggleFavorite={toggleFavorite}
+              onSend={onSend}
+            />
+          ))}
         </div>
-        {sortedBoxes.length > FAVORITES_LIMIT && (
+        {pendingCount > 0 && (
+          <div className="mt-3 flex items-center gap-3 rounded-xl bg-[#111] p-3">
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#FFE135] border-t-transparent" />
+            <p className="text-xs text-[#7DD3E8]">
+              Loading {pendingCount} box{pendingCount !== 1 ? "es" : ""}…
+            </p>
+          </div>
+        )}
+        {sortedGroups.length > FAVORITES_LIMIT && (
           <button
             onClick={() => setExpanded((v) => !v)}
             className="mt-4 rounded-full border border-[#FFE135] px-4 py-1.5 text-sm font-semibold text-[#FFE135] transition-colors hover:bg-[#FFE135]/10"
           >
-            {expanded ? "Show less" : `Show all (${sortedBoxes.length})`}
+            {expanded ? "Show less" : `Show all (${sortedGroups.length})`}
           </button>
         )}
         </>
