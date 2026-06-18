@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import { RARE_PIZZAS_CONTRACT, PIZZA_ABI } from "@/lib/contracts";
-import { OPENSEA_BASE_URL } from "@/lib/constants";
+import PizzaLightbox from "@/components/PizzaLightbox";
 
 const PIZZA_ERC721_ABI = [
   {
@@ -26,6 +26,7 @@ const PIZZA_ERC721_ABI = [
 ] as const;
 
 export default function MyPizzas({ pizzaTokenIds }: { pizzaTokenIds: number[] }) {
+  const [selectedPizza, setSelectedPizza] = useState<number | null>(null);
   const { address, isConnected } = useAccount();
 
   const { data: balance } = useReadContract({
@@ -77,14 +78,13 @@ export default function MyPizzas({ pizzaTokenIds }: { pizzaTokenIds: number[] })
       </p>
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
         {myPizzasWithTopping.map((tokenId) => (
-          <a
+          <button
             key={tokenId}
-            href={`${OPENSEA_BASE_URL}/${tokenId}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => setSelectedPizza(tokenId)}
             className="group overflow-hidden rounded-lg border border-[#FFE135]/30 transition-all hover:border-[#FFE135]/50 hover:shadow-lg hover:shadow-[#FFE135]/10"
             title={`Rare Pizza #${tokenId}`}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`/pizzas/${tokenId}.webp`}
               alt={`Rare Pizza #${tokenId}`}
@@ -93,9 +93,16 @@ export default function MyPizzas({ pizzaTokenIds }: { pizzaTokenIds: number[] })
               className="h-auto w-full transition-transform group-hover:scale-105"
               loading="lazy"
             />
-          </a>
+          </button>
         ))}
       </div>
+
+      {selectedPizza !== null && (
+        <PizzaLightbox
+          tokenId={selectedPizza}
+          onClose={() => setSelectedPizza(null)}
+        />
+      )}
     </section>
   );
 }
