@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
 import WalletStatus from "./WalletStatus";
+import { OpenInWallet } from "./OpenInWallet";
 
 const ConnectButton = dynamic(
   () =>
@@ -120,6 +121,13 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {/* Mobile browsers without a wallet: open this page in a wallet app's browser */}
+      {!isConnected && (
+        <div className="mx-auto max-w-7xl px-4 pb-3 empty:hidden">
+          <OpenInWallet />
+        </div>
+      )}
 
       {/* Mobile menu */}
       {menuOpen && (

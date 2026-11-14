@@ -1,11 +1,15 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { mainnet, optimism } from "wagmi/chains";
-import { http } from "wagmi";
+import { createConfig, http } from "wagmi";
+import { createWalletConnectors } from "@/lib/wallet/connectors";
 
-export const config = getDefaultConfig({
-  appName: "Rare Pizzas",
-  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "placeholder",
+// No WalletConnect / Reown project ID: see lib/wallet/connectors.ts.
+export const config = createConfig({
   chains: [mainnet, optimism],
+  connectors: createWalletConnectors({
+    name: "Rare Pizzas",
+    url: "https://rarepizzas.com",
+    icon: "https://rarepizzas.com/pizzadao-icon.svg",
+  }),
   transports: {
     [mainnet.id]: http("https://ethereum-rpc.publicnode.com", {
       batch: false,
