@@ -3,7 +3,7 @@ import type { Wallet, WalletDetailsParams } from "@rainbow-me/rainbowkit";
 import { coinbaseWallet, injectedWallet, metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import { createConnector } from "wagmi";
 import { metaMask } from "wagmi/connectors";
-import { isMobile } from "./handoff";
+import { hasInjectedProvider, isMobile } from "./handoff";
 
 interface AppMeta {
   name: string;
@@ -23,15 +23,38 @@ function metaMaskSdkWallet(app: AppMeta) {
     mobile: undefined,
     // Non-headless: with no extension the SDK shows its own QR code (MetaMask relay).
     createConnector: (walletDetails: WalletDetailsParams) =>
-      createConnector((config) => ({
-        ...metaMask({
+      createConnector((config) => {
+        const connector = metaMask({
           dappMetadata: { name: app.name, url: app.url, iconUrl: app.icon },
           enableAnalytics: false,
-        })(config),
-        ...walletDetails,
-      })),
+        })(config);
+        return {
+          ...connector,
+          ...walletDetails,
+          // RainbowKit awaits getChainId() before connecting; with no extension the SDK throws
+          // and the modal would hang. Same guard RainbowKit's own metaMaskWallet uses.
+          getChainId: async () => {
+            try {
+              return await connector.getChainId();
+            } catch {
+              return config.chains[0]?.id ?? 1;
+            }
+          },
+        };
+      }),
   });
 }
+
+/**
+ * RainbowKit marks injectedWallet always ready, which shows a "Browser Wallet" that silently
+ * fails on iPhone Safari / desktop without an extension. Only show it when a provider exists
+ * (still needed so in-wallet browsers connect through RainbowKit's mobile options).
+ */
+const gatedInjectedWallet = (): Wallet => ({
+  ...injectedWallet(),
+  installed: hasInjectedProvider(),
+  hidden: () => !hasInjectedProvider(),
+});
 
 /**
  * Wallet list that needs no WalletConnect / Reown project ID:
@@ -47,7 +70,7 @@ export function createWalletConnectors(app: AppMeta) {
     [
       {
         groupName: "Wallets",
-        wallets: [injectedWallet, ...(isMobile() ? [] : [metaMaskSdkWallet(app)]), coinbaseWallet],
+        wallets: [gatedInjectedWallet, ...(isMobile() ? [] : [metaMaskSdkWallet(app)]), coinbaseWallet],
       },
     ],
     // Only read by WalletConnect-based wallets, none of which are listed.

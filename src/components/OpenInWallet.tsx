@@ -34,6 +34,11 @@ export function OpenInWallet({ className = "" }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const fallbackTimer = useRef<number | null>(null);
+  const copyTimer = useRef<number | null>(null);
+
+  useEffect(() => () => {
+    if (copyTimer.current) window.clearTimeout(copyTimer.current);
+  }, []);
 
   // Never fire the custom-scheme fallback after the page was hidden/left (the app took over).
   useEffect(() => {
@@ -72,7 +77,8 @@ export function OpenInWallet({ className = "" }: { className?: string }) {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      if (copyTimer.current) window.clearTimeout(copyTimer.current);
+      copyTimer.current = window.setTimeout(() => setCopied(false), 2000);
     } catch {
       /* clipboard unavailable */
     }
