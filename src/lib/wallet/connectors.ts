@@ -19,14 +19,17 @@ function metaMaskSdkWallet(app: AppMeta) {
   return (): Wallet => ({
     // Reuse RainbowKit's MetaMask metadata (icon, store links); only the connector differs.
     ...metaMaskWallet({ projectId: "no-walletconnect" }),
-    qrCode: undefined,
+    // RainbowKit draws the QR from the SDK display_uri (a metamask.app.link URL phone cameras open).
+    qrCode: { getUri: (uri: string) => uri },
     mobile: undefined,
-    // Non-headless: with no extension the SDK shows its own QR code (MetaMask relay).
+    // Headless: the SDK modal would render behind RainbowKit's modal, so RainbowKit shows the QR.
     createConnector: (walletDetails: WalletDetailsParams) =>
       createConnector((config) => {
         const connector = metaMask({
           dappMetadata: { name: app.name, url: app.url, iconUrl: app.icon },
           enableAnalytics: false,
+          headless: true,
+          useDeeplink: false,
         })(config);
         return {
           ...connector,
