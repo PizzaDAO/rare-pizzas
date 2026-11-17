@@ -45,7 +45,7 @@ export default function Header() {
               priority
             />
           </Link>
-          <nav className="hidden items-center gap-4 sm:flex">
+          <nav className="hidden items-center gap-4 xl:flex">
             <Link href="/" className={navColor("/", pathname)}>
               Mint
             </Link>
@@ -69,7 +69,7 @@ export default function Header() {
           </nav>
         </div>
         <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 sm:flex">
+          <div className="hidden items-center gap-2 xl:flex">
             <a
               href="https://discord.pizzadao.xyz"
               target="_blank"
@@ -103,12 +103,12 @@ export default function Header() {
             </a>
           </div>
           <WalletStatus />
-          <div className="hidden sm:block"><ConnectButton showBalance={false} chainStatus="none" /></div>
-          <div className="sm:hidden"><ConnectButton showBalance={false} chainStatus="none" label="Connect" /></div>
+          <div className="hidden xl:block"><ConnectButton showBalance={false} chainStatus="none" /></div>
+          <div className="xl:hidden"><ConnectButton showBalance={false} chainStatus="none" label="Connect" /></div>
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="sm:hidden rounded-md p-1.5 text-white/70 hover:text-white"
+            className="xl:hidden rounded-md p-1.5 text-white/70 hover:text-white"
             aria-label="Toggle menu"
           >
             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -131,7 +131,7 @@ export default function Header() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <nav className="flex flex-col gap-3 border-t border-[#FFE135]/10 px-4 py-4 sm:hidden">
+        <nav className="flex flex-col gap-3 border-t border-[#FFE135]/10 px-4 py-4 xl:hidden">
           <Link href="/" className={navColor("/", pathname, true)} onClick={() => setMenuOpen(false)}>
             Mint
           </Link>
